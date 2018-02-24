@@ -40,7 +40,8 @@
             android:id="@+id/ivDelete"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_delete" />
+            android:src="@drawable/ic_delete"
+            android:onClick="deleteItem"/>
 
         <ImageView
             android:id="@+id/ivEdit"

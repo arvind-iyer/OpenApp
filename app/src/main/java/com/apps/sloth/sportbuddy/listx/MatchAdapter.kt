@@ -3,6 +3,7 @@ package com.apps.sloth.sportbuddy.listx
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -15,8 +16,8 @@ import org.w3c.dom.Text
  */
 
 class MatchAdapter : BaseAdapter {
-    var matchList = ArrayList<Match>()
-    var context: Context? = null
+    private var matchList = ArrayList<Match>()
+    private var context: Context? = null
 
     constructor(context: Context, matchList: ArrayList<Match>) : super() {
         this.matchList = matchList
@@ -29,7 +30,7 @@ class MatchAdapter : BaseAdapter {
         val vh: ViewHolder
 
         if (convertView == null) {
-            view = layoutInflater.inflate(R.layout.note, parent, false)
+            view = LayoutInflater.from(context).inflate(R.layout.match, parent, false)
             vh = ViewHolder(view)
             view.tag = vh
             Log.i("JSA", "set Tag for ViewHolder, position: " + position)
@@ -60,12 +61,12 @@ class MatchAdapter : BaseAdapter {
     }
 }
 
-private class ViewHolder(view: View?) {
+private class ViewHolder(view: View) {
     val sportText: TextView
     val hostText: TextView
 
     init {
-        this.sportText = view?.findViewById(R.id.sportText) as TextView
-        this.hostText = view?.findViewById(R.id.hostText) as TextView
+        this.sportText = view.findViewById(R.id.sportText) as TextView
+        this.hostText = view.findViewById(R.id.hostText) as TextView
     }
 }
