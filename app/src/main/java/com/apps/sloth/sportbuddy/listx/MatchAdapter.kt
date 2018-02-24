@@ -59,6 +59,26 @@ class MatchAdapter : BaseAdapter {
         // return quantity of the list
         return matchList.size
     }
+    fun remove(id: String) {
+        var ind = -1
+        matchList.forEach { m ->
+            ind += 1
+            if(m.id.equals(id)) {
+                return@forEach
+            }
+        }
+        if(ind != -1) {
+            matchList.removeAt(ind)
+            this.notifyDataSetChanged()
+        }
+    }
+
+    fun removeAt(index : Int) {
+        if(index >= 0 && index < matchList.size) {
+            matchList.removeAt(index)
+            this.notifyDataSetChanged()
+        }
+    }
 }
 
 private class ViewHolder(view: View) {

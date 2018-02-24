@@ -1,9 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.apps.sloth.sportbuddy.CreateMatchActivity">
 
+    <TextView
+        android:id="@+id/cm_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Create a Match"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/cm_sport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cm_header" />
+
+    <EditText
+        android:id="@+id/cm_max_capacity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Max number of players"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/cm_sport" />
+
+    <!--<TimePicker-->
+    <!--android:id="@+id/cm_time"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:visibility="gone">-->
+    <!--</TimePicker>-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:adjustViewBounds="false"
+        android:background="@android:color/holo_red_light"
+        android:clickable="true"
+        android:onClick="createMatch"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add" />
 </android.support.constraint.ConstraintLayout>
+
