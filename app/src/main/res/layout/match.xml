@@ -1,49 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--suppress ALL -->
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:orientation="horizontal"
     android:padding="10dp"
-    android:weightSum="10" android:baselineAligned="false">
+    android:weightSum="10">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="9"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/sportText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/sport"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/hostText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Hosted by: " />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ivDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:baselineAligned="true"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        android:id="@+id/home_list_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_marginStart="20dp"
+            android:id="@+id/home_list_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_delete"
-            android:contentDescription="TODO"/>
-    </LinearLayout>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/tennis"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/home_list_sportText"
+            android:layout_width="70dp"
+            android:layout_height="52dp"
+            android:background="#0001"
+            android:padding="5dp"
+            android:shadowColor="#000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.3"
+            android:shadowRadius="1.6"
+            android:text="@string/sport"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/home_list_hostText"
+        card_view:layout_constraintHorizontal_bias="0.0"
+        android:layout_width="348dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:padding="5dp"
+        android:text="Organiser:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_list_card_view" />
+
+</android.support.constraint.ConstraintLayout>
+
+
+
+
+
+
