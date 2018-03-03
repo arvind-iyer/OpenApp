@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -14,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_match_list.*
 import kotlinx.android.synthetic.main.match.*
 import kotlinx.android.synthetic.main.match.view.*
@@ -66,8 +69,30 @@ class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        setSupportActionBar(toolbar)
         populateCurrentMatches()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId){
+        R.id.action_settings -> {
+
+            true
+        }
+
+        R.id.action_pd -> {
+            val intent = Intent(applicationContext, PersonalDetailsActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     fun openCreateMatchActivity(view: View) {

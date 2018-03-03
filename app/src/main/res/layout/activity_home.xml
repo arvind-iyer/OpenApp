@@ -37,6 +37,7 @@
         android:adjustViewBounds="false"
         android:background="@android:color/holo_red_light"
         android:clickable="true"
+        android:focusable="true"
         android:onClick="openCreateMatchActivity"
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_anchor="@+id/include"

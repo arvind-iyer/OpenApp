@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:timePickerDialogTheme">@style/myTimePickerStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -17,4 +18,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="myTimePickerStyle" parent="@android:style/Widget.Material.TimePicker">
+        <item name="android:numbersTextColor">#666</item>
+        <item name="android:numbersBackgroundColor">@color/colorAccent</item>
+        <item name="android:numbersSelectorColor">@color/colorPrimary</item>
+        <item name="android:headerBackground">#EEA5BE00</item>
+    </style>
 </resources>

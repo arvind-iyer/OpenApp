@@ -10,6 +10,7 @@ data class Match (
     var host_id: String? = null,
     var max_capacity : Int? = null,
     var curr_capacity : Int? = null,
-    var time: Date? = null,
+    var hourOfDay: Int? = null,
+    var minute: Int? = null,
     var location: Location? = null
 )

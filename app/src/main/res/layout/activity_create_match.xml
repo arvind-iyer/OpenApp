@@ -8,25 +8,26 @@
     android:layout_height="match_parent"
     tools:context="com.apps.sloth.sportbuddy.CreateMatchActivity">
 
-    <TextView
-        android:id="@+id/cm_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Create a Match"
-        android:textAlignment="center"
-        android:textSize="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--<TextView-->
+        <!--android:id="@+id/cm_header"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:text="Create a Match"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textSize="40dp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent" />-->
 
     <EditText
         android:id="@+id/cm_sport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:hint="Sport"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cm_header" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/cm_max_capacity"
@@ -36,12 +37,14 @@
         android:inputType="number"
         app:layout_constraintTop_toBottomOf="@id/cm_sport" />
 
-    <!--<TimePicker-->
-    <!--android:id="@+id/cm_time"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:visibility="gone">-->
-    <!--</TimePicker>-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cm_btn_time"
+        android:text="Time"
+        app:layout_constraintTop_toBottomOf="@id/cm_max_capacity"
+        android:onClick="openTimePicker"/>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -56,6 +59,6 @@
         app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_check_black_24dp" />
 </android.support.constraint.ConstraintLayout>
 
