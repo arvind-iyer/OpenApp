@@ -10,7 +10,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.apps.sloth.sportbuddy.R
 import org.w3c.dom.Text
-
 /**
  * Created by arvind on 22/2/18.
  */
@@ -86,7 +85,7 @@ private class ViewHolder(view: View) {
     val hostText: TextView
 
     init {
-        this.sportText = view.findViewById(R.id.sportText) as TextView
-        this.hostText = view.findViewById(R.id.hostText) as TextView
+        this.sportText = view.findViewById(R.id.home_list_sportText) as TextView
+        this.hostText = view.findViewById(R.id.home_list_hostText) as TextView
     }
 }
