@@ -50,10 +50,10 @@ class Home : AppCompatActivity() {
                             applicationContext, currentMatches[position].id.toString(),
                             Toast.LENGTH_SHORT
                     ).show()
-                    view.ivDelete.setOnClickListener { view ->
-                        val matchDB = databaseReference.child("matches")
-                        matchAdapter.removeAt(position)
-                    }
+//                    view.ivDelete.setOnClickListener { view ->
+//                        val matchDB = databaseReference.child("matches")
+//                        matchAdapter.removeAt(position)
+//                    }
 
                 }
 
