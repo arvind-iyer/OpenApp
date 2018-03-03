@@ -27,7 +27,7 @@ class CreateMatchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_match)
     }
 
-    fun createMatch() {
+    fun createMatch(view: View) {
         val thisMatch = Match(
             sport= cm_sport.text.toString(),
             max_capacity= cm_max_capacity.text.toString().toInt(),
