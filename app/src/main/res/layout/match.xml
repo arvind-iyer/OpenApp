@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,8 +13,8 @@
         android:id="@+id/home_list_card_view"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="4dp"
         app:cardCornerRadius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,40 +25,71 @@
             android:id="@+id/home_list_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
+            android:contentDescription="Tennis Court"
             android:src="@mipmap/tennis"/>
 
-        <TextView
-            android:id="@+id/home_list_sportText"
-            android:layout_width="70dp"
-            android:layout_height="52dp"
-            android:background="#0001"
-            android:padding="5dp"
-            android:shadowColor="#000000"
-            android:shadowDx="1.5"
-            android:shadowDy="1.3"
-            android:shadowRadius="1.6"
-            android:text="@string/sport"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_bg">
+
+            <TextView
+                android:id="@+id/home_list_sportText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:text="Tennis"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/home_list_capacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="end"
+                android:text="1/2"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/home_list_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/home_list_capacity"
+                app:layout_constraintTop_toBottomOf='@id/home_list_capacity'
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="end"
+                android:text="Court A"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/home_list_hostText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:padding="5dp"
+                android:text="Pedro Sander"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@id/home_list_sportText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/home_list_sportText"/>
+            </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
 
-    <TextView
-        android:id="@+id/home_list_hostText"
-        card_view:layout_constraintHorizontal_bias="0.0"
-        android:layout_width="348dp"
-        android:layout_height="33dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:padding="5dp"
-        android:text="Organiser:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_list_card_view" />
+
 
 </android.support.constraint.ConstraintLayout>
 
