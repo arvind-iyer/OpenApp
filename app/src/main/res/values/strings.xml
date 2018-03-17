@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OpenMatch</string>
+    <string name="app_name">GotNext</string>
     <string name="str_toast_btn">Toast</string>
     <string name="str_cnt_btn">Count</string>
     <string name="str_rnd_btn">Random</string>

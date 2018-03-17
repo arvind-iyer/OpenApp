@@ -46,10 +46,17 @@ class Home : AppCompatActivity() {
                 cur_matches.adapter = matchAdapter
                 cur_matches.onItemClickListener = AdapterView.OnItemClickListener {
                     adapterView, view, position, id ->
-                    Toast.makeText(
-                            applicationContext, currentMatches[position].id.toString(),
-                            Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                            applicationContext, currentMatches[position].id.toString(),
+//                            Toast.LENGTH_SHORT
+//                    ).show()
+                    if(currentMatches[position].curr_capacity < currentMatches[position].max_capacity) {
+                        currentMatches[position].curr_capacity++
+                    }
+                    val matchDB = databaseReference.child("matches")
+                    matchDB.child(currentMatches[position].id).child("curr_capacity")
+                            .setValue(currentMatches[position].curr_capacity)
+
 //                    view.ivDelete.setOnClickListener { view ->
 //                        val matchDB = databaseReference.child("matches")
 //                        matchAdapter.removeAt(position)
@@ -80,7 +87,8 @@ class Home : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId){
         R.id.action_settings -> {
-
+            Toast.makeText(this, "This should open the settings activity",
+                    Toast.LENGTH_SHORT).show()
             true
         }
 
