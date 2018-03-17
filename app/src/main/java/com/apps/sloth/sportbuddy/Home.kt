@@ -26,10 +26,10 @@ class Home : AppCompatActivity() {
     private val databaseReference = FirebaseDatabase.getInstance().getReference()
     private var matchAdapter = MatchAdapter(this, currentMatches)
 
-    private fun updateMatchListFromLocal() {
-        val mdb = databaseReference.child("matches")
-
-    }
+//    private fun updateMatchListFromLocal() {
+//        val mdb = databaseReference.child("matches")
+//
+//    }
     private fun populateCurrentMatches() {
         val mdb = databaseReference.child("matches")
 

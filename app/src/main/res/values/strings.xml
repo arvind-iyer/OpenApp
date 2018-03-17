@@ -26,5 +26,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_pd">Personal Details</string>
     <string name="sport">Sport</string>
+    <string name="register">Register</string>
 
 </resources>
