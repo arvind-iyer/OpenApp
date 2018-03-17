@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -14,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_match_list.*
 import kotlinx.android.synthetic.main.match.*
 import kotlinx.android.synthetic.main.match.view.*
@@ -23,10 +26,10 @@ class Home : AppCompatActivity() {
     private val databaseReference = FirebaseDatabase.getInstance().getReference()
     private var matchAdapter = MatchAdapter(this, currentMatches)
 
-    private fun updateMatchListFromLocal() {
-        val mdb = databaseReference.child("matches")
-
-    }
+//    private fun updateMatchListFromLocal() {
+//        val mdb = databaseReference.child("matches")
+//
+//    }
     private fun populateCurrentMatches() {
         val mdb = databaseReference.child("matches")
 
@@ -43,10 +46,17 @@ class Home : AppCompatActivity() {
                 cur_matches.adapter = matchAdapter
                 cur_matches.onItemClickListener = AdapterView.OnItemClickListener {
                     adapterView, view, position, id ->
-                    Toast.makeText(
-                            applicationContext, currentMatches[position].id.toString(),
-                            Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                            applicationContext, currentMatches[position].id.toString(),
+//                            Toast.LENGTH_SHORT
+//                    ).show()
+                    if(currentMatches[position].curr_capacity < currentMatches[position].max_capacity) {
+                        currentMatches[position].curr_capacity++
+                    }
+                    val matchDB = databaseReference.child("matches")
+                    matchDB.child(currentMatches[position].id).child("curr_capacity")
+                            .setValue(currentMatches[position].curr_capacity)
+
 //                    view.ivDelete.setOnClickListener { view ->
 //                        val matchDB = databaseReference.child("matches")
 //                        matchAdapter.removeAt(position)
@@ -66,8 +76,31 @@ class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        setSupportActionBar(toolbar)
         populateCurrentMatches()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId){
+        R.id.action_settings -> {
+            Toast.makeText(this, "This should open the settings activity",
+                    Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        R.id.action_pd -> {
+            val intent = Intent(applicationContext, PersonalDetailsActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     fun openCreateMatchActivity(view: View) {
