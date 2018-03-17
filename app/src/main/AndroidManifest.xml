@@ -29,10 +29,17 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CreateMatchActivity"
-            android:label="@string/title_activity_create_match"/>
-        <activity android:name=".PersonalDetailsActivity"
-            android:label="@string/title_activity_pd"/>
+        <activity
+            android:name=".CreateMatchActivity"
+            android:label="@string/title_activity_create_match" />
+        <activity
+            android:name=".PersonalDetailsActivity"
+            android:label="@string/title_activity_pd" />
+        <activity android:name=".MatchDetailsActivity" />
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
