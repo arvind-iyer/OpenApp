@@ -16,7 +16,7 @@
     <!--<string name="error_incorrect_password">This password is incorrect</string>-->
     <!--<string name="error_field_required">This field is required</string>-->
     <!--<string name="permission_rationale">"Contacts permissions are needed for providing email-->
-        <!--completions."-->
+    <!--completions."-->
     <!--</string>-->
     <!--<string name="facebook_app_id">369948326805649</string>-->
     <!--<string name="fb_login_protocol_scheme">fb369948326805649</string>-->
@@ -27,5 +27,6 @@
     <string name="action_pd">Personal Details</string>
     <string name="sport">Sport</string>
     <string name="register">Register</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
 
 </resources>
