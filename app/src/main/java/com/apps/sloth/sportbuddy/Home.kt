@@ -1,9 +1,8 @@
 package com.apps.sloth.sportbuddy
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -18,8 +17,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_match_list.*
-import kotlinx.android.synthetic.main.match.*
-import kotlinx.android.synthetic.main.match.view.*
 
 class Home : AppCompatActivity() {
     private var currentMatches = ArrayList<Match>()
@@ -57,6 +54,9 @@ class Home : AppCompatActivity() {
                     matchDB.child(currentMatches[position].id).child("curr_capacity")
                             .setValue(currentMatches[position].curr_capacity)
 
+                    val intent = Intent(applicationContext, MatchDetailsActivity::class.java)
+                    intent.putExtra("match_id", currentMatches[position].id)
+                    startActivity(intent)
 //                    view.ivDelete.setOnClickListener { view ->
 //                        val matchDB = databaseReference.child("matches")
 //                        matchAdapter.removeAt(position)

@@ -15,10 +15,10 @@
         android:layout_height="match_parent"
         tools:context="com.apps.sloth.sportbuddy.MatchDetailsActivity">
 
-        <EditText
-            android:id="@+id/organiser"
-            android:layout_width="349dp"
-            android:layout_height="47dp"
+        <TextView
+            android:id="@+id/md_host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
@@ -31,10 +31,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <EditText
-            android:id="@+id/skill_level"
-            android:layout_width="349dp"
-            android:layout_height="47dp"
+        <TextView
+            android:id="@+id/md_skill_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
@@ -44,12 +44,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.526"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/organiser" />
+            app:layout_constraintTop_toBottomOf="@id/md_host" />
 
-        <EditText
-            android:id="@+id/location"
-            android:layout_width="349dp"
-            android:layout_height="47dp"
+        <TextView
+            android:id="@+id/md_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
@@ -59,26 +59,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/skill_level" />
+            app:layout_constraintTop_toBottomOf="@id/md_skill_level" />
 
-        <EditText
-            android:id="@+id/number_of_people"
-            android:layout_width="349dp"
-            android:layout_height="47dp"
+        <TextView
+            android:id="@+id/md_capacity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:text="Number of Players"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location" />
+            app:layout_constraintTop_toBottomOf="@id/md_location" />
 
-        <EditText
-            android:id="@+id/time_begin"
-            android:layout_width="349dp"
-            android:layout_height="47dp"
+        <TextView
+            android:id="@+id/md_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
@@ -88,7 +88,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.526"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/number_of_people" />
+            app:layout_constraintTop_toBottomOf="@id/md_capacity" />
 
     </android.support.constraint.ConstraintLayout>
 
