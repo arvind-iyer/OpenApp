@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import com.apps.sloth.sportbuddy.listx.Match
@@ -56,6 +55,7 @@ class Home : AppCompatActivity() {
 
                     val intent = Intent(applicationContext, MatchDetailsActivity::class.java)
                     intent.putExtra("match_id", currentMatches[position].id)
+                    println("match_id_extra: " + currentMatches[position].id)
                     startActivity(intent)
 //                    view.ivDelete.setOnClickListener { view ->
 //                        val matchDB = databaseReference.child("matches")
@@ -98,12 +98,17 @@ class Home : AppCompatActivity() {
             true
         }
 
+        R.id.action_create_match -> {
+            openCreateMatchActivity()
+            true
+        }
+
         else -> {
             super.onOptionsItemSelected(item)
         }
     }
 
-    fun openCreateMatchActivity(view: View) {
+    fun openCreateMatchActivity() {
         val intent = Intent(this, CreateMatchActivity::class.java)
         startActivity(intent)
     }

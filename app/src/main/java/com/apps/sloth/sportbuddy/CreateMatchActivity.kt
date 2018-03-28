@@ -1,20 +1,18 @@
 package com.apps.sloth.sportbuddy
 
-import android.app.AlertDialog
 import android.app.Dialog
-import android.support.v7.app.AppCompatActivity
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.support.v7.app.AppCompatActivity
+import android.text.format.DateFormat
 import android.view.View
+import android.widget.TimePicker
 import com.apps.sloth.sportbuddy.listx.Match
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create_match.*
-import android.widget.TimePicker
-import android.text.format.DateFormat.is24HourFormat
-import android.app.TimePickerDialog
-import android.support.v4.app.DialogFragment
-import android.text.format.DateFormat
 import java.util.*
 
 
@@ -29,6 +27,8 @@ class CreateMatchActivity : AppCompatActivity() {
         val mCurrentTime = Calendar.getInstance()
         val currenthour = mCurrentTime.get(Calendar.HOUR_OF_DAY)
         val currentminute = mCurrentTime.get(Calendar.MINUTE)
+        hour = currenthour
+        minute = currentminute
         cm_time_text.setText(currenthour.toString() + ":" + currentminute.toString())
     }
 
