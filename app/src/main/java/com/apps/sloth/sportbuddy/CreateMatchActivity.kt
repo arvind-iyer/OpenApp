@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.TimePicker
+import android.widget.Toast
 import com.apps.sloth.sportbuddy.listx.Match
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -37,12 +38,22 @@ class CreateMatchActivity : AppCompatActivity() {
             println("Set time first pl0x")
             return
         }
+        if(cm_sport.text.equals("")) {
+            println("Sport not set")
+            Toast.makeText(this, "Sport has not been selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(cm_max_capacity.text.equals("")) {
+            println("Capacity not set")
+            Toast.makeText(this, "Capacity not selected", Toast.LENGTH_SHORT).show()
+            return
+        }
         val thisMatch = Match(
             sport= cm_sport.text.toString(),
             max_capacity= cm_max_capacity.text.toString().toInt(),
             hourOfDay = hour,
             minute = minute,
-            host_id = currentUser.uid,
+            host_id = currentUser.displayName,
             id = matchesDB.push().key
         )
         matchesDB.child(thisMatch.id).setValue(thisMatch)
