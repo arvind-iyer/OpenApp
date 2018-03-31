@@ -3,6 +3,7 @@ package com.apps.sloth.sportbuddy
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import com.apps.sloth.sportbuddy.listx.Match
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,6 +18,12 @@ class MatchDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mdetail_scrolling)
+        md_playercount_plus.setOnClickListener(View.OnClickListener { view ->
+            incrementCounter(view)
+        })
+        md_playercount_minus.setOnClickListener(View.OnClickListener { view ->
+            decrementCounter(view)
+        })
         val match_id = intent.extras.getString("match_id")
         println("match_id: " + match_id)
         val matchRef = dbRef.child("matches").child(match_id)
@@ -39,4 +46,20 @@ class MatchDetailsActivity : AppCompatActivity() {
             }
         })
     }
+
+    fun incrementCounter (view:View)
+    {
+        var currentCount = Integer.parseInt(md_countertext.text.toString())
+        currentCount += 1
+        md_countertext.setText(currentCount.toString())
+        println(currentCount)
+    }
+    fun decrementCounter (view:View)
+    {
+        var currentCount = Integer.parseInt(md_countertext.text.toString())
+        currentCount += 1
+        md_countertext.setText(currentCount.toString())
+        println(currentCount)
+    }
 }
+

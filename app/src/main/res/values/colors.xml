@@ -5,6 +5,7 @@
     <color name="colorAccent">#e0e1dd</color>
     <color name="colorSecondary">#778da9</color>
     <color name="colorSecondaryDark">#1b263b</color>
+    <color name="textColor">#000000</color>
     <!--<color name="colorPrimary">#A5BE00</color>-->
     <!--<color name="colorPrimaryDark">#679436</color>-->
     <!--<color name="colorAccent">#EBF2FA</color>-->
