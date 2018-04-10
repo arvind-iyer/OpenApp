@@ -1,9 +1,11 @@
 package com.apps.sloth.sportbuddy
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import com.apps.sloth.sportbuddy.listx.Match
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -14,6 +16,7 @@ import kotlinx.android.synthetic.main.content_mdetail_scrolling.*
 class MatchDetailsActivity : AppCompatActivity() {
     private val dbRef = FirebaseDatabase.getInstance().getReference()
     private var thisMatch : Match? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,20 @@ class MatchDetailsActivity : AppCompatActivity() {
                 println("MDActi/onCancelled()")
             }
         })
+        md_skill_1.setOnClickListener({
+            md_skill_2.setBackgroundColor(Color.GRAY)
+            md_skill_3.setBackgroundColor(Color.GRAY)
+        })
+
+        md_skill_2.setOnClickListener({
+            md_skill_1.setBackgroundColor(Color.GRAY)
+            md_skill_3.setBackgroundColor(Color.GRAY)
+        })
+
+        md_skill_3.setOnClickListener({
+            md_skill_1.setBackgroundColor(Color.GRAY)
+            md_skill_2.setBackgroundColor(Color.GRAY)
+        })
     }
 
     fun incrementCounter (view:View)
@@ -75,6 +92,9 @@ class MatchDetailsActivity : AppCompatActivity() {
             md_countertext.setText(currentCount.toString())
         }
         println(currentCount)
+
     }
+
+
 }
 
