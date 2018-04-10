@@ -2,23 +2,21 @@ package com.apps.sloth.sportbuddy
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_personal_details.*
 import java.io.FileNotFoundException
 
@@ -38,16 +36,20 @@ public class PersonalDetailsActivity : AppCompatActivity() {
         currentUser = mAuth.currentUser
 
         val usersDB = udb.child(currentUser?.uid)
-
-        pd_text_name.setText(currentUser?.displayName.toString())
-        pd_image_user_pic.setImageURI(currentUser?.photoUrl)
-//        pd_text_bio.setText()
-        usersDB.child("bio").addListenerForSingleValueEvent(object: ValueEventListener{
+        usersDB.child(currentUser?.uid).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                pd_text_bio.setText(snapshot.value.toString())
+                pd_text_bio.setText(snapshot.child("bio").value.toString())
+                Picasso.get()
+                        .load(snapshot.value.toString())
+                        .placeholder(R.mipmap.default_user)
+                        .into(findViewById(R.id.pd_image_user_pic)as CircleImageView)
+
+                pd_text_phone.setText(snapshot.child("phone").value.toString())
+
             }
-            override fun onCancelled(p0: DatabaseError?) {}
         })
+        pd_text_name.setText(currentUser?.displayName.toString())
+//        pd_text_bio.setText()
     }
 
 
@@ -83,28 +85,17 @@ public class PersonalDetailsActivity : AppCompatActivity() {
         }
     }
 
-    fun updatePersonalDetails() {
+    fun updatePersonalDetails(view: View) {
         if(pd_text_name.text.toString().equals("") ) {
             println("Missing username")
             return
         }
         var profileChangeRequest =  UserProfileChangeRequest.Builder()
                 .setDisplayName(pd_text_name.text.toString())
-        if(imgUri != null) {
-
-        }
+        udb.child("bio").setValue(pd_text_bio.text.toString())
+        udb.child("phone").setValue(pd_text_phone.text.toString())
         currentUser?.updateProfile(profileChangeRequest.build())
         finish()
     }
 }
 
-private class DownloadImageTask : AsyncTask<String, Void, Bitmap>()
-{
-    val imgView : ImageView?
-    constructor(imgView: ImageView) {
-        this.imgView = imgView
-    }
-    override fun doInBackground(vararg p0: String?): Bitmap {
-
-    }
-}
