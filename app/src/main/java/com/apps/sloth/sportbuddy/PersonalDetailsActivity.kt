@@ -58,10 +58,6 @@ public class PersonalDetailsActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError?) {
 
             }
-
-            override fun onCancelled(p0: DatabaseError?) {
-
-            }
         })
         pd_text_name.setText(currentUser?.displayName.toString())
 //        pd_text_bio.setText()

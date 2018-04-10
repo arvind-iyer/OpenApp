@@ -42,26 +42,11 @@ class Home : AppCompatActivity() {
                 cur_matches.adapter = matchAdapter
                 cur_matches.onItemClickListener = AdapterView.OnItemClickListener {
                     adapterView, view, position, id ->
-//                    Toast.makeText(
-//                            applicationContext, currentMatches[position].id.toString(),
-//                            Toast.LENGTH_SHORT
-//                    ).show()
-                    if(currentMatches[position].curr_capacity < currentMatches[position].max_capacity) {
-                        currentMatches[position].curr_capacity++
-                    }
-                    val matchDB = databaseReference.child("matches")
-                    matchDB.child(currentMatches[position].id).child("curr_capacity")
-                            .setValue(currentMatches[position].curr_capacity)
-
-                    val intent = Intent(applicationContext, MatchDetailsActivity::class.java)
-                    intent.putExtra("match_id", currentMatches[position].id)
-                    println("match_id_extra: " + currentMatches[position].id)
-                    startActivity(intent)
-//                    view.ivDelete.setOnClickListener { view ->
-//                        val matchDB = databaseReference.child("matches")
-//                        matchAdapter.removeAt(position)
-//                    }
-
+                        val intent = Intent(applicationContext, MatchDetailsActivity::class.java)
+                        intent.putExtra("match_id", currentMatches[position].id)
+                        intent.putExtra("sport_type", currentMatches[position].sport)
+                        println("match_id_extra: " + currentMatches[position].id)
+                        startActivity(intent)
                 }
 
 
