@@ -1,12 +1,16 @@
 package com.apps.sloth.sportbuddy
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import com.apps.sloth.sportbuddy.listx.Match
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.content_mdetail_scrolling.*
 
 class MatchDetailsActivity : AppCompatActivity() {
@@ -23,7 +27,6 @@ class MatchDetailsActivity : AppCompatActivity() {
             decrementCounter(view)
         })
         val match_id = intent.extras.getString("match_id")
-
         println("match_id: " + match_id)
         val matchRef = dbRef.child("matches").child(match_id)
         matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -43,6 +46,20 @@ class MatchDetailsActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError?) {
                 println("MDActi/onCancelled()")
             }
+        })
+        md_skill_1.setOnClickListener({
+            md_skill_2.setBackgroundColor(Color.GRAY)
+            md_skill_3.setBackgroundColor(Color.GRAY)
+        })
+
+        md_skill_2.setOnClickListener({
+            md_skill_1.setBackgroundColor(Color.GRAY)
+            md_skill_3.setBackgroundColor(Color.GRAY)
+        })
+
+        md_skill_3.setOnClickListener({
+            md_skill_1.setBackgroundColor(Color.GRAY)
+            md_skill_2.setBackgroundColor(Color.GRAY)
         })
     }
 
