@@ -51,14 +51,29 @@ class MatchDetailsActivity : AppCompatActivity() {
     {
         var currentCount = Integer.parseInt(md_countertext.text.toString())
         currentCount += 1
-        md_countertext.setText(currentCount.toString())
+        if (currentCount > 22)
+        {
+            md_countertext.setText(22.toString())
+        }
+        else
+        {
+            md_countertext.setText(currentCount.toString())
+        }
+
         println(currentCount)
     }
     fun decrementCounter (view:View)
     {
         var currentCount = Integer.parseInt(md_countertext.text.toString())
-        currentCount += 1
-        md_countertext.setText(currentCount.toString())
+        currentCount -= 1
+        if (currentCount < 0)
+        {
+            md_countertext.setText(0.toString())
+        }
+        else
+        {
+            md_countertext.setText(currentCount.toString())
+        }
         println(currentCount)
     }
 }
