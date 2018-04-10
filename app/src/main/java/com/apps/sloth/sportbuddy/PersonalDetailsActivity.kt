@@ -36,16 +36,26 @@ public class PersonalDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_personal_details)
         currentUser = mAuth.currentUser
 
-        val usersDB = udb.child(currentUser?.uid)
-        usersDB.child(currentUser?.uid).addListenerForSingleValueEvent(object: ValueEventListener {
+
+        udb.child(currentUser?.uid).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                pd_text_bio.setText(snapshot.child("bio").value.toString())
+                val bio = snapshot.child("bio").value
+                println("bio: ${bio.toString()}")
+                println("user: ${currentUser?.uid}")
+                if(bio != null) {
+                    pd_text_bio.setText(bio.toString())
+                }
                 Picasso.get()
-                        .load(snapshot.value.toString())
+                        .load(snapshot.child("profile_picture").value.toString())
                         .placeholder(R.mipmap.default_user)
                         .into(findViewById(R.id.pd_image_user_pic)as CircleImageView)
+                val phone = snapshot.child("phone").value
+                if(phone != null ) {
+                    pd_text_phone.setText(phone.toString())
+                }
+            }
 
-                pd_text_phone.setText(snapshot.child("phone").value.toString())
+            override fun onCancelled(p0: DatabaseError?) {
 
             }
 
@@ -97,10 +107,11 @@ public class PersonalDetailsActivity : AppCompatActivity() {
         }
         var profileChangeRequest =  UserProfileChangeRequest.Builder()
                 .setDisplayName(pd_text_name.text.toString())
-        udb.child("bio").setValue(pd_text_bio.text.toString())
-        udb.child("phone").setValue(pd_text_phone.text.toString())
+        udb.child(currentUser?.uid).child("bio").setValue(pd_text_bio.text.toString())
+        udb.child(currentUser?.uid).child("phone").setValue(pd_text_phone.text.toString())
         currentUser?.updateProfile(profileChangeRequest.build())
         finish()
+        println(pd_text_phone.text.toString())
     }
 }
 
