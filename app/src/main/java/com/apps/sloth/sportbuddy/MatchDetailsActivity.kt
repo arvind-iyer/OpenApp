@@ -1,25 +1,30 @@
 package com.apps.sloth.sportbuddy
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Menu
 import android.view.View
-import android.widget.Button
+import android.widget.Toast
 import com.apps.sloth.sportbuddy.listx.Match
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.content_mdetail_scrolling.*
 
 class MatchDetailsActivity : AppCompatActivity() {
     private val dbRef = FirebaseDatabase.getInstance().getReference()
     private var thisMatch : Match? = null
+    private var participantList = ArrayList<String>()
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mdetail_scrolling)
+
+
         md_playercount_plus.setOnClickListener(View.OnClickListener { view ->
             incrementCounter(view)
         })
@@ -36,11 +41,33 @@ class MatchDetailsActivity : AppCompatActivity() {
                 } catch (e: Throwable) {
                     Log.e("onCreateError", e.toString())
                 }
+                thisMatch?.id = snapshot.key
                 md_host.text = md_host.text.toString() + ": " + thisMatch?.host_id
                 val capacityText = thisMatch?.curr_capacity.toString() + "/" + thisMatch?.max_capacity.toString()
                 md_capacity.setText(capacityText)
                 val timeText = thisMatch?.hourOfDay.toString() + ":" + thisMatch?.minute.toString()
                 md_time.setText(timeText)
+
+
+                if (snapshot.hasChild("participants")) {
+                    val partis = object : GenericTypeIndicator<ArrayList<String>>() {}
+                    participantList = snapshot.child("participants").getValue(partis)!!
+                    if (participantList.contains(currentUser?.uid)
+                            || thisMatch?.host_id.equals(currentUser?.uid)) {
+                        Toast.makeText(applicationContext,
+                                "You have already signed up for this match",
+                                Toast.LENGTH_SHORT)
+                                .show()
+                        md_btn_join.isClickable = false
+                        md_btn_join.isEnabled = false
+                    }
+
+                } else {
+                    val list = ArrayList<String>()
+                    list.add(currentUser?.uid!!)
+                    matchRef.child("participants").setValue(list)
+                }
+
             }
 
             override fun onCancelled(p0: DatabaseError?) {
@@ -48,18 +75,21 @@ class MatchDetailsActivity : AppCompatActivity() {
             }
         })
         md_skill_1.setOnClickListener({
-            md_skill_2.setBackgroundColor(Color.GRAY)
-            md_skill_3.setBackgroundColor(Color.GRAY)
+            md_skill_1.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#008000"))
+            md_skill_2.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.material_grey_300))
+            md_skill_3.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.material_grey_300))
         })
 
         md_skill_2.setOnClickListener({
-            md_skill_1.setBackgroundColor(Color.GRAY)
-            md_skill_3.setBackgroundColor(Color.GRAY)
+            md_skill_2.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFA500"))
+            md_skill_1.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.material_grey_300))
+            md_skill_3.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.material_grey_300))
         })
 
         md_skill_3.setOnClickListener({
-            md_skill_1.setBackgroundColor(Color.GRAY)
-            md_skill_2.setBackgroundColor(Color.GRAY)
+            md_skill_3.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF0000"))
+            md_skill_1.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.material_grey_300))
+            md_skill_2.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.material_grey_300))
         })
     }
 
@@ -94,22 +124,11 @@ class MatchDetailsActivity : AppCompatActivity() {
     }
 
     fun joinGame(view: View) {
-        val participantsRef = dbRef.child("matches").child(thisMatch?.id).child("participants")
-        participantsRef.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val partis = object: GenericTypeIndicator<ArrayList<String>>() {}
-                val joined : ArrayList<String>? = snapshot.getValue(partis)
-                val currentUser = FirebaseAuth.getInstance().currentUser
+        println(thisMatch?.id)
 
-                if(joined?.contains(currentUser?.uid) != true) {
-                    joined?.add(currentUser?.uid!!)
-                }
-            }
-
-            override fun onCancelled(p0: DatabaseError?) {
-
-            }
-        })
+        if (participantList.contains(currentUser?.uid) != true) {
+            participantList.add(currentUser?.uid!!)
+        }
     }
 }
 
