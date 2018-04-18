@@ -1,0 +1,8 @@
+{
+  "name": "gotnext",
+  "app_id": "515940cb",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
