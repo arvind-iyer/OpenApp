@@ -7,3 +7,15 @@
 /build
 /captures
 .externalNativeBuild
+
+
+node_modules
+www
+.idea
+.sass-cache
+coverage
+platforms
+plugins
+*.swp
+*.swo
+*.log
