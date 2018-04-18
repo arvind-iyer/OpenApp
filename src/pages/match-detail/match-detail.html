@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{match?.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="match-detail">
+  <div text-center *ngIf="match">
+    <img [src]="match.profilePic" [alt]="match.name"><br>
+
+    <button ion-button icon-only clear small color="twitter">
+      <ion-icon name="logo-twitter"></ion-icon>
+    </button>
+    <button ion-button icon-only clear small color="github">
+      <ion-icon name="logo-github"></ion-icon>
+    </button>
+    <button ion-button icon-only clear small color="instagram">
+      <ion-icon name="logo-instagram"></ion-icon>
+    </button>
+  </div>
+
+  <p>{{match?.about}}</p>
+</ion-content>
