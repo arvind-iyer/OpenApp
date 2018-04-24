@@ -29,3 +29,37 @@ page-match-list {
     padding-right: 0;
   }
 }
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+.icontext {
+  display: inline;
+  vertical-align: -10px;
+}
+
+
+$categories: (
+ joined: #AC282B,
+ full: #8E8D93,
+ available: #69BB7B,
+ hosted: #3BC7C4,
+);
+
+@function auxiliary-categories() {
+  @return map-remove($categories);
+}
+
+page-match-list {
+  @each $state, $value in auxiliary-categories()  {
+   ion-item-sliding[state=#{$state}] {
+     button {
+     border-left: 5px solid $value;
+     }
+     padding-left: 10px;
+     margin-top: 5px;
+     margin-bottom: 5px;
+   }
+  }
+}

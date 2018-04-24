@@ -8,19 +8,39 @@
 </ion-header>
 
 <ion-content class="outer-content match-list">
-  <ion-list>
-    <ion-grid fixed *ngFor="let match of matches | async">
-          <ion-card class="match-card">
-            <ion-card-header>
-              <button ion-item detail-none (click)="goToMatchDetail(match)">
-                {{match.sport}}
-              </button>
-            </ion-card-header>
+  <ion-list #scheduleList>
+      <ion-item-sliding *ngFor="let match of matches | async" #slidingItem [attr.state]="getState(match)" >
+        <button ion-item (click)="goToMatchDetail(match)">
+          <h2>{{match.sport}}</h2>
+          <h5>{{getDate(match.start_time)}}</h5>
+          <p>
+            {{getTime(match.start_time)}}-{{getTime(match.end_time)}} 
+          </p>
+          
+          <ion-row>
+            <ion-col col-1>
+              <ion-icon name="pin" class="icon" item-left></ion-icon>
+            </ion-col>
+            <ion-col col-11 >
+              <p class="icontext">{{match.location}}</p>
+            </ion-col>
+          </ion-row>
+          
+          <ion-note>Hosted By: {{match.host_id}}</ion-note>
+        </button>
 
-            <ion-card-content class="outer-content">
-              <h3>{{ match | json }}</h3>
-            </ion-card-content>
-          </ion-card>
-    </ion-grid>
+        <ion-item-options>
+          <button ion-button color="favorite"  *ngIf="segment === 'all'">
+            Favorite
+          </button>
+          <button ion-button color="danger" *ngIf="segment === 'favorites'">
+            Remove
+          </button>
+        </ion-item-options>
+
+      </ion-item-sliding>
+
+
   </ion-list>
+
 </ion-content>
