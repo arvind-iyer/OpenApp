@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 
 import {
   Config,
-  NavController
+  NavController,
+  ModalController
 } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Observable } from 'rxjs/Observable';
 import { MatchDetailPage } from '../match-detail/match-detail';
-import { FirebaseDatabase } from '../../providers/firebase/firebase';
+import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebase';
 
 import { SessionDetailPage } from '../session-detail/session-detail';
 
-
+import { CreateMatchPage } from '../create-match/create-match'; 
 
 @Component({
   selector: 'page-match-list',
@@ -23,11 +24,14 @@ export class MatchListPage {
 
   constructor(
     public navCtrl: NavController,
+    public modalCtrl: ModalController,
     public fbDb: FirebaseDatabase,
+    public fbAuth: FirebaseAuth,
     public config: Config,
     public inAppBrowser: InAppBrowser
   ) {
     this.matches = fbDb.getMatches();
+    console.log(this.matches);
   }
 
   ionViewDidLoad() {
@@ -41,17 +45,37 @@ export class MatchListPage {
   goToMatchDetail(match: any) {
     this.navCtrl.push(MatchDetailPage, { matchId: match.id });
   }
-
-  goToMatchTwitter(match: any) {
-    this.inAppBrowser.create(
-      `https://twitter.com/${match.host_id}`,
-      '_blank'
-    );
+  
+  getTime(timestamp) {
+    var time = new Date(timestamp);
+    return  (
+        ("0" + time.getHours()).slice(-2)   + ":" + 
+        ("0" + time.getMinutes()).slice(-2)
+      );
   }
 
-  openmatchShare() {
+  getDate(timestamp) {
+    return (new Date(timestamp)).toDateString();
   }
 
-  openContact() {
+  getState(match) {
+    var current_user= this.fbAuth.getCurrentUser();
+    if(match.host_id == current_user.displayName) {
+      return "hosted";
+    }
+    else if(match.participants.length >= match.max_capacity) {
+      return "full";
+    }
+    else if(match.participants.indexOf(current_user.uid) >= 0) {
+      return "joined";
+    }
+    else {
+      return "available";
+    }
+  }
+
+  openCreateMatchModal() {
+    let cmModal = this.modalCtrl.create(CreateMatchPage);
+    cmModal.present();
   }
 }

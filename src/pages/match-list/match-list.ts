@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 import {
   Config,
-  NavController
+  NavController,
+  ModalController
 } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
@@ -12,7 +13,7 @@ import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebas
 
 import { SessionDetailPage } from '../session-detail/session-detail';
 
-
+import { CreateMatchPage } from '../create-match/create-match'; 
 
 @Component({
   selector: 'page-match-list',
@@ -20,9 +21,10 @@ import { SessionDetailPage } from '../session-detail/session-detail';
 })
 export class MatchListPage {
   matches: Observable<any[]>;
-
+  currentUser : any = {displayName: ""};
   constructor(
     public navCtrl: NavController,
+    public modalCtrl: ModalController,
     public fbDb: FirebaseDatabase,
     public fbAuth: FirebaseAuth,
     public config: Config,
@@ -30,6 +32,7 @@ export class MatchListPage {
   ) {
     this.matches = fbDb.getMatches();
     console.log(this.matches);
+    this.currentUser = fbAuth.getCurrentUser();
   }
 
   ionViewDidLoad() {
@@ -57,18 +60,25 @@ export class MatchListPage {
   }
 
   getState(match) {
-    var current_user= this.fbAuth.getCurrentUser();
-    if(match.host_id == current_user.displayName) {
-      return "hosted";
+    var state : string;
+    if(match.host_id == this.currentUser.displayName) {
+      
+      state = "hosted";
     }
     else if(match.participants.length >= match.max_capacity) {
-      return "full";
+      state = "full";
     }
-    else if(match.participants.indexOf(current_user.uid) >= 0) {
-      return "joined";
+    else if(match.participants.indexOf(this.currentUser.uid) >= 0) {
+      state = "joined";
     }
     else {
-      return "available";
+      state = "available";
     }
+    return state;
+  }
+
+  openCreateMatchModal() {
+    let cmModal = this.modalCtrl.create(CreateMatchPage);
+    cmModal.present();
   }
 }

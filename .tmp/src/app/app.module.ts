@@ -25,7 +25,7 @@ import { MatchListPage } from '../pages/match-list/match-list';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
-
+import { CreateMatchPage } from '../pages/create-match/create-match';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
@@ -48,6 +48,7 @@ import { firebaseConfig } from '../providers/firebase/config';
     SchedulePage,
     ScheduleFilterPage,
     SessionDetailPage,
+    CreateMatchPage,
     SignupPage,
     MatchDetailPage,
     MatchListPage,
@@ -94,6 +95,7 @@ import { firebaseConfig } from '../providers/firebase/config';
     MatchDetailPage,
     MatchListPage,
     TabsPage,
+    CreateMatchPage,
     TutorialPage,
     SupportPage
   ],

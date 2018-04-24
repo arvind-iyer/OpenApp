@@ -1,0 +1,52 @@
+<!--
+  Generated template for the CreateMatchPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>CreateMatch</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form (ngSubmit)="createMatch()">
+    <ion-item>
+      <ion-label>Location</ion-label>
+      <ion-input type="text" [(ngModel)]="match.location" name="location"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" name="date" [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Start Time</ion-label>
+      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="start_time" name="start_time"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="end_time" name="end_time"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Max Capacity</ion-label>
+      <ion-input type="number" name="max_cap" [(ngModel)]="match.max_capacity" min="1"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Sport</ion-label>
+      <ion-select [(ngModel)]="match.sport" name="sport" >
+        <ion-option value="Basketball">Basketball</ion-option>
+        <ion-option value="Tennis" >Tennis</ion-option>
+        <ion-option value="Table-tennis" >Table-tennis</ion-option>
+        <ion-option value="Squash" >Squash</ion-option>
+        <ion-option value="Football" >Football</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <button ion-button submit>Submit</button>
+  </form>
+
+</ion-content>

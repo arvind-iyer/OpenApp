@@ -26,6 +26,7 @@ import { MatchListPage } from '../pages/match-list/match-list';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
+import { CreateMatchPage } from '../pages/create-match/create-match';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { FirebaseDatabase, FirebaseAuth } from '../providers/firebase/firebase';
@@ -48,6 +49,7 @@ var AppModule = (function () {
                 SchedulePage,
                 ScheduleFilterPage,
                 SessionDetailPage,
+                CreateMatchPage,
                 SignupPage,
                 MatchDetailPage,
                 MatchListPage,
@@ -94,6 +96,7 @@ var AppModule = (function () {
                 MatchDetailPage,
                 MatchListPage,
                 TabsPage,
+                CreateMatchPage,
                 TutorialPage,
                 SupportPage
             ],
