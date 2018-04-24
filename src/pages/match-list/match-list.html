@@ -8,59 +8,19 @@
 </ion-header>
 
 <ion-content class="outer-content match-list">
-  <ion-list [virtualScroll]="matches">
-    <ion-grid fixed>
-      <ion-row align-items-stretch>
-
-        <ion-col col-12 col-md-6 align-self-stretch align-self-center *virtualItem="let match" approxItemHeight="457px">
-
+  <ion-list>
+    <ion-grid fixed *ngFor="let match of matches | async">
           <ion-card class="match-card">
             <ion-card-header>
-              <button ion-item detail-none (click)="goTomatchDetail(match)">
-                <ion-avatar item-start>
-                  <img [src]="match.profilePic" alt="match profile pic">
-                </ion-avatar>
-                {{match.name}}
+              <button ion-item detail-none (click)="goToMatchDetail(match)">
+                {{match.sport}}
               </button>
             </ion-card-header>
 
             <ion-card-content class="outer-content">
-              <ion-list>
-                <button ion-item *ngFor="let session of match.sessions" (click)="goToSessionDetail(session)">
-                  <h3>{{session.name}}</h3>
-                </button>
-
-                <button ion-item (click)="goTomatchDetail(match)">
-                  <h3>About {{match.name}}</h3>
-                </button>
-              </ion-list>
+              <h3>{{ match | json }}</h3>
             </ion-card-content>
-
-            <ion-row no-padding>
-              <ion-col col-12 col-lg-auto text-center text-lg-left>
-                <button ion-button clear small color="primary" icon-start (click)="goTomatchTwitter(match)">
-                  <ion-icon name="logo-twitter"></ion-icon>
-                  Tweet
-                </button>
-              </ion-col>
-              <ion-col col-12 col-lg-auto text-center>
-                <button ion-button clear small color="primary" icon-start (click)="openmatchShare(match)">
-                  <ion-icon name='share-alt'></ion-icon>
-                  Share
-                </button>
-              </ion-col>
-              <ion-col col-12 col-lg-auto text-center text-lg-right>
-                <button ion-button clear small color="primary" icon-start (click)="openContact(match)">
-                  <ion-icon name='chatboxes'></ion-icon>
-                  Contact
-                </button>
-              </ion-col>
-            </ion-row>
-
           </ion-card>
-
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </ion-list>
 </ion-content>

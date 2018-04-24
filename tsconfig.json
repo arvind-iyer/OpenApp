@@ -2,7 +2,7 @@
   "atom": {
     "rewriteTsconfig": false
   },
-  "compileOnSave": false,
+  "compileOnSave": true,
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": false,

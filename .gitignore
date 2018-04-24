@@ -19,3 +19,4 @@ plugins
 *.swp
 *.swo
 *.log
+src/providers/firebase/config.ts
