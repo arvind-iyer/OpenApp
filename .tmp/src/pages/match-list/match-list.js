@@ -22,8 +22,10 @@ var MatchListPage = (function () {
         this.fbAuth = fbAuth;
         this.config = config;
         this.inAppBrowser = inAppBrowser;
+        this.currentUser = { displayName: "" };
         this.matches = fbDb.getMatches();
         console.log(this.matches);
+        this.currentUser = fbAuth.getCurrentUser();
     }
     MatchListPage.prototype.ionViewDidLoad = function () {
         console.log(this.matches);
@@ -43,19 +45,20 @@ var MatchListPage = (function () {
         return (new Date(timestamp)).toDateString();
     };
     MatchListPage.prototype.getState = function (match) {
-        var current_user = this.fbAuth.getCurrentUser();
-        if (match.host_id == current_user.displayName) {
-            return "hosted";
+        var state;
+        if (match.host_id == this.currentUser.displayName) {
+            state = "hosted";
         }
         else if (match.participants.length >= match.max_capacity) {
-            return "full";
+            state = "full";
         }
-        else if (match.participants.indexOf(current_user.uid) >= 0) {
-            return "joined";
+        else if (match.participants.indexOf(this.currentUser.uid) >= 0) {
+            state = "joined";
         }
         else {
-            return "available";
+            state = "available";
         }
+        return state;
     };
     MatchListPage.prototype.openCreateMatchModal = function () {
         var cmModal = this.modalCtrl.create(CreateMatchPage);
@@ -63,7 +66,7 @@ var MatchListPage = (function () {
     };
     MatchListPage = __decorate([
         Component({
-            selector: 'page-match-list',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Matches</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content match-list">\n  <ion-list #scheduleList>\n      <ion-item-sliding *ngFor="let match of matches | async" #slidingItem [attr.state]="getState(match)" >\n        <button ion-item (click)="goToMatchDetail(match)">\n          <h2>{{match.sport}}</h2>\n          <h5>{{getDate(match.start_time)}}</h5>\n          <p>\n            {{getTime(match.start_time)}}-{{getTime(match.end_time)}} \n          </p>\n          \n          <ion-row>\n            <ion-col col-1>\n              <ion-icon name="pin" class="icon" item-left></ion-icon>\n            </ion-col>\n            <ion-col col-11 >\n              <p class="icontext">{{match.location}}</p>\n            </ion-col>\n          </ion-row>\n          \n          <ion-note>Hosted By: {{match.host_id}}</ion-note>\n        </button>\n\n        <ion-item-options>\n          <button ion-button color="favorite"  *ngIf="segment === \'all\'">\n            Favorite\n          </button>\n          <button ion-button color="danger" *ngIf="segment === \'favorites\'">\n            Remove\n          </button>\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n\n  </ion-list>\n\n  <button ion-fab (click)="openCreateMatchModal()"></button>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/
+            selector: 'page-match-list',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Matches</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content match-list">\n  <ion-list #scheduleList>\n      <ion-item-sliding *ngFor="let match of matches | async" #slidingItem [attr.state]="getState(match)" >\n        <button ion-item (click)="goToMatchDetail(match)">\n          <h2>{{match.sport}}</h2>\n          <h5>{{getDate(match.start_time)}}</h5>\n          <p>\n            {{getTime(match.start_time)}}-{{getTime(match.end_time)}} \n          </p>\n          \n          <ion-row>\n            <ion-col col-1>\n              <ion-icon name="pin" class="icon" item-left></ion-icon>\n            </ion-col>\n            <ion-col col-11 >\n              <p class="icontext">{{match.location}}</p>\n            </ion-col>\n          </ion-row>\n          \n          <ion-note>Hosted By: {{match.host_id}}</ion-note>\n        </button>\n\n        <ion-item-options>\n          <button ion-button color="favorite"  *ngIf="segment === \'all\'">\n            Favorite\n          </button>\n          <button ion-button color="danger" *ngIf="segment === \'favorites\'">\n            Remove\n          </button>\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n\n  </ion-list>\n  <ion-fab bottom right>\n    <button ion-fab (click)="openCreateMatchModal()"><ion-icon name="add"></ion-icon></button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/
         }),
         __metadata("design:paramtypes", [NavController,
             ModalController,

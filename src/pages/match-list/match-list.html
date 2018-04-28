@@ -10,6 +10,7 @@
 <ion-content class="outer-content match-list">
   <ion-list #scheduleList>
       <ion-item-sliding *ngFor="let match of matches | async" #slidingItem [attr.state]="getState(match)" >
+        
         <button ion-item (click)="goToMatchDetail(match)">
           <h2>{{match.sport}}</h2>
           <h5>{{getDate(match.start_time)}}</h5>
@@ -33,7 +34,7 @@
           <button ion-button color="favorite"  *ngIf="segment === 'all'">
             Favorite
           </button>
-          <button ion-button color="danger" *ngIf="segment === 'favorites'">
+          <button ion-button color="danger" *ngIf="getState(match) === 'hosted'" (click)="deleteMatch(match)">
             Remove
           </button>
         </ion-item-options>

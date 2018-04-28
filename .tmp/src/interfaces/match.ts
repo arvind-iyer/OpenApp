@@ -1,6 +1,5 @@
 
 export interface Match {
-    curr_capacity: number;
     host_id: string;
     location: string;
     max_capacity: number;
@@ -9,5 +8,4 @@ export interface Match {
     participants: string[];
     skill_level: number;
     sport: string;
-    date: string;
   }
