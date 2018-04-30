@@ -29,8 +29,11 @@ export class FirebaseDatabase {
 
 @Injectable()
 export class FirebaseAuth {
-  constructor(public afAuth: AngularFireAuth) {
-
+  authState : any = null
+  constructor(public afAuth: AngularFireAuth, public db: FirebaseDatabase) {
+    afAuth.authState.subscribe( (auth)=> { 
+      this.authState = auth
+    });
   }
 
   login(email: string, password: string) {
@@ -41,10 +44,51 @@ export class FirebaseAuth {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  getCurrentUser() {
-    return this.afAuth.auth.currentUser;
+  get authenticated() : boolean {
+    return this.authState !== null;
+  }
+  get currentUser() : any {
+    return this.authenticated ? this.authState : null;
+  }
+  get currentUserObservable() : any {
+    return this.afAuth.authState;
+  }
+  get currentUserId() : string {
+    return this.authenticated ? this.authState.uid : '';
+  }
+  get currentUserDisplayName() : string {
+    if (!this.authState) {return 'Guest'; }
+    else { return this.authState['displayName'] || 'User has not set name'; }
   }
 
+  googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    return this.socialSignIn(provider);
+  }
+
+  private socialSignIn(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((credential) =>  {
+          this.authState = credential.user
+          this.updateUserData()
+      })
+      .catch(error => console.log(error));
+  }
+  
+  private updateUserData(): void {
+    // Writes user name and email to realtime db
+    // useful if your app displays information about users or for admin features
+      let path = `users/${this.currentUserId}`; // Endpoint on firebase
+      let data = {
+                    email: this.authState.email,
+                    name: this.authState.displayName
+                  }
+  
+      this.db.afd.object(path).update(data)
+      .catch(error => console.log(error));
+  
+  }
+  
   logout() {
     this.afAuth.auth.signOut();
   }
@@ -52,9 +96,4 @@ export class FirebaseAuth {
   loginGoogle() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
-
-  hasLoggedIn() {
-    return this.getCurrentUser() != null;
-  }
-
 }
