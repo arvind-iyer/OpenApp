@@ -11,7 +11,6 @@ import { Observable } from 'rxjs/Observable';
 import { MatchDetailPage } from '../match-detail/match-detail';
 import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebase';
 
-import { SessionDetailPage } from '../session-detail/session-detail';
 
 import { CreateMatchPage } from '../create-match/create-match'; 
 
@@ -21,7 +20,7 @@ import { CreateMatchPage } from '../create-match/create-match';
 })
 export class MatchListPage {
   matches: Observable<any[]>;
-  currentUser : any = {displayName: ""};
+  currentUser : any;
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
@@ -32,18 +31,16 @@ export class MatchListPage {
   ) {
     this.matches = fbDb.getMatches();
     console.log(this.matches);
-    this.currentUser = fbAuth.getCurrentUser();
+    this.currentUser = fbAuth.currentUser;
   }
 
   ionViewDidLoad() {
     console.log(this.matches);
   }
 
-  goToSessionDetail(session: any) {
-    this.navCtrl.push(SessionDetailPage, { sessionId: session.id });
-  }
 
   goToMatchDetail(match: any) {
+    console.log(match);
     this.navCtrl.push(MatchDetailPage, { matchId: match.id });
   }
   
@@ -61,6 +58,9 @@ export class MatchListPage {
 
   getState(match) {
     var state : string;
+    if(this.currentUser == null) {
+      return;
+    }
     if(match.host_id == this.currentUser.displayName) {
       
       state = "hosted";
@@ -74,11 +74,23 @@ export class MatchListPage {
     else {
       state = "available";
     }
+    
     return state;
   }
 
   openCreateMatchModal() {
     let cmModal = this.modalCtrl.create(CreateMatchPage);
     cmModal.present();
+  }
+
+  deleteMatch(match) {
+    let ms : any[] = [];
+    this.matches.subscribe(data => {
+      ms = data;
+      let x = ms.filter(function(x){
+        return x.start_time == match.start_time && x.end_time == match.end_time
+      });
+      console.log(x.length > 0 && x.keys().next().value);
+    })
   }
 }

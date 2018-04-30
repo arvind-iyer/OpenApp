@@ -8,4 +8,5 @@ export interface Match {
     participants: string[];
     skill_level: number;
     sport: string;
+    state: string;
   }

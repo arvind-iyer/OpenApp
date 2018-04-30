@@ -35,7 +35,7 @@ var CreateMatchPage = (function () {
         this.start_time = "";
         this.end_time = "";
         this.date = "";
-        this.currentUser = this.fbAuth.getCurrentUser();
+        this.currentUser = this.fbAuth.currentUser;
         console.log(this.currentUser);
     }
     CreateMatchPage.prototype.ionViewDidLoad = function () {

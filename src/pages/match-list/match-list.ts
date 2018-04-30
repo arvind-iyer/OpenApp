@@ -13,6 +13,8 @@ import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebas
 
 
 import { CreateMatchPage } from '../create-match/create-match'; 
+import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
+import { Match } from '../../interfaces/match';
 
 @Component({
   selector: 'page-match-list',
@@ -20,7 +22,10 @@ import { CreateMatchPage } from '../create-match/create-match';
 })
 export class MatchListPage {
   matches: Observable<any[]>;
+  shownMatches : any = [];
   currentUser : any;
+  excludeStates: any = [];
+  
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
@@ -31,7 +36,7 @@ export class MatchListPage {
   ) {
     this.matches = fbDb.getMatches();
     console.log(this.matches);
-    this.currentUser = fbAuth.getCurrentUser();
+    this.currentUser = fbAuth.currentUser;
   }
 
   ionViewDidLoad() {
@@ -50,6 +55,26 @@ export class MatchListPage {
         ("0" + time.getHours()).slice(-2)   + ":" + 
         ("0" + time.getMinutes()).slice(-2)
       );
+  }
+
+  presentFilter() {
+    let modal = this.modalCtrl.create(ScheduleFilterPage, this.excludeStates);
+    modal.present();
+
+    modal.onWillDismiss((data: any[]) => {
+      if (data) {
+        this.excludeStates = data;
+        this.updateMatchList();
+      }
+    });
+
+  }
+
+  updateMatchList() {
+    this.shownMatches = this.matches.subscribe( (m) =>  {
+      return (this.excludeStates.indexOf(m['state']) >= 0)
+    }
+    );
   }
 
   getDate(timestamp) {

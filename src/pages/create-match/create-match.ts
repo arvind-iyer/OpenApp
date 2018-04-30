@@ -24,7 +24,8 @@ export class CreateMatchPage {
     end_time: 0,
     participants: [],
     skill_level: 0,
-    sport: ""
+    sport: "",
+    state: ""
   };
 
   start_time : string = "";
@@ -36,7 +37,7 @@ export class CreateMatchPage {
     public navParams: NavParams, 
     public fbAuth : FirebaseAuth, 
     public fbDb : FirebaseDatabase) {
-      this.currentUser = this.fbAuth.getCurrentUser();
+      this.currentUser = this.fbAuth.currentUser;
       console.log(this.currentUser);
   }
 

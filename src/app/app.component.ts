@@ -84,7 +84,7 @@ export class ConferenceApp {
     confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
-    this.enableMenu(this.fbAuth.hasLoggedIn());
+    this.enableMenu(this.fbAuth.authenticated);
     this.listenToLoginEvents();
   }
 
