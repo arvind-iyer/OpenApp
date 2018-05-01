@@ -37,7 +37,8 @@ export class AccountPage {
     });
     alert.addButton({
       text: 'Ok',
-      handler: (data: any) => { console.log(data);
+      handler: (data: any) => { 
+        this.fbAuth.updateProfile(data.username, "");
       }
     });
 
@@ -49,12 +50,12 @@ export class AccountPage {
   }
 
   changePassword() {
-    console.log('Clicked to change password');
-    this.fbAuth.changePassword();
+
   }
 
   logout() {
-    this.nav.setRoot('LoginPage');
+    this.fbAuth.logout();
+    
   }
 
   support() {
