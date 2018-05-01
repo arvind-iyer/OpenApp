@@ -15,7 +15,7 @@ import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebas
 import { CreateMatchPage } from '../create-match/create-match'; 
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { Match } from '../../interfaces/match';
-import {LoginPage} from '../login/login';
+// import {LoginPage} from '../login/login';
 
 @Component({
   selector: 'page-match-list',

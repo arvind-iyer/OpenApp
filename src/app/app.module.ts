@@ -1,4 +1,4 @@
-import { AngularFireStorage } from 'angularfire2/storage';
+// import { AngularFireStorage } from 'angularfire2/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';

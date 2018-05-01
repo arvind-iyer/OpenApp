@@ -1,5 +1,5 @@
-import { Storage } from '@ionic/storage';
-import { Injectable, Inject } from '@angular/core';
+// import { Storage } from '@ionic/storage';
+import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
