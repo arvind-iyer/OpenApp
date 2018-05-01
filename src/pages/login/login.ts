@@ -32,13 +32,15 @@ export class LoginPage {
     }
   }
   ionViewDidLoad() {
-    this.toastCtrl.create({
-      message: 'Already Logged In',
-      duration: 1500,
-      position: 'bottom'
-    }).present();
+
     
-    if(this.fbAuth.currentUser) {
+    if(this.fbAuth.authenticated) {
+      this.toastCtrl.create({
+        message: 'Already Logged In',
+        duration: 1500,
+        position: 'bottom'
+      }).present();
+      
       this.navCtrl.push(TabsPage);
     }
   }

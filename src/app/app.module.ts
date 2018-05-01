@@ -9,16 +9,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
 
-import { ConferenceApp } from './app.component';
+import { GotNextApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
-import { SchedulePage } from '../pages/schedule/schedule';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
-import { SessionDetailPage } from '../pages/session-detail/session-detail';
 import { SignupPage } from '../pages/signup/signup';
 import { MatchDetailPage } from '../pages/match-detail/match-detail';
 import { MatchListPage } from '../pages/match-list/match-list';
@@ -26,8 +24,6 @@ import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 import { CreateMatchPage } from '../pages/create-match/create-match';
-import { ConferenceData } from '../providers/conference-data';
-import { UserData } from '../providers/user-data';
 
 import { FirebaseDatabase, FirebaseAuth } from '../providers/firebase/firebase';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -39,15 +35,13 @@ import { firebaseConfig } from '../providers/firebase/config';
 
 @NgModule({
   declarations: [
-    ConferenceApp,
+    GotNextApp,
     AboutPage,
     AccountPage,
     LoginPage,
     MapPage,
     PopoverPage,
-    SchedulePage,
     ScheduleFilterPage,
-    SessionDetailPage,
     CreateMatchPage,
     SignupPage,
     MatchDetailPage,
@@ -61,11 +55,9 @@ import { firebaseConfig } from '../providers/firebase/config';
     HttpModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    IonicModule.forRoot(ConferenceApp, {}, {
+    IonicModule.forRoot(GotNextApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs-page' },
-        { component: SchedulePage, name: 'Schedule', segment: 'schedule' },
-        { component: SessionDetailPage, name: 'SessionDetail', segment: 'sessionDetail/:sessionId' },
         { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
         { component: MatchListPage, name: 'MatchList', segment: 'matchList' },
         { component: MatchDetailPage, name: 'MatchDetail', segment: 'matchDetail/:matchId' },
@@ -82,15 +74,13 @@ import { firebaseConfig } from '../providers/firebase/config';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ConferenceApp,
+    GotNextApp,
     AboutPage,
     AccountPage,
     LoginPage,
     MapPage,
     PopoverPage,
-    SchedulePage,
     ScheduleFilterPage,
-    SessionDetailPage,
     SignupPage,
     MatchDetailPage,
     MatchListPage,
@@ -101,8 +91,6 @@ import { firebaseConfig } from '../providers/firebase/config';
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ConferenceData,
-    UserData,
     InAppBrowser,
     SplashScreen,
     FirebaseDatabase,

@@ -54,13 +54,10 @@ $categories: (
 
 page-match-list {
   @each $state, $value in auxiliary-categories()  {
-   ion-item-sliding[state=#{$state}] {
-     button {
-     border-left: 5px solid $value;
-     }
-     padding-left: 10px;
-     margin-top: 5px;
-     margin-bottom: 5px;
+   ion-item[state=#{$state}] {
+      margin: 10px;
+      padding-left: 0px;
+      border-left: 8px solid $value;
    }
   }
 }
@@ -74,39 +71,55 @@ $sports : (
 );
 
 .card-background-page {
-
+  
   ion-card {
+    margin: 0px;
     position: relative;
     text-align: center;
     height: 150px;
   }
   img {
     height: 100%;
-    background: radial-gradient(circle at 100%, #333, #333 50%, #eee 75%, #333 75%);    
-    mix-blend-mode: multiply;
   }
-  .card-title {
-    position: absolute;
-    top: 18%;
-    font-size: 2.0em;
-    width: 100%;
-    font-weight: bold;
-    color: #fff;
+  .card-text {
+    .card-title {
+      position: absolute;
+      height: 65%;
+      background: linear-gradient(to right,rgba(#888, 0.0), rgba(#222, 0.9) 0.5, rgba(#888, 0.0));
+      top: 18%;
+      font-size: 2.0em;
+      width: 80%;
+      margin-left: 10%;
+      margin-right:10%;
+      text-align: center;
+      align-self: center;  
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 52%;
+      width: 80%;
+      height: 100%;
+      margin-left: 10%;
+      margin-right: 10%;
+      color: #fff;
+      
+    }
+    .card-subtitle2 {
+      font-size: 1.0em;
+      position: absolute;
+      top: 70%;
+      width: 100%;
+      color: #fff;
+      
+    }
   }
 
-  .card-subtitle {
-    font-size: 1.0em;
-    position: absolute;
-    top: 52%;
-    width: 100%;
-    color: #fff;
-  }
-  .card-subtitle2 {
-    font-size: 1.0em;
-    position: absolute;
-    top: 70%;
-    width: 100%;
-    color: #fff;
-  }
+}
 
+.label {
+  margin: 2px;
 }

@@ -15,6 +15,7 @@ import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebas
 import { CreateMatchPage } from '../create-match/create-match'; 
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { Match } from '../../interfaces/match';
+import {LoginPage} from '../login/login';
 
 @Component({
   selector: 'page-match-list',
@@ -34,9 +35,11 @@ export class MatchListPage {
     public config: Config,
     public inAppBrowser: InAppBrowser
   ) {
-    this.matches = fbDb.getMatches();
-    this.matches.subscribe(matches => {this.shownMatches = matches});
-    console.log(this.matches);
+    if(fbAuth.authenticated) {
+      this.matches = fbDb.getMatches();
+      this.matches.subscribe(matches => {this.shownMatches = matches});
+      console.log(this.matches);
+    }
     this.currentUser = fbAuth.currentUser;
   }
 

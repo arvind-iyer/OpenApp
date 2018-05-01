@@ -3,6 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase/app";
 import { Match } from "../../interfaces/match";
+import { Events } from "ionic-angular";
 
 @Injectable()
 export class FirebaseDatabase {
@@ -32,7 +33,7 @@ export class FirebaseDatabase {
 @Injectable()
 export class FirebaseAuth {
   authState : any = null
-  constructor(public afAuth: AngularFireAuth, public db: FirebaseDatabase) {
+  constructor(private events: Events, public afAuth: AngularFireAuth, public db: FirebaseDatabase) {
     afAuth.authState.subscribe( (auth)=> { 
       this.authState = auth
     });
@@ -40,10 +41,12 @@ export class FirebaseAuth {
 
   login(email: string, password: string) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    this.events.publish('user:login', this.currentUser, Date.now());    
   }
 
   signup(email: string, password: string) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+    this.events.publish('user:signup', this.currentUser, Date.now());
   }
 
   get authenticated() : boolean {
@@ -93,9 +96,13 @@ export class FirebaseAuth {
   
   logout() {
     this.afAuth.auth.signOut();
+    this.events.publish('user:logout', this.currentUser, Date.now());    
   }
 
   loginGoogle() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  changePassword() {
   }
 }
