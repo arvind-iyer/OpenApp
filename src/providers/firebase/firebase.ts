@@ -12,7 +12,9 @@ export class FirebaseDatabase {
   getMatches() {
     return this.afd.list('/matches/').valueChanges();
   }
-
+  getStates() {
+    return ["joined", "hosted", "full", "available"];
+  }
   createMatch(match : Match) {
     this.afd.list('/matches/').push(match);
   }

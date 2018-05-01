@@ -13,6 +13,8 @@ import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebas
 
 
 import { CreateMatchPage } from '../create-match/create-match'; 
+import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
+import { Match } from '../../interfaces/match';
 
 @Component({
   selector: 'page-match-list',
@@ -20,7 +22,10 @@ import { CreateMatchPage } from '../create-match/create-match';
 })
 export class MatchListPage {
   matches: Observable<any[]>;
+  shownMatches : Match[] = [];
   currentUser : any;
+  excludeStates: any = [];
+  
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
@@ -30,6 +35,7 @@ export class MatchListPage {
     public inAppBrowser: InAppBrowser
   ) {
     this.matches = fbDb.getMatches();
+    this.matches.subscribe(matches => {this.shownMatches = matches});
     console.log(this.matches);
     this.currentUser = fbAuth.currentUser;
   }
@@ -52,6 +58,34 @@ export class MatchListPage {
       );
   }
 
+  presentFilter() {
+    let modal = this.modalCtrl.create(ScheduleFilterPage, this.excludeStates);
+    modal.present();
+
+    modal.onWillDismiss((data: any[]) => {
+      if (data) {
+        this.excludeStates = data;
+        console.log(this.excludeStates);
+        this.updateMatchList();
+      }
+    });
+
+  }
+
+  updateMatchList() {
+    this.shownMatches = [];
+    this.matches.subscribe( (matches) =>  {
+      matches.forEach(m => {
+        var s = this.getState(m);
+        if (this.excludeStates.indexOf(this.capitalize(s)) === -1) {
+          this.shownMatches.push(m);
+        }
+      });
+    });
+  }
+  private capitalize(s : string) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
   getDate(timestamp) {
     return (new Date(timestamp)).toDateString();
   }
@@ -74,7 +108,6 @@ export class MatchListPage {
     else {
       state = "available";
     }
-    
     return state;
   }
 

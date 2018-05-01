@@ -30,7 +30,8 @@ var CreateMatchPage = (function () {
             end_time: 0,
             participants: [],
             skill_level: 0,
-            sport: ""
+            sport: "",
+            state: ""
         };
         this.start_time = "";
         this.end_time = "";

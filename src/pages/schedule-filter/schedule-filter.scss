@@ -3,9 +3,9 @@
   color: color($colors, danger);
 }
 
-@each $track, $value in auxiliary-categories() {
+@each $state, $value in auxiliary-categories() {
 
-  ion-item[track=#{$track}] .dot {
+  ion-item[state=#{$state}] .dot {
     height: 10px;
     display: inline-block;
     width: 10px;

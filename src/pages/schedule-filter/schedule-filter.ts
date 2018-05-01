@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavParams, ViewController } from 'ionic-angular';
 
-import { ConferenceData } from '../../providers/conference-data';
+import { FirebaseDatabase } from '../../providers/firebase/firebase';
 
 
 @Component({
@@ -10,39 +10,41 @@ import { ConferenceData } from '../../providers/conference-data';
   templateUrl: 'schedule-filter.html'
 })
 export class ScheduleFilterPage {
-  tracks: Array<{name: string, isChecked: boolean}> = [];
+  states: Array<{name: string, isChecked: boolean}> = [];
 
   constructor(
-    public confData: ConferenceData,
+    public fbd: FirebaseDatabase,
     public navParams: NavParams,
     public viewCtrl: ViewController
   ) {
     // passed in array of track names that should be excluded (unchecked)
     let excludedTrackNames = this.navParams.data;
+    console.log(excludedTrackNames);
+    
 
-    this.confData.getTracks().subscribe((trackNames: string[]) => {
-
-      trackNames.forEach(trackName => {
-        this.tracks.push({
-          name: trackName,
-          isChecked: (excludedTrackNames.indexOf(trackName) === -1)
+    this.fbd.getStates().forEach(stateName => {
+        this.states.push({
+          name: stateName.charAt(0).toUpperCase() + stateName.slice(1),
+          isChecked: (excludedTrackNames.indexOf(this.capitalize(stateName)) === -1)
         });
-      });
-
     });
+  }
+
+  private capitalize(s : string) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
   resetFilters() {
     // reset all of the toggles to be checked
-    this.tracks.forEach(track => {
+    this.states.forEach(track => {
       track.isChecked = true;
     });
   }
 
   applyFilters() {
     // Pass back a new array of track names to exclude
-    let excludedTrackNames = this.tracks.filter(c => !c.isChecked).map(c => c.name);
-    this.dismiss(excludedTrackNames);
+    let excludedTrackNames = this.states.filter(c => !c.isChecked).map(c => c.name);
+    this.viewCtrl.dismiss(excludedTrackNames);
   }
 
   dismiss(data?: any) {

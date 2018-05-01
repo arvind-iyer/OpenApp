@@ -22,7 +22,7 @@ import { Match } from '../../interfaces/match';
 })
 export class MatchListPage {
   matches: Observable<any[]>;
-  shownMatches : any = [];
+  shownMatches : Match[] = [];
   currentUser : any;
   excludeStates: any = [];
   
@@ -35,6 +35,7 @@ export class MatchListPage {
     public inAppBrowser: InAppBrowser
   ) {
     this.matches = fbDb.getMatches();
+    this.matches.subscribe(matches => {this.shownMatches = matches});
     console.log(this.matches);
     this.currentUser = fbAuth.currentUser;
   }
@@ -64,6 +65,7 @@ export class MatchListPage {
     modal.onWillDismiss((data: any[]) => {
       if (data) {
         this.excludeStates = data;
+        console.log(this.excludeStates);
         this.updateMatchList();
       }
     });
@@ -71,12 +73,19 @@ export class MatchListPage {
   }
 
   updateMatchList() {
-    this.shownMatches = this.matches.subscribe( (m) =>  {
-      return (this.excludeStates.indexOf(m['state']) >= 0)
-    }
-    );
+    this.shownMatches = [];
+    this.matches.subscribe( (matches) =>  {
+      matches.forEach(m => {
+        var s = this.getState(m);
+        if (this.excludeStates.indexOf(this.capitalize(s)) === -1) {
+          this.shownMatches.push(m);
+        }
+      });
+    });
   }
-
+  private capitalize(s : string) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
   getDate(timestamp) {
     return (new Date(timestamp)).toDateString();
   }
@@ -99,7 +108,6 @@ export class MatchListPage {
     else {
       state = "available";
     }
-    
     return state;
   }
 

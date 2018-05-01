@@ -66,7 +66,7 @@ var ConferenceApp = (function () {
         // load the conference data
         confData.load();
         // decide which menu items should be hidden by current login status stored in local storage
-        this.enableMenu(this.fbAuth.hasLoggedIn());
+        this.enableMenu(this.fbAuth.authenticated);
         this.listenToLoginEvents();
     }
     ConferenceApp.prototype.openPage = function (page) {

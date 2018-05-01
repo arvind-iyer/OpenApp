@@ -24,7 +24,8 @@ export class CreateMatchPage {
     end_time: 0,
     participants: [],
     skill_level: 0,
-    sport: ""
+    sport: "",
+    state: ""
   };
 
   start_time : string = "";

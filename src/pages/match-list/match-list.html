@@ -12,43 +12,16 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="outer-content match-list">
-  <ion-list #scheduleList>
-      <ion-item-sliding *ngFor="let match of matches | async" #slidingItem [attr.state]="getState(match)" >
-        
-        <button ion-item (click)="goToMatchDetail(match)">
-          <h2>{{match.sport}}</h2>
-          <h5>{{getDate(match.start_time)}}</h5>
-          <p>
-            {{getTime(match.start_time)}}-{{getTime(match.end_time)}} 
-          </p>
-          
-          <ion-row>
-            <ion-col col-1>
-              <ion-icon name="pin" class="icon" item-left></ion-icon>
-            </ion-col>
-            <ion-col col-11 >
-              <p class="icontext">{{match.location}}</p>
-            </ion-col>
-          </ion-row>
-          
-          <ion-note>Hosted By: {{match.host_id}}</ion-note>
-        </button>
-
-        <ion-item-options>
-          <button ion-button color="favorite"  *ngIf="segment === 'all'">
-            Favorite
-          </button>
-          <button ion-button color="danger" *ngIf="getState(match) === 'hosted'" (click)="deleteMatch(match)">
-            Remove
-          </button>
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-
-  </ion-list>
-  <ion-fab bottom right>
-    <button ion-fab (click)="openCreateMatchModal()"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
+<ion-content class="outer-content match-list card-background-page">
+  <ion-item *ngFor="let match of shownMatches" #slidingItem [attr.state]="getState(match)"  >
+    <ion-card>
+      <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>
+      <div class="card-title">{{match.sport}}</div>
+      <div class="card-subtitle">{{match.location}}</div>
+      <div class="card-subtitle2">{{getTime(match.start_time)}}-{{getTime(match.end_time)}} </div>
+    </ion-card>
+  </ion-item>
 </ion-content>
+    <ion-fab bottom right>
+      <button ion-fab (click)="openCreateMatchModal()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>

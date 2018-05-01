@@ -47,6 +47,7 @@ $categories: (
  hosted: #3BC7C4,
 );
 
+
 @function auxiliary-categories() {
   @return map-remove($categories);
 }
@@ -62,4 +63,50 @@ page-match-list {
      margin-bottom: 5px;
    }
   }
+}
+
+$sports : (
+  "basketball",
+  "tennis",
+  "table-tennis",
+  "football",
+  "squash"
+);
+
+.card-background-page {
+
+  ion-card {
+    position: relative;
+    text-align: center;
+    height: 150px;
+  }
+  img {
+    height: 100%;
+    background: radial-gradient(circle at 100%, #333, #333 50%, #eee 75%, #333 75%);    
+    mix-blend-mode: multiply;
+  }
+  .card-title {
+    position: absolute;
+    top: 18%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+  .card-subtitle2 {
+    font-size: 1.0em;
+    position: absolute;
+    top: 70%;
+    width: 100%;
+    color: #fff;
+  }
+
 }
