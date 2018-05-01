@@ -8,9 +8,38 @@
   <div text-center *ngIf="match">
     <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->
     <ion-item>
-      <ion-label stacked color> Location: </ion-label>
+        <ion-label stacked color>Sport </ion-label>
+        {{match.sport}}
+      </ion-item>
+    <ion-item>
+      <ion-label stacked color>Location </ion-label>
       {{match.location}}
     </ion-item>
+    <ion-item>
+      <ion-label stacked color>No. of Players </ion-label>
+      {{match.participants}}
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color>Maximum No. of Players </ion-label>
+      {{match.max_capacity}}
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color>Start Time </ion-label>
+      {{match.start_time}}
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color>End Time </ion-label>
+      {{match.end_time}}
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color>Skill Level Required </ion-label>
+      {{match.skill_level}}
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color>Host </ion-label>
+      {{match.host_id}}
+    </ion-item>
+
   </div>
 
 </ion-content>
