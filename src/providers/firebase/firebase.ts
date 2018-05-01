@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { Injectable, Inject } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase/app";
 import { Match } from "../../interfaces/match";
@@ -7,8 +9,10 @@ import { Events } from "ionic-angular";
 
 @Injectable()
 export class FirebaseDatabase {
-
-  constructor(public afd: AngularFireDatabase) { }
+  storage: AngularFireStorageReference;
+  constructor(public afd: AngularFireDatabase, public afs: AngularFireStorage ) {
+    this.storage = afs.ref("users")
+   }
 
   getMatches() {
     return this.afd.list('/matches/').valueChanges();
@@ -26,6 +30,13 @@ export class FirebaseDatabase {
 
   updateMatch(id, match) {
     this.afd.list('/matches/').update(id, match);
+  }
+
+  uploadProfileImage(user_id: string, file: any) {
+    let task : AngularFireUploadTask = this.storage.child('${user_id}/profile_picture').put(file);
+    return task; 
+
+    // Use uploadProfileImage(x,y).downloadURL() to get file URL
   }
 }
 
@@ -103,6 +114,20 @@ export class FirebaseAuth {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
-  changePassword() {
+  updatePassword (newPass: string) {
+    this.afAuth.auth.currentUser.updatePassword(newPass)
+  }
+
+  updateProfile( newUserName: string, photoUrl: string) {
+    if (newUserName == "") {
+      newUserName = this.currentUserDisplayName;
+    }
+    if (photoUrl == "") {
+      photoUrl = this.afAuth.auth.currentUser.photoURL;
+    }
+    this.afAuth.auth.currentUser.updateProfile({
+      displayName: newUserName,
+      photoURL: photoUrl
+    });
   }
 }
