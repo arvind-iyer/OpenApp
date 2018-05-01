@@ -1,23 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{match?.name}}</ion-title>
+    <ion-title>{{match.sport}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="match-detail">
   <div text-center *ngIf="match">
     <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->
-
-    <button ion-button icon-only clear small color="twitter">
-      <ion-icon name="logo-twitter"></ion-icon>
-    </button>
-    <button ion-button icon-only clear small color="github">
-      <ion-icon name="logo-github"></ion-icon>
-    </button>
-    <button ion-button icon-only clear small color="instagram">
-      <ion-icon name="logo-instagram"></ion-icon>
-    </button>
+    <ion-item>
+      <ion-label stacked color> Location: </ion-label>
+      {{match.location}}
+    </ion-item>
   </div>
 
-  <p>{{match?.about}}</p>
 </ion-content>

@@ -10,6 +10,8 @@ export class MatchDetailPage {
   match: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.match = navParams.data;
+    console.log(this.match);
   }
 
   ionViewWillEnter() {

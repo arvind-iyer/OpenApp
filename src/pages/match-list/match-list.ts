@@ -35,11 +35,15 @@ export class MatchListPage {
     public config: Config,
     public inAppBrowser: InAppBrowser
   ) {
-    if(fbAuth.authenticated) {
-      this.matches = fbDb.getMatches();
-      this.matches.subscribe(matches => {this.shownMatches = matches});
-      console.log(this.matches);
-    }
+    this.fbAuth.afAuth.authState.subscribe(auth=> {
+      if (auth) {
+        this.matches = fbDb.getMatches();
+        this.matches.subscribe(matches => {
+          this.shownMatches = matches;
+        })
+        console.log(this.matches);
+      }
+    })
     this.currentUser = fbAuth.currentUser;
   }
 
@@ -50,7 +54,7 @@ export class MatchListPage {
 
   goToMatchDetail(match: any) {
     console.log(match);
-    this.navCtrl.push(MatchDetailPage, { matchId: match.id });
+    this.navCtrl.push(MatchDetailPage, match);
   }
   
   getTime(timestamp) {
