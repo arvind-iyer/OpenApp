@@ -21,19 +21,26 @@
 
     <ion-list no-lines>
       <ion-item>
-        <ion-icon name="calendar" item-start></ion-icon>
-        <ion-label>Date</ion-label>
-        <ion-datetime displayFormat="MMM DD, YYYY" max="2056" [(ngModel)]="conferenceDate"></ion-datetime>
+        <ion-icon name="person" item-start></ion-icon>
+        <ion-label fixed>Name</ion-label>
+        <ion-input type="text" value=""></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="flame" item-start></ion-icon>
+        <ion-label fixed>Age</ion-label>
+        <ion-input type="number" value=""></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-icon name="pin" item-start></ion-icon>
         <ion-label>Location</ion-label>
         <ion-select>
-          <ion-option value="madison" selected>Madison, WI</ion-option>
-          <ion-option value="austin">Austin, TX</ion-option>
-          <ion-option value="chicago">Chicago, IL</ion-option>
-          <ion-option value="seattle">Seattle, WA</ion-option>
+          <ion-option value="tennis" selected>Tennis</ion-option>
+          <ion-option value="squash">Squash</ion-option>
+          <ion-option value="basketball">Basketball</ion-option>
+          <ion-option value="table_tennis">Table Tennis</ion-option>
+          <ion-option value="football">Football</ion-option>
         </ion-select>
       </ion-item>
     </ion-list>
