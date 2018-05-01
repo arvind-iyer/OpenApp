@@ -120,6 +120,7 @@ export class GotNextApp {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
+      this.nav.setRoot('LoginPage');    
     });
 
     this.events.subscribe('user:signup', () => {

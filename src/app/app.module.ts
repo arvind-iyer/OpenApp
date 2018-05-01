@@ -1,3 +1,4 @@
+import { AngularFireStorage } from 'angularfire2/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -28,6 +29,7 @@ import { CreateMatchPage } from '../pages/create-match/create-match';
 import { FirebaseDatabase, FirebaseAuth } from '../providers/firebase/firebase';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireStorage} from 'angularfire2/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { firebaseConfig } from '../providers/firebase/config';
@@ -95,6 +97,7 @@ import { firebaseConfig } from '../providers/firebase/config';
     SplashScreen,
     FirebaseDatabase,
     FirebaseAuth,
+    AngularFireStorage,
     AngularFireAuth    
   ]
 })
