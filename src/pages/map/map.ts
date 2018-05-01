@@ -4,7 +4,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
 
-declare var google: any;
+// declare var google: any;
 
 
 @Component({

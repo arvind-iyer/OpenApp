@@ -12,24 +12,24 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content> 
-    <ion-list no-lines>
+<ion-content>
+    <form (ngSubmit)="updateInfo()">
       <ion-item>
         <ion-icon name="person" item-start></ion-icon>
         <ion-label >Name</ion-label>
-        <ion-input type="text" value=""></ion-input>
+        <ion-input type="text" [(ngModel)]="data.name" value=""></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-icon name="calendar" item-start></ion-icon>
         <ion-label >Age</ion-label>
-        <ion-input type="number" value=""></ion-input>
+        <ion-input type="number" value="" [(ngModel)]="data.age"></ion-input>
       </ion-item>
 
       <ion-item>
           <ion-icon name="body" item-start></ion-icon>
           <ion-label >Gender</ion-label>
-          <ion-select>
+          <ion-select [(ngModel)]="data.gender">
             <ion-option value="male" >Male</ion-option>
             <ion-option value="female" >Female</ion-option>
             <ion-option value="other" >Other</ion-option>
@@ -39,7 +39,7 @@
       <ion-item>
         <ion-icon name="basketball" item-start></ion-icon>
         <ion-label>Favorite Sport</ion-label>
-        <ion-select multiple="true">
+        <ion-select multiple="true" [(ngModel)]="data.sports">
           <ion-option value="tennis">Tennis</ion-option>
           <ion-option value="squash">Squash</ion-option>
           <ion-option value="basketball">Basketball</ion-option>
@@ -47,5 +47,12 @@
           <ion-option value="football">Football</ion-option>
         </ion-select>
       </ion-item>
-    </ion-list>
+
+      <ion-item>
+        <ion-icon name="phone" item-start></ion-icon>
+        <ion-label >Phone</ion-label>
+        <ion-input type="phone" name="phone" [(ngModel)]="data.phone"></ion-input>
+      </ion-item>
+      <button ion-button submit>Confirm</button>
+    </form>
 </ion-content>

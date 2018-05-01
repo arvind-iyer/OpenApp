@@ -33,6 +33,7 @@ export class FirebaseDatabase {
   }
 
   uploadProfileImage(user_id: string, file: any) {
+    console.log(user_id); // just to suppress the non-usage error
     let task : AngularFireUploadTask = this.storage.child('${user_id}/profile_picture').put(file);
     return task; 
 
