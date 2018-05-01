@@ -20,3 +20,4 @@ plugins
 *.swo
 *.log
 src/providers/firebase/config.ts
+.tmp
