@@ -6,6 +6,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase/app";
 import { Match } from "../../interfaces/match";
 import { Events } from "ionic-angular";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class FirebaseDatabase {
@@ -129,6 +131,45 @@ export class FirebaseAuth {
     this.afAuth.auth.currentUser.updateProfile({
       displayName: newUserName,
       photoURL: photoUrl
+    });
+  }
+}
+
+
+@Injectable() 
+export class FirebaseMessaging {
+  m = firebase.messaging();
+  currentMessage = new BehaviorSubject(null);
+  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {  }
+
+  updateToken(token) {
+    this.auth.authState.take(1).subscribe(user => 
+    {
+      if (!user) return;
+      const data = { [user.uid]: token};
+      this.db.object('notifTokens/').update(data);
+    })
+  }
+
+  getPermission() {
+    this.m.requestPermission()
+      .then( () => {
+        console.log('Notification permission granted');
+        return this.m.getToken();
+      })
+      .then(token => {
+        console.log(token);
+        this.updateToken(token);
+      })
+      .catch(err => {
+        console.log("Unable to get permission to notify", err);
+      })
+  }
+
+  receiveMessage() {
+    this.m.onMessage((payload) => {
+      console.log("Message received: ", payload);
+      this.currentMessage.next(payload);
     });
   }
 }

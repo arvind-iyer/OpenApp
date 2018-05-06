@@ -12,11 +12,9 @@ import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
-import { SchedulePage } from '../pages/schedule/schedule';
 import { MatchListPage } from '../pages/match-list/match-list';
 import { SupportPage } from '../pages/support/support';
 
-import { ConferenceData } from '../providers/conference-data';
 import { FirebaseAuth } from '../providers/firebase/firebase';
 
 export interface PageInterface {
@@ -33,7 +31,7 @@ export interface PageInterface {
 @Component({
   templateUrl: 'app.template.html'
 })
-export class ConferenceApp {
+export class GotNextApp {
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -42,10 +40,9 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
-    { title: 'Schedule', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'calendar' },
-    { title: 'Matches', name: 'TabsPage', component: TabsPage, tabComponent: MatchListPage, index: 1, icon: 'basketball' },
-    { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map' },
-    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
+    { title: 'Matches', name: 'TabsPage', component: TabsPage, tabComponent: MatchListPage, index: 0, icon: 'basketball' },
+    { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map' },
+    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'information-circle' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -57,31 +54,31 @@ export class ConferenceApp {
     { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
     { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
   ];
-  rootPage: any;
+  rootPage: any = LoginPage;
 
   constructor(
     public events: Events,
     public fbAuth: FirebaseAuth,
     public menu: MenuController,
     public platform: Platform,
-    public confData: ConferenceData,
     public storage: Storage,
     public splashScreen: SplashScreen
   ) {
 
-    // Check if the user has already seen the tutorial
-    this.storage.get('hasSeenTutorial')
-      .then((hasSeenTutorial) => {
-        if (hasSeenTutorial) {
-          this.rootPage = TabsPage;
-        } else {
-          this.rootPage = TutorialPage;
-        }
-        this.platformReady()
-      });
-
+    // // Check if the user has already seen the tutorial
+    // this.storage.get('hasSeenTutorial')
+    //   .then((hasSeenTutorial) => {
+    //     if (hasSeenTutorial) {
+    //       this.rootPage = LoginPage;
+    //     } else {
+    //       this.rootPage = TutorialPage;
+    //     }
+    //     this.platformReady()
+    //   });
+    if(fbAuth.authenticated) {
+      this.rootPage = TabsPage;
+    }
     // load the conference data
-    confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
     this.enableMenu(this.fbAuth.authenticated);
@@ -123,6 +120,7 @@ export class ConferenceApp {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
+      this.nav.setRoot('LoginPage');    
     });
 
     this.events.subscribe('user:signup', () => {
@@ -130,6 +128,7 @@ export class ConferenceApp {
     });
 
     this.events.subscribe('user:logout', () => {
+      console.log("User has logged out");
       this.enableMenu(false);
     });
   }

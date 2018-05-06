@@ -18,29 +18,24 @@ import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
-import { SchedulePage } from '../pages/schedule/schedule';
 import { MatchListPage } from '../pages/match-list/match-list';
 import { SupportPage } from '../pages/support/support';
-import { ConferenceData } from '../providers/conference-data';
 import { FirebaseAuth } from '../providers/firebase/firebase';
-var ConferenceApp = (function () {
-    function ConferenceApp(events, fbAuth, menu, platform, confData, storage, splashScreen) {
-        var _this = this;
+var GotNextApp = (function () {
+    function GotNextApp(events, fbAuth, menu, platform, storage, splashScreen) {
         this.events = events;
         this.fbAuth = fbAuth;
         this.menu = menu;
         this.platform = platform;
-        this.confData = confData;
         this.storage = storage;
         this.splashScreen = splashScreen;
         // List of pages that can be navigated to from the left menu
         // the left menu only works after login
         // the login page disables the left menu
         this.appPages = [
-            { title: 'Schedule', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'calendar' },
-            { title: 'Matches', name: 'TabsPage', component: TabsPage, tabComponent: MatchListPage, index: 1, icon: 'basketball' },
-            { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map' },
-            { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
+            { title: 'Matches', name: 'TabsPage', component: TabsPage, tabComponent: MatchListPage, index: 0, icon: 'basketball' },
+            { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map' },
+            { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'information-circle' }
         ];
         this.loggedInPages = [
             { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -52,24 +47,26 @@ var ConferenceApp = (function () {
             { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
             { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
         ];
-        // Check if the user has already seen the tutorial
-        this.storage.get('hasSeenTutorial')
-            .then(function (hasSeenTutorial) {
-            if (hasSeenTutorial) {
-                _this.rootPage = TabsPage;
-            }
-            else {
-                _this.rootPage = TutorialPage;
-            }
-            _this.platformReady();
-        });
+        this.rootPage = LoginPage;
+        // // Check if the user has already seen the tutorial
+        // this.storage.get('hasSeenTutorial')
+        //   .then((hasSeenTutorial) => {
+        //     if (hasSeenTutorial) {
+        //       this.rootPage = LoginPage;
+        //     } else {
+        //       this.rootPage = TutorialPage;
+        //     }
+        //     this.platformReady()
+        //   });
+        if (fbAuth.authenticated) {
+            this.rootPage = TabsPage;
+        }
         // load the conference data
-        confData.load();
         // decide which menu items should be hidden by current login status stored in local storage
         this.enableMenu(this.fbAuth.authenticated);
         this.listenToLoginEvents();
     }
-    ConferenceApp.prototype.openPage = function (page) {
+    GotNextApp.prototype.openPage = function (page) {
         var params = {};
         // the nav component was found using @ViewChild(Nav)
         // setRoot on the nav to remove previous pages and only have this page
@@ -94,33 +91,35 @@ var ConferenceApp = (function () {
             this.fbAuth.logout();
         }
     };
-    ConferenceApp.prototype.openTutorial = function () {
+    GotNextApp.prototype.openTutorial = function () {
         this.nav.setRoot(TutorialPage);
     };
-    ConferenceApp.prototype.listenToLoginEvents = function () {
+    GotNextApp.prototype.listenToLoginEvents = function () {
         var _this = this;
         this.events.subscribe('user:login', function () {
             _this.enableMenu(true);
+            _this.nav.setRoot('LoginPage');
         });
         this.events.subscribe('user:signup', function () {
             _this.enableMenu(true);
         });
         this.events.subscribe('user:logout', function () {
+            console.log("User has logged out");
             _this.enableMenu(false);
         });
     };
-    ConferenceApp.prototype.enableMenu = function (loggedIn) {
+    GotNextApp.prototype.enableMenu = function (loggedIn) {
         this.menu.enable(loggedIn, 'loggedInMenu');
         this.menu.enable(!loggedIn, 'loggedOutMenu');
     };
-    ConferenceApp.prototype.platformReady = function () {
+    GotNextApp.prototype.platformReady = function () {
         var _this = this;
         // Call any initial plugins when ready
         this.platform.ready().then(function () {
             _this.splashScreen.hide();
         });
     };
-    ConferenceApp.prototype.isActive = function (page) {
+    GotNextApp.prototype.isActive = function (page) {
         var childNav = this.nav.getActiveChildNavs()[0];
         // Tabs are a special case because they have their own navigation
         if (childNav) {
@@ -137,19 +136,18 @@ var ConferenceApp = (function () {
     __decorate([
         ViewChild(Nav),
         __metadata("design:type", Nav)
-    ], ConferenceApp.prototype, "nav", void 0);
-    ConferenceApp = __decorate([
+    ], GotNextApp.prototype, "nav", void 0);
+    GotNextApp = __decorate([
         Component({template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/app/app.template.html"*/'<ion-split-pane>\n\n  <!-- logged out menu -->\n  <ion-menu id="loggedOutMenu" [content]="content">\n\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n\n    <ion-content class="outer-content">\n\n      <ion-list>\n        <ion-list-header>\n          Navigate\n        </ion-list-header>\n        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">\n          <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>\n          {{p.title}}\n        </button>\n      </ion-list>\n\n      <ion-list>\n        <ion-list-header>\n          Account\n        </ion-list-header>\n        <button ion-item menuClose *ngFor="let p of loggedOutPages" (click)="openPage(p)">\n          <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>\n          {{p.title}}\n        </button>\n      </ion-list>\n\n      <ion-list>\n        <ion-list-header>\n          Tutorial\n        </ion-list-header>\n        <button ion-item menuClose (click)="openTutorial()">\n          <ion-icon item-start name="hammer"></ion-icon>\n          Show Tutorial\n        </button>\n      </ion-list>\n    </ion-content>\n\n  </ion-menu>\n\n  <!-- logged in menu -->\n  <ion-menu id="loggedInMenu" [content]="content">\n\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n\n    <ion-content class="outer-content">\n\n      <ion-list>\n        <ion-list-header>\n          Navigate\n        </ion-list-header>\n        <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">\n          <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>\n          {{p.title}}\n        </button>\n      </ion-list>\n\n      <ion-list>\n        <ion-list-header>\n          Account\n        </ion-list-header>\n        <button ion-item menuClose *ngFor="let p of loggedInPages" (click)="openPage(p)">\n          <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>\n          {{p.title}}\n        </button>\n      </ion-list>\n\n      <ion-list>\n        <ion-list-header>\n          Tutorial\n        </ion-list-header>\n        <button ion-item menuClose (click)="openTutorial()">\n          <ion-icon item-start name="hammer"></ion-icon>\n          Show Tutorial\n        </button>\n      </ion-list>\n\n    </ion-content>\n\n  </ion-menu>\n\n  <!-- main navigation -->\n  <ion-nav [root]="rootPage" #content swipeBackEnabled="false" main name="app"></ion-nav>\n\n</ion-split-pane>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/app/app.template.html"*/
         }),
         __metadata("design:paramtypes", [Events,
             FirebaseAuth,
             MenuController,
             Platform,
-            ConferenceData,
             Storage,
             SplashScreen])
-    ], ConferenceApp);
-    return ConferenceApp;
+    ], GotNextApp);
+    return GotNextApp;
 }());
-export { ConferenceApp };
+export { GotNextApp };
 //# sourceMappingURL=app.component.js.map

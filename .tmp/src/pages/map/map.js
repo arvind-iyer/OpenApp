@@ -8,38 +8,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { ConferenceData } from '../../providers/conference-data';
 import { Platform } from 'ionic-angular';
+// declare var google: any;
 var MapPage = (function () {
-    function MapPage(confData, platform) {
-        this.confData = confData;
+    function MapPage(platform) {
         this.platform = platform;
     }
     MapPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.confData.getMap().subscribe(function (mapData) {
-            var mapEle = _this.mapElement.nativeElement;
-            var map = new google.maps.Map(mapEle, {
-                center: mapData.find(function (d) { return d.center; }),
-                zoom: 16
-            });
-            mapData.forEach(function (markerData) {
-                var infoWindow = new google.maps.InfoWindow({
-                    content: "<h5>" + markerData.name + "</h5>"
-                });
-                var marker = new google.maps.Marker({
-                    position: markerData,
-                    map: map,
-                    title: markerData.name
-                });
-                marker.addListener('click', function () {
-                    infoWindow.open(map, marker);
-                });
-            });
-            google.maps.event.addListenerOnce(map, 'idle', function () {
-                mapEle.classList.add('show-map');
-            });
-        });
+        // this.confData.getMap().subscribe((mapData: any) => {
+        //   let mapEle = this.mapElement.nativeElement;
+        //   let map = new google.maps.Map(mapEle, {
+        //     center: mapData.find((d: any) => d.center),
+        //     zoom: 16
+        //   });
+        //   mapData.forEach((markerData: any) => {
+        //     let infoWindow = new google.maps.InfoWindow({
+        //       content: `<h5>${markerData.name}</h5>`
+        //     });
+        //     let marker = new google.maps.Marker({
+        //       position: markerData,
+        //       map: map,
+        //       title: markerData.name
+        //     });
+        //     marker.addListener('click', () => {
+        //       infoWindow.open(map, marker);
+        //     });
+        //   });
+        //   google.maps.event.addListenerOnce(map, 'idle', () => {
+        //     mapEle.classList.add('show-map');
+        //   });
+        // });
     };
     __decorate([
         ViewChild('mapCanvas'),
@@ -49,7 +47,7 @@ var MapPage = (function () {
         Component({
             selector: 'page-map',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/map/map.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Map</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="map-page">\n  <div style="height: 100%; width: 100%" #mapCanvas id="map_canvas"></div>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/map/map.html"*/
         }),
-        __metadata("design:paramtypes", [ConferenceData, Platform])
+        __metadata("design:paramtypes", [Platform])
     ], MapPage);
     return MapPage;
 }());

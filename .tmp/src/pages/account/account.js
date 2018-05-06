@@ -9,15 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { AlertController, NavController } from 'ionic-angular';
-import { UserData } from '../../providers/user-data';
+import { FirebaseAuth } from '../../providers/firebase/firebase';
 var AccountPage = (function () {
-    function AccountPage(alertCtrl, nav, userData) {
+    function AccountPage(alertCtrl, nav, fbAuth) {
         this.alertCtrl = alertCtrl;
         this.nav = nav;
-        this.userData = userData;
+        this.fbAuth = fbAuth;
+        this.user = fbAuth.currentUser;
     }
     AccountPage.prototype.ngAfterViewInit = function () {
-        this.getUsername();
     };
     AccountPage.prototype.updatePicture = function () {
         console.log('Clicked to update picture');
@@ -41,33 +41,31 @@ var AccountPage = (function () {
         alert.addButton({
             text: 'Ok',
             handler: function (data) {
-                _this.userData.setUsername(data.username);
-                _this.getUsername();
+                _this.fbAuth.updateProfile(data.username, "");
             }
         });
         alert.present();
     };
-    AccountPage.prototype.getUsername = function () {
-        var _this = this;
-        this.userData.getUsername().then(function (username) {
-            _this.username = username;
-        });
-    };
+    Object.defineProperty(AccountPage.prototype, "username", {
+        get: function () {
+            return this.fbAuth.currentUserDisplayName;
+        },
+        enumerable: true,
+        configurable: true
+    });
     AccountPage.prototype.changePassword = function () {
-        console.log('Clicked to change password');
     };
     AccountPage.prototype.logout = function () {
-        this.userData.logout();
-        this.nav.setRoot('LoginPage');
+        this.fbAuth.logout();
     };
     AccountPage.prototype.support = function () {
         this.nav.push('SupportPage');
     };
     AccountPage = __decorate([
         Component({
-            selector: 'page-account',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/account/account.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Account</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content">\n  <div padding-top text-center *ngIf="username">\n    <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">\n    <h2>{{username}}</h2>\n\n    <ion-list inset>\n      <button ion-item (click)="updatePicture()">Update Picture</button>\n      <button ion-item (click)="changeUsername()">Change Username</button>\n      <button ion-item (click)="changePassword()">Change Password</button>\n      <button ion-item (click)="support()">Support</button>\n      <button ion-item (click)="logout()">Logout</button>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/account/account.html"*/
+            selector: 'page-account',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/account/account.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Account</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content">\n  <div padding-top text-center *ngIf="username">\n    <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">\n    <h2>{{user.username}}</h2>\n\n    <ion-list inset>\n      <button ion-item (click)="updatePicture()">Update Picture</button>\n      <button ion-item (click)="changeUsername()">Change Username</button>\n      <button ion-item (click)="changePassword()">Change Password</button>\n      <button ion-item (click)="support()">Support</button>\n      <button ion-item (click)="logout()">Logout</button>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/account/account.html"*/
         }),
-        __metadata("design:paramtypes", [AlertController, NavController, UserData])
+        __metadata("design:paramtypes", [AlertController, NavController, FirebaseAuth])
     ], AccountPage);
     return AccountPage;
 }());

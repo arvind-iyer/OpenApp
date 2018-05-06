@@ -15,9 +15,18 @@ export class MatchDetailPage {
     if (!this.match.start_time) {
       navCtrl.push(LoginPage);
     }
-    console.log(this.match);
+    console.log(this.match.participants.length);
   }
 
+  getTime(timestamp) {
+    var time = new Date(timestamp);
+    return  (
+        ("0" + time.getHours()).slice(-2)   + ":" + 
+        ("0" + time.getMinutes()).slice(-2)
+      );
+  }
+
+  
   ionViewWillEnter() {
   }
 }

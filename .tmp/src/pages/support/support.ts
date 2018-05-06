@@ -1,8 +1,9 @@
+import { LoginPage } from '../login/login';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { AlertController, NavController, ToastController } from 'ionic-angular';
-
+import { FirebaseAuth } from '../../providers/firebase/firebase';
 
 @Component({
   selector: 'page-user',
@@ -16,7 +17,8 @@ export class SupportPage {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private fbAuth: FirebaseAuth
   ) {
 
   }
@@ -42,6 +44,12 @@ export class SupportPage {
       });
       toast.present();
     }
+  }
+
+  logout() {
+    console.log("Trying to logout");
+    this.fbAuth.logout();
+    this.navCtrl.push(LoginPage);
   }
 
   // If the user enters text in the support question and then navigates

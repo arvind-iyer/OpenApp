@@ -5,7 +5,7 @@ export interface Match {
     max_capacity: number;
     start_time: number;
     end_time: number;
-    participants: string[];
+    participants: Array<string>;
     skill_level: number;
     sport: string;
     state: string;

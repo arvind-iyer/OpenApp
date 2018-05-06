@@ -11,19 +11,17 @@ import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 import { AboutPage } from '../about/about';
 import { MapPage } from '../map/map';
-import { SchedulePage } from '../schedule/schedule';
 import { MatchListPage } from '../match-list/match-list';
 var TabsPage = (function () {
     function TabsPage(navParams) {
         // set the root pages for each tab
-        this.tab1Root = SchedulePage;
-        this.tab2Root = MatchListPage;
-        this.tab3Root = MapPage;
-        this.tab4Root = AboutPage;
+        this.tab1Root = MatchListPage;
+        this.tab2Root = MapPage;
+        this.tab3Root = AboutPage;
         this.mySelectedIndex = navParams.data.tabIndex || 0;
     }
     TabsPage = __decorate([
-        Component({template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/tabs-page/tabs-page.html"*/'<ion-tabs [selectedIndex]="mySelectedIndex" name="conference">\n  <ion-tab [root]="tab1Root" tabTitle="Schedule" tabIcon="calendar" tabUrlPath="conference-schedule"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="Matches" tabIcon="basketball"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Map" tabIcon="map"></ion-tab>\n  <ion-tab [root]="tab4Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/tabs-page/tabs-page.html"*/
+        Component({template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/tabs-page/tabs-page.html"*/'<ion-tabs [selectedIndex]="mySelectedIndex" name="gotnext">\n  <ion-tab [root]="tab1Root" tabTitle="Matches" tabIcon="basketball" tabUrlPath="matches"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="Map" tabIcon="map"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/tabs-page/tabs-page.html"*/
         }),
         __metadata("design:paramtypes", [NavParams])
     ], TabsPage);

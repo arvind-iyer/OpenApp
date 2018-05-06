@@ -7,13 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+// import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireStorage } from 'angularfire2/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase/app";
+import { Events } from "ionic-angular";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import 'rxjs/add/operator/take';
 var FirebaseDatabase = (function () {
-    function FirebaseDatabase(afd) {
+    function FirebaseDatabase(afd, afs) {
         this.afd = afd;
+        this.afs = afs;
+        this.storage = afs.ref("users");
     }
     FirebaseDatabase.prototype.getMatches = function () {
         return this.afd.list('/matches/').valueChanges();
@@ -30,16 +37,23 @@ var FirebaseDatabase = (function () {
     FirebaseDatabase.prototype.updateMatch = function (id, match) {
         this.afd.list('/matches/').update(id, match);
     };
+    FirebaseDatabase.prototype.uploadProfileImage = function (user_id, file) {
+        console.log(user_id); // just to suppress the non-usage error
+        var task = this.storage.child('${user_id}/profile_picture').put(file);
+        return task;
+        // Use uploadProfileImage(x,y).downloadURL() to get file URL
+    };
     FirebaseDatabase = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [AngularFireDatabase])
+        __metadata("design:paramtypes", [AngularFireDatabase, AngularFireStorage])
     ], FirebaseDatabase);
     return FirebaseDatabase;
 }());
 export { FirebaseDatabase };
 var FirebaseAuth = (function () {
-    function FirebaseAuth(afAuth, db) {
+    function FirebaseAuth(events, afAuth, db) {
         var _this = this;
+        this.events = events;
         this.afAuth = afAuth;
         this.db = db;
         this.authState = null;
@@ -49,9 +63,11 @@ var FirebaseAuth = (function () {
     }
     FirebaseAuth.prototype.login = function (email, password) {
         this.afAuth.auth.signInWithEmailAndPassword(email, password);
+        this.events.publish('user:login', this.currentUser, Date.now());
     };
     FirebaseAuth.prototype.signup = function (email, password) {
         this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+        this.events.publish('user:signup', this.currentUser, Date.now());
     };
     Object.defineProperty(FirebaseAuth.prototype, "authenticated", {
         get: function () {
@@ -119,15 +135,77 @@ var FirebaseAuth = (function () {
     };
     FirebaseAuth.prototype.logout = function () {
         this.afAuth.auth.signOut();
+        this.events.publish('user:logout', this.currentUser, Date.now());
     };
     FirebaseAuth.prototype.loginGoogle = function () {
         this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     };
+    FirebaseAuth.prototype.updatePassword = function (newPass) {
+        this.afAuth.auth.currentUser.updatePassword(newPass);
+    };
+    FirebaseAuth.prototype.updateProfile = function (newUserName, photoUrl) {
+        if (newUserName == "") {
+            newUserName = this.currentUserDisplayName;
+        }
+        if (photoUrl == "") {
+            photoUrl = this.afAuth.auth.currentUser.photoURL;
+        }
+        this.afAuth.auth.currentUser.updateProfile({
+            displayName: newUserName,
+            photoURL: photoUrl
+        });
+    };
     FirebaseAuth = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [AngularFireAuth, FirebaseDatabase])
+        __metadata("design:paramtypes", [Events, AngularFireAuth, FirebaseDatabase])
     ], FirebaseAuth);
     return FirebaseAuth;
 }());
 export { FirebaseAuth };
+var FirebaseMessaging = (function () {
+    function FirebaseMessaging(db, auth) {
+        this.db = db;
+        this.auth = auth;
+        this.m = firebase.messaging();
+        this.currentMessage = new BehaviorSubject(null);
+    }
+    FirebaseMessaging.prototype.updateToken = function (token) {
+        var _this = this;
+        this.auth.authState.take(1).subscribe(function (user) {
+            if (!user)
+                return;
+            var data = (_a = {}, _a[user.uid] = token, _a);
+            _this.db.object('notifTokens/').update(data);
+            var _a;
+        });
+    };
+    FirebaseMessaging.prototype.getPermission = function () {
+        var _this = this;
+        this.m.requestPermission()
+            .then(function () {
+            console.log('Notification permission granted');
+            return _this.m.getToken();
+        })
+            .then(function (token) {
+            console.log(token);
+            _this.updateToken(token);
+        })
+            .catch(function (err) {
+            console.log("Unable to get permission to notify", err);
+        });
+    };
+    FirebaseMessaging.prototype.receiveMessage = function () {
+        var _this = this;
+        this.m.onMessage(function (payload) {
+            console.log("Message received: ", payload);
+            _this.currentMessage.next(payload);
+        });
+    };
+    FirebaseMessaging = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [AngularFireDatabase, AngularFireAuth])
+    ], FirebaseMessaging);
+    return FirebaseMessaging;
+}());
+export { FirebaseMessaging };
 //# sourceMappingURL=firebase.js.map

@@ -9,35 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ConferenceData } from '../../providers/conference-data';
+import { LoginPage } from '../login/login';
 var MatchDetailPage = (function () {
-    function MatchDetailPage(dataProvider, navCtrl, navParams) {
-        this.dataProvider = dataProvider;
+    function MatchDetailPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.match = navParams.data;
+        if (!this.match.start_time) {
+            navCtrl.push(LoginPage);
+        }
+        console.log(this.match.participants.length);
     }
-    MatchDetailPage.prototype.ionViewWillEnter = function () {
-        var _this = this;
-        this.dataProvider.load().subscribe(function (data) {
-            if (data && data.matches) {
-                for (var _i = 0, _a = data.matches; _i < _a.length; _i++) {
-                    var match = _a[_i];
-                    if (match && match.id === _this.navParams.data.matchId) {
-                        _this.match = match;
-                        break;
-                    }
-                }
-            }
-        });
+    MatchDetailPage.prototype.getTime = function (timestamp) {
+        var time = new Date(timestamp);
+        return (("0" + time.getHours()).slice(-2) + ":" +
+            ("0" + time.getMinutes()).slice(-2));
     };
-    MatchDetailPage.prototype.goToSessionDetail = function (session) {
-        this.navCtrl.push('SessionDetailPage', { sessionId: session.id });
+    MatchDetailPage.prototype.ionViewWillEnter = function () {
     };
     MatchDetailPage = __decorate([
         Component({
-            selector: 'page-match-detail',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>{{match?.name}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding class="match-detail">\n  <div text-center *ngIf="match">\n    <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n\n    <button ion-button icon-only clear small color="twitter">\n      <ion-icon name="logo-twitter"></ion-icon>\n    </button>\n    <button ion-button icon-only clear small color="github">\n      <ion-icon name="logo-github"></ion-icon>\n    </button>\n    <button ion-button icon-only clear small color="instagram">\n      <ion-icon name="logo-instagram"></ion-icon>\n    </button>\n  </div>\n\n  <p>{{match?.about}}</p>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/
+            selector: 'page-match-detail',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/'<ion-header>\n  <ion-card>\n   <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n   <ion-card-content padding class="match-detail">\n     <ion-card-title>\n       {{match.sport}} \n     </ion-card-title>\n    <div text-center *ngIf="match">\n      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n      <ion-item no-lines>\n          <ion-label>Host: {{match.host_id}} </ion-label>\n        </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>Location: {{match.location}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>No. of Players: {{match.participants}}/{{match.max_capacity}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>Time: {{getTime(match.start_time)}}-{{getTime(match.end_time)}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>Skill Level Required: {{match.skill_level}} </ion-label>\n      </ion-item>\n  </div>\n  </ion-card-content>\n  </ion-card>\n  </ion-header>'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/
         }),
-        __metadata("design:paramtypes", [ConferenceData, NavController, NavParams])
+        __metadata("design:paramtypes", [NavController, NavParams])
     ], MatchDetailPage);
     return MatchDetailPage;
 }());

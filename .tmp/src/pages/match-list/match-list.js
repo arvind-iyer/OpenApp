@@ -14,6 +14,7 @@ import { MatchDetailPage } from '../match-detail/match-detail';
 import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebase';
 import { CreateMatchPage } from '../create-match/create-match';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
+// import {LoginPage} from '../login/login';
 var MatchListPage = (function () {
     function MatchListPage(navCtrl, modalCtrl, fbDb, fbAuth, config, inAppBrowser) {
         var _this = this;
@@ -25,9 +26,15 @@ var MatchListPage = (function () {
         this.inAppBrowser = inAppBrowser;
         this.shownMatches = [];
         this.excludeStates = [];
-        this.matches = fbDb.getMatches();
-        this.matches.subscribe(function (matches) { _this.shownMatches = matches; });
-        console.log(this.matches);
+        this.fbAuth.afAuth.authState.subscribe(function (auth) {
+            if (auth) {
+                _this.matches = fbDb.getMatches();
+                _this.matches.subscribe(function (matches) {
+                    _this.shownMatches = matches;
+                });
+                console.log(_this.matches);
+            }
+        });
         this.currentUser = fbAuth.currentUser;
     }
     MatchListPage.prototype.ionViewDidLoad = function () {
@@ -35,7 +42,7 @@ var MatchListPage = (function () {
     };
     MatchListPage.prototype.goToMatchDetail = function (match) {
         console.log(match);
-        this.navCtrl.push(MatchDetailPage, { matchId: match.id });
+        this.navCtrl.push(MatchDetailPage, match);
     };
     MatchListPage.prototype.getTime = function (timestamp) {
         var time = new Date(timestamp);
@@ -107,7 +114,7 @@ var MatchListPage = (function () {
     };
     MatchListPage = __decorate([
         Component({
-            selector: 'page-match-list',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Matches</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentFilter()">\n        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content match-list card-background-page">\n  <ion-item *ngFor="let match of shownMatches" #slidingItem [attr.state]="getState(match)"  >\n    <ion-card>\n      <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n      <div class="card-title">{{match.sport}}</div>\n      <div class="card-subtitle">{{match.location}}</div>\n      <div class="card-subtitle2">{{getTime(match.start_time)}}-{{getTime(match.end_time)}} </div>\n    </ion-card>\n  </ion-item>\n</ion-content>\n    <ion-fab bottom right>\n      <button ion-fab (click)="openCreateMatchModal()"><ion-icon name="add"></ion-icon></button>\n    </ion-fab>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/
+            selector: 'page-match-list',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Matches</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentFilter()">\n        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content match-list card-background-page" >\n  <ion-item *ngFor="let match of shownMatches" #slidingItem [attr.state]="getState(match)" (click)="goToMatchDetail(match)" >\n    <ion-card>\n      <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n      <div class="card-text">\n        <div class="card-title">{{match.sport}}</div>\n        <div class="card-subtitle">{{match.location}}</div>\n        <div class="card-subtitle2">{{getTime(match.start_time)}}-{{getTime(match.end_time)}} </div>\n      </div>\n    </ion-card>\n  </ion-item>\n  <ion-fab bottom right>\n    <button ion-fab (click)="openCreateMatchModal()"><ion-icon name="add"></ion-icon></button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/
         }),
         __metadata("design:paramtypes", [NavController,
             ModalController,

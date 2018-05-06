@@ -10,3 +10,11 @@ export interface Match {
     sport: string;
     state: string;
   }
+
+export interface AboutSettings {
+  name: string;
+  age: number;
+  gender: string;
+  sport: string[];
+  phone: number;
+}

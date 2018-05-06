@@ -1,23 +1,19 @@
 import { Component } from '@angular/core';
 
 import { AlertController, NavController } from 'ionic-angular';
-
-import { UserData } from '../../providers/user-data';
-
+import { FirebaseAuth } from '../../providers/firebase/firebase';
 
 @Component({
   selector: 'page-account',
   templateUrl: 'account.html'
 })
 export class AccountPage {
-  username: string;
-
-  constructor(public alertCtrl: AlertController, public nav: NavController, public userData: UserData) {
-
+  user : any;
+  constructor(public alertCtrl: AlertController, public nav: NavController, public fbAuth: FirebaseAuth) {
+    this.user = fbAuth.currentUser;
   }
 
   ngAfterViewInit() {
-    this.getUsername();
   }
 
   updatePicture() {
@@ -41,28 +37,25 @@ export class AccountPage {
     });
     alert.addButton({
       text: 'Ok',
-      handler: (data: any) => {
-        this.userData.setUsername(data.username);
-        this.getUsername();
+      handler: (data: any) => { 
+        this.fbAuth.updateProfile(data.username, "");
       }
     });
 
     alert.present();
   }
 
-  getUsername() {
-    this.userData.getUsername().then((username) => {
-      this.username = username;
-    });
+  get username() : string {
+    return this.fbAuth.currentUserDisplayName;
   }
 
   changePassword() {
-    console.log('Clicked to change password');
+
   }
 
   logout() {
-    this.userData.logout();
-    this.nav.setRoot('LoginPage');
+    this.fbAuth.logout();
+    
   }
 
   support() {

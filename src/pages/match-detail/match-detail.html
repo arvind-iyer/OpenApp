@@ -1,27 +1,26 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>{{match.sport}}</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding class="match-detail">
-  <div text-center *ngIf="match">
-    <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->
-    <ion-item no-lines>
-        <ion-label>Host: {{match.host_id}} </ion-label>
+  <ion-card style="height: 100%">
+   <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>
+   <ion-card-content padding class="match-detail">
+     <ion-card-title>
+       {{match.sport}} 
+     </ion-card-title>
+    <div text-center *ngIf="match">
+      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->
+      <ion-item no-lines>
+          <ion-label>Host: {{match.host_id}} </ion-label>
+        </ion-item>
+      <ion-item no-lines>
+        <ion-label stacked color>Location: {{match.location}} </ion-label>
       </ion-item>
-    <ion-item no-lines>
-      <ion-label stacked color>Location: {{match.location}} </ion-label>
-    </ion-item>
-    <ion-item no-lines>
-      <ion-label stacked color>No. of Players: {{match.participants/match.max_capacity}} </ion-label>
-    </ion-item>
-    <ion-item no-lines>
-      <ion-label stacked color>Time: {{match.start_time-match.end_time}} </ion-label>
-    </ion-item>
-    <ion-item no-lines>
-      <ion-label stacked color>Skill Level Required: {{match.skill_level}} </ion-label>
-    </ion-item>
+      <ion-item no-lines>
+        <ion-label stacked color>No. of Players: {{match.participants.length}}/{{match.max_capacity}} </ion-label>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label stacked color>Time: {{getTime(match.start_time)}}-{{getTime(match.end_time)}} </ion-label>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label stacked color>Skill Level Required: {{match.skill_level}} </ion-label>
+      </ion-item>
   </div>
-
-</ion-content>
+  </ion-card-content>
+  </ion-card>
