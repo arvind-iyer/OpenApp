@@ -138,9 +138,11 @@ export class FirebaseAuth {
 
 @Injectable() 
 export class FirebaseMessaging {
-  m = firebase.messaging();
+  m : firebase.messaging.Messaging;
   currentMessage = new BehaviorSubject(null);
-  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {  }
+  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
+    // this.m = firebase.messaging();
+  }
 
   updateToken(token) {
     this.auth.authState.take(1).subscribe(user => 

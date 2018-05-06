@@ -9,7 +9,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Observable } from 'rxjs/Observable';
 import { MatchDetailPage } from '../match-detail/match-detail';
-import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebase';
+import { FirebaseDatabase, FirebaseAuth, FirebaseMessaging } from '../../providers/firebase/firebase';
 
 
 import { CreateMatchPage } from '../create-match/create-match'; 
@@ -32,6 +32,7 @@ export class MatchListPage {
     public modalCtrl: ModalController,
     public fbDb: FirebaseDatabase,
     public fbAuth: FirebaseAuth,
+    public fbm: FirebaseMessaging,
     public config: Config,
     public inAppBrowser: InAppBrowser
   ) {

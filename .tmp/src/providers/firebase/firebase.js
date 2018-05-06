@@ -166,8 +166,8 @@ var FirebaseMessaging = (function () {
     function FirebaseMessaging(db, auth) {
         this.db = db;
         this.auth = auth;
-        this.m = firebase.messaging();
         this.currentMessage = new BehaviorSubject(null);
+        // this.m = firebase.messaging();
     }
     FirebaseMessaging.prototype.updateToken = function (token) {
         var _this = this;

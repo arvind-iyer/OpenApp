@@ -1,26 +1,40 @@
+  <ion-scroll scrollY="true">
   <ion-card style="height: 100%">
-   <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>
+   <img  style="max-height: 25vh" src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>
    <ion-card-content padding class="match-detail">
      <ion-card-title>
        {{match.sport}} 
      </ion-card-title>
     <div text-center *ngIf="match">
       <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->
+      <button ion-button block>Join Game</button>
       <ion-item no-lines>
-          <ion-label>Host: {{match.host_id}} </ion-label>
+          <ion-icon name="person" item-start></ion-icon>
+          <ion-label>Hosted by {{match.host_id}} </ion-label>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-icon name="pin" item-start></ion-icon>
+        <ion-label>{{match.location}} </ion-label>
+      </ion-item>
+      <ion-item no-lines>
+          <ion-icon name="time" item-start></ion-icon>
+          <ion-label>{{getTime(match.start_time)}}-{{getTime(match.end_time)}}</ion-label>
         </ion-item>
-      <ion-item no-lines>
-        <ion-label stacked color>Location: {{match.location}} </ion-label>
-      </ion-item>
-      <ion-item no-lines>
-        <ion-label stacked color>No. of Players: {{match.participants.length}}/{{match.max_capacity}} </ion-label>
-      </ion-item>
-      <ion-item no-lines>
-        <ion-label stacked color>Time: {{getTime(match.start_time)}}-{{getTime(match.end_time)}} </ion-label>
-      </ion-item>
-      <ion-item no-lines>
-        <ion-label stacked color>Skill Level Required: {{match.skill_level}} </ion-label>
-      </ion-item>
-  </div>
-  </ion-card-content>
+        <ion-item no lines>
+          <ion-icon name="calendar" item-start></ion-icon>
+          <ion-label>{{getDate(match.start_time)}}</ion-label>
+        </ion-item>
+        <ion-item no-lines>
+            <ion-icon name="medal" item-start></ion-icon>
+            <ion-label >Skill Level: {{skillLevel(match)}} </ion-label>
+        </ion-item>
+        <!-- <ion-item> -->
+        <p>{{match.participants.length}} going </p>
+        <p *ngIf="hasSpots(match) == 1">{{hasSpots(match)}} spot left</p>
+        <p *ngIf="hasSpots(match) > 1">{{hasSpots(match)}} spots left</p>
+        <p *ngIf="hasSpots(match) < 1">No spots left</p>
+      <!-- </ion-item> -->
+      </div>
+    </ion-card-content>
   </ion-card>
+</ion-scroll>

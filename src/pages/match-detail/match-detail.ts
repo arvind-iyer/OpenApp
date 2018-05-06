@@ -26,7 +26,30 @@ export class MatchDetailPage {
       );
   }
 
-  
+  getDate(timestamp) {
+    var time = new Date(timestamp);
+    return time.toDateString();
+  }
+
+  hasSpots(match: Match) {
+    return match.max_capacity - match.participants.length; 
+  }
+
+  skillLevel(match) {
+    if(match.skill_level == 1) {
+      return "Beginner";
+    }
+    else if(match.skill_level == 2){
+      return "Intermediate";
+    }
+    else if(match.skill_level == 3){
+      return "Professional";
+    }
+    else {
+      return "Any"
+    }
+  }
+
   ionViewWillEnter() {
   }
 }

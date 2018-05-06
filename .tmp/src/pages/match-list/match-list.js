@@ -11,17 +11,18 @@ import { Component } from '@angular/core';
 import { Config, NavController, ModalController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MatchDetailPage } from '../match-detail/match-detail';
-import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebase';
+import { FirebaseDatabase, FirebaseAuth, FirebaseMessaging } from '../../providers/firebase/firebase';
 import { CreateMatchPage } from '../create-match/create-match';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 // import {LoginPage} from '../login/login';
 var MatchListPage = (function () {
-    function MatchListPage(navCtrl, modalCtrl, fbDb, fbAuth, config, inAppBrowser) {
+    function MatchListPage(navCtrl, modalCtrl, fbDb, fbAuth, fbm, config, inAppBrowser) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.modalCtrl = modalCtrl;
         this.fbDb = fbDb;
         this.fbAuth = fbAuth;
+        this.fbm = fbm;
         this.config = config;
         this.inAppBrowser = inAppBrowser;
         this.shownMatches = [];
@@ -120,6 +121,7 @@ var MatchListPage = (function () {
             ModalController,
             FirebaseDatabase,
             FirebaseAuth,
+            FirebaseMessaging,
             Config,
             InAppBrowser])
     ], MatchListPage);

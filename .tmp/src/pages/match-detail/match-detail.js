@@ -25,11 +25,32 @@ var MatchDetailPage = (function () {
         return (("0" + time.getHours()).slice(-2) + ":" +
             ("0" + time.getMinutes()).slice(-2));
     };
+    MatchDetailPage.prototype.getDate = function (timestamp) {
+        var time = new Date(timestamp);
+        return time.toDateString();
+    };
+    MatchDetailPage.prototype.hasSpots = function (match) {
+        return match.max_capacity - match.participants.length;
+    };
+    MatchDetailPage.prototype.skillLevel = function (match) {
+        if (match.skill_level == 1) {
+            return "Beginner";
+        }
+        else if (match.skill_level == 2) {
+            return "Intermediate";
+        }
+        else if (match.skill_level == 3) {
+            return "Professional";
+        }
+        else {
+            return "Any";
+        }
+    };
     MatchDetailPage.prototype.ionViewWillEnter = function () {
     };
     MatchDetailPage = __decorate([
         Component({
-            selector: 'page-match-detail',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/'<ion-header>\n  <ion-card>\n   <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n   <ion-card-content padding class="match-detail">\n     <ion-card-title>\n       {{match.sport}} \n     </ion-card-title>\n    <div text-center *ngIf="match">\n      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n      <ion-item no-lines>\n          <ion-label>Host: {{match.host_id}} </ion-label>\n        </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>Location: {{match.location}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>No. of Players: {{match.participants}}/{{match.max_capacity}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>Time: {{getTime(match.start_time)}}-{{getTime(match.end_time)}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-label stacked color>Skill Level Required: {{match.skill_level}} </ion-label>\n      </ion-item>\n  </div>\n  </ion-card-content>\n  </ion-card>\n  </ion-header>'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/
+            selector: 'page-match-detail',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/'  <ion-scroll scrollY="true">\n  <ion-card style="height: 100%">\n   <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n   <ion-card-content padding class="match-detail">\n     <ion-card-title>\n       {{match.sport}} \n     </ion-card-title>\n    <div text-center *ngIf="match">\n      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n      <button ion-button block>Join Game</button>\n      <ion-item no-lines>\n          <ion-icon name="person" item-start></ion-icon>\n          <ion-label>Hosted by {{match.host_id}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-icon name="pin" item-start></ion-icon>\n        <ion-label>{{match.location}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n          <ion-icon name="time" item-start></ion-icon>\n          <ion-label>{{getTime(match.start_time)}}-{{getTime(match.end_time)}}</ion-label>\n        </ion-item>\n        <ion-item no lines>\n          <ion-icon name="calendar" item-start></ion-icon>\n          <ion-label>{{getDate(match.start_time)}}</ion-label>\n        </ion-item>\n        <ion-item no-lines>\n            <ion-icon name="medal" item-start></ion-icon>\n            <ion-label >Skill Level: {{skillLevel(match)}} </ion-label>\n        </ion-item>\n        <!-- <ion-item> -->\n        <p>{{match.participants.length}} going </p>\n        <p *ngIf="hasSpots(match) == 1">{{hasSpots(match)}} spot left</p>\n        <p *ngIf="hasSpots(match) > 1">{{hasSpots(match)}} spots left</p>\n        <p *ngIf="hasSpots(match) < 1">No spots left</p>\n      <!-- </ion-item> -->\n      </div>\n    </ion-card-content>\n  </ion-card>\n</ion-scroll>'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/
         }),
         __metadata("design:paramtypes", [NavController, NavParams])
     ], MatchDetailPage);

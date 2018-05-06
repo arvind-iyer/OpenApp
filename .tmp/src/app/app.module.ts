@@ -26,7 +26,7 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 import { CreateMatchPage } from '../pages/create-match/create-match';
 
-import { FirebaseDatabase, FirebaseAuth } from '../providers/firebase/firebase';
+import { FirebaseDatabase, FirebaseAuth, FirebaseMessaging } from '../providers/firebase/firebase';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireStorage} from 'angularfire2/storage';
@@ -97,8 +97,9 @@ import { firebaseConfig } from '../providers/firebase/config';
     SplashScreen,
     FirebaseDatabase,
     FirebaseAuth,
+    AngularFireAuth ,   
     AngularFireStorage,
-    AngularFireAuth    
+    FirebaseMessaging
   ]
 })
 export class AppModule { }
