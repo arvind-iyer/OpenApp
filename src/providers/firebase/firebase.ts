@@ -17,28 +17,30 @@ export class FirebaseDatabase {
    }
 
   getMatches() {
-    return this.afd.list('/matches/').valueChanges();
+    return this.afd.list('/matches/', ref=>ref.orderByChild("start_time")).valueChanges();
   }
   getStates() {
     return ["joined", "hosted", "full", "available"];
   }
   createMatch(match : Match) {
-    this.afd.list('/matches/').push(match);
+    const promise = this.afd.list('/matches/').push(match);
+    match.id = promise.key;
+    this.afd.list('/matches/').update(promise.key, match);
   }
 
   deleteMatch(id) {
     this.afd.list('/matches/').remove(id);
   }
 
-  updateMatch(id, match) {
-    this.afd.list('/matches/').update(id, match);
+  updateMatch(match) {
+    this.afd.list('/matches/').update(match.id, match);
   }
+
 
   uploadProfileImage(user_id: string, file: any) {
     console.log(user_id); // just to suppress the non-usage error
     let task : AngularFireUploadTask = this.storage.child('${user_id}/profile_picture').put(file);
     return task; 
-
     // Use uploadProfileImage(x,y).downloadURL() to get file URL
   }
 }

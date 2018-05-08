@@ -17,7 +17,7 @@ export class FirebaseDatabase {
    }
 
   getMatches() {
-    return this.afd.list('/matches/').valueChanges();
+    return this.afd.list('/matches/', ref=>ref.orderByChild("start_time")).valueChanges();
   }
   getStates() {
     return ["joined", "hosted", "full", "available"];
@@ -34,11 +34,38 @@ export class FirebaseDatabase {
     this.afd.list('/matches/').update(id, match);
   }
 
+  joinMatch(match_id : string, user_id: string) {
+    console.log(match_id, "join game");
+    const pLink = '/matches/' + match_id + '/participants/';
+    console.log(pLink); 
+    const pRef = this.afd.list(pLink); 
+    var joined = false;
+    pRef.valueChanges().subscribe(
+      participants => {
+        for (var p in participants) {
+          if(p == user_id) {
+            joined = true;
+          }
+        }
+
+        if (!joined) {
+          console.log("push ", user_id);
+          pRef.push(user_id);
+        }
+        else {
+          console.log("already joined");
+        }
+        
+      },
+      error => console.log(error)
+    );
+
+  }
+
   uploadProfileImage(user_id: string, file: any) {
     console.log(user_id); // just to suppress the non-usage error
     let task : AngularFireUploadTask = this.storage.child('${user_id}/profile_picture').put(file);
     return task; 
-
     // Use uploadProfileImage(x,y).downloadURL() to get file URL
   }
 }

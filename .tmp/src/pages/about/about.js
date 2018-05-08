@@ -7,12 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+import { FirebaseAuth } from '../../providers/firebase/firebase';
 import { Component } from '@angular/core';
 import { PopoverController } from 'ionic-angular';
 import { PopoverPage } from '../about-popover/about-popover';
 var AboutPage = (function () {
-    function AboutPage(popoverCtrl) {
+    function AboutPage(popoverCtrl, fbAuth) {
         this.popoverCtrl = popoverCtrl;
+        this.fbAuth = fbAuth;
+        this.data = {};
+        this.data.name = this.fbAuth.currentUserDisplayName;
     }
     AboutPage.prototype.presentPopover = function (event) {
         var popover = this.popoverCtrl.create(PopoverPage);
@@ -23,9 +27,9 @@ var AboutPage = (function () {
     };
     AboutPage = __decorate([
         Component({
-            selector: 'page-about',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/about/about.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>About</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <form (ngSubmit)="updateInfo()">\n      <ion-item>\n        <ion-icon name="person" item-start></ion-icon>\n        <ion-label >Name</ion-label>\n        <ion-input type="text" [(ngModel)]="data.name" value=""></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-icon name="calendar" item-start></ion-icon>\n        <ion-label >Age</ion-label>\n        <ion-input type="number" value="" [(ngModel)]="data.age"></ion-input>\n      </ion-item>\n\n      <ion-item>\n          <ion-icon name="body" item-start></ion-icon>\n          <ion-label >Gender</ion-label>\n          <ion-select [(ngModel)]="data.gender">\n            <ion-option value="male" >Male</ion-option>\n            <ion-option value="female" >Female</ion-option>\n            <ion-option value="other" >Other</ion-option>\n          </ion-select>\n        </ion-item>\n\n      <ion-item>\n        <ion-icon name="basketball" item-start></ion-icon>\n        <ion-label>Favorite Sport</ion-label>\n        <ion-select multiple="true" [(ngModel)]="data.sport">\n          <ion-option value="tennis">Tennis</ion-option>\n          <ion-option value="squash">Squash</ion-option>\n          <ion-option value="basketball">Basketball</ion-option>\n          <ion-option value="table_tennis">Table Tennis</ion-option>\n          <ion-option value="football">Football</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item>\n        <ion-icon name="phone" item-start></ion-icon>\n        <ion-label >Phone</ion-label>\n        <ion-input type="phone" name="phone" [(ngModel)]="data.phone"></ion-input>\n      </ion-item>\n      <button ion-button submit>Confirm</button>\n    </form>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/about/about.html"*/
+            selector: 'page-about',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/about/about.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>About</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <form (ngSubmit)="updateInfo()">\n      <ion-item>\n        <ion-icon name="person" item-start></ion-icon>\n        <ion-label >Name</ion-label>\n        <ion-input type="text" [(ngModel)]="data.name" name="name" value=""></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-icon name="calendar" item-start></ion-icon>\n        <ion-label >Age</ion-label>\n        <ion-input type="number" value="" [(ngModel)]="data.age" name="age"></ion-input>\n      </ion-item>\n\n      <ion-item>\n          <ion-icon name="body" item-start></ion-icon>\n          <ion-label >Gender</ion-label>\n          <ion-select [(ngModel)]="data.gender" name="gender">\n            <ion-option value="male" >Male</ion-option>\n            <ion-option value="female" >Female</ion-option>\n            <ion-option value="other" >Other</ion-option>\n          </ion-select>\n        </ion-item>\n\n      <ion-item>\n        <ion-icon name="basketball" item-start></ion-icon>\n        <ion-label>Favorite Sport</ion-label>\n        <ion-select multiple="true" [(ngModel)]="data.sport" name="sport">\n          <ion-option value="tennis">Tennis</ion-option>\n          <ion-option value="squash">Squash</ion-option>\n          <ion-option value="basketball">Basketball</ion-option>\n          <ion-option value="table_tennis">Table Tennis</ion-option>\n          <ion-option value="football">Football</ion-option>\n        </ion-select>\n      </ion-item>\n\n      <ion-item>\n        <ion-icon name="phone" item-start></ion-icon>\n        <ion-label >Phone</ion-label>\n        <ion-input type="phone" name="phone" [(ngModel)]="data.phone" name="phone"></ion-input>\n      </ion-item>\n      <button ion-button submit>Confirm</button>\n    </form>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/about/about.html"*/
         }),
-        __metadata("design:paramtypes", [PopoverController])
+        __metadata("design:paramtypes", [PopoverController, FirebaseAuth])
     ], AboutPage);
     return AboutPage;
 }());

@@ -1,5 +1,6 @@
 
 export interface Match {
+    id? : string;
     host_id: string;
     location: string;
     max_capacity: number;
@@ -8,13 +9,13 @@ export interface Match {
     participants: Array<string>;
     skill_level: number;
     sport: string;
-    state: string;
+    state?: string;
   }
 
 export interface AboutSettings {
-  name: string;
-  age: number;
-  gender: string;
-  sport: string[];
-  phone: number;
+  name?: string;
+  age?: number;
+  gender?: string;
+  sport?: string[];
+  phone?: number;
 }

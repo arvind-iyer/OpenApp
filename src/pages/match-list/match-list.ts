@@ -98,23 +98,26 @@ export class MatchListPage {
     return (new Date(timestamp)).toDateString();
   }
 
+
   getState(match) {
     var state : string;
     if(this.currentUser == null) {
       return;
     }
-    if(match.host_id == this.currentUser.displayName) {
-      
+    if(match.participants[0] == this.currentUser.uid) {
       state = "hosted";
-    }
-    else if(match.participants.length >= match.max_capacity) {
-      state = "full";
     }
     else if(match.participants.indexOf(this.currentUser.uid) >= 0) {
       state = "joined";
     }
+    else if(match.participants.length >= match.max_capacity) {
+      state = "full";
+    }
     else {
       state = "available";
+    }
+    if(match) {
+      match.state = state;
     }
     return state;
   }

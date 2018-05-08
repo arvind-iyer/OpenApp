@@ -1,8 +1,8 @@
+import { FirebaseDatabase, FirebaseAuth } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Match } from '../../interfaces/match';
 import { LoginPage } from '../login/login';
-
 @Component({
   selector: 'page-match-detail',
   templateUrl: 'match-detail.html'
@@ -10,7 +10,9 @@ import { LoginPage } from '../login/login';
 export class MatchDetailPage {
   match: Match;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private db: FirebaseDatabase,
+    private au: FirebaseAuth) {
     this.match = navParams.data;
     if (!this.match.start_time) {
       navCtrl.push(LoginPage);
@@ -34,6 +36,12 @@ export class MatchDetailPage {
   hasSpots(match: Match) {
     return match.max_capacity - match.participants.length; 
   }
+  canJoin() {
+    return !(this.match.state == "joined" || this.match.state == "hosted")
+  }
+  joinMatch() {
+    this.db.joinMatch(this.match.id, this.au.currentUserId);
+  }
 
   skillLevel(match) {
     if(match.skill_level == 1) {
@@ -51,5 +59,6 @@ export class MatchDetailPage {
   }
 
   ionViewWillEnter() {
+    console.log(this.match.state);
   }
 }

@@ -6,10 +6,7 @@
     "type" : "shell",
     "tasks": [
         {
-            "label": "ionic:serve-lab",
-            "args": [
-                "--lab"
-            ],
+            "label": "serve",
             "group": "build",
             "presentation": {
                 "reveal": "silent"

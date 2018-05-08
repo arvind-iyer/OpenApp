@@ -7,13 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+import { FirebaseDatabase, FirebaseAuth } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 var MatchDetailPage = (function () {
-    function MatchDetailPage(navCtrl, navParams) {
+    function MatchDetailPage(navCtrl, navParams, db, au) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.db = db;
+        this.au = au;
         this.match = navParams.data;
         if (!this.match.start_time) {
             navCtrl.push(LoginPage);
@@ -32,6 +35,12 @@ var MatchDetailPage = (function () {
     MatchDetailPage.prototype.hasSpots = function (match) {
         return match.max_capacity - match.participants.length;
     };
+    MatchDetailPage.prototype.canJoin = function () {
+        return !(this.match.state == "joined" || this.match.state == "hosted");
+    };
+    MatchDetailPage.prototype.joinMatch = function () {
+        this.db.joinMatch(this.match.id, this.au.currentUserId);
+    };
     MatchDetailPage.prototype.skillLevel = function (match) {
         if (match.skill_level == 1) {
             return "Beginner";
@@ -47,12 +56,15 @@ var MatchDetailPage = (function () {
         }
     };
     MatchDetailPage.prototype.ionViewWillEnter = function () {
+        console.log(this.match.state);
     };
     MatchDetailPage = __decorate([
         Component({
-            selector: 'page-match-detail',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/'  <ion-scroll scrollY="true">\n  <ion-card style="height: 100%">\n   <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n   <ion-card-content padding class="match-detail">\n     <ion-card-title>\n       {{match.sport}} \n     </ion-card-title>\n    <div text-center *ngIf="match">\n      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n      <button ion-button block>Join Game</button>\n      <ion-item no-lines>\n          <ion-icon name="person" item-start></ion-icon>\n          <ion-label>Hosted by {{match.host_id}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-icon name="pin" item-start></ion-icon>\n        <ion-label>{{match.location}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n          <ion-icon name="time" item-start></ion-icon>\n          <ion-label>{{getTime(match.start_time)}}-{{getTime(match.end_time)}}</ion-label>\n        </ion-item>\n        <ion-item no lines>\n          <ion-icon name="calendar" item-start></ion-icon>\n          <ion-label>{{getDate(match.start_time)}}</ion-label>\n        </ion-item>\n        <ion-item no-lines>\n            <ion-icon name="medal" item-start></ion-icon>\n            <ion-label >Skill Level: {{skillLevel(match)}} </ion-label>\n        </ion-item>\n        <!-- <ion-item> -->\n        <p>{{match.participants.length}} going </p>\n        <p *ngIf="hasSpots(match) == 1">{{hasSpots(match)}} spot left</p>\n        <p *ngIf="hasSpots(match) > 1">{{hasSpots(match)}} spots left</p>\n        <p *ngIf="hasSpots(match) < 1">No spots left</p>\n      <!-- </ion-item> -->\n      </div>\n    </ion-card-content>\n  </ion-card>\n</ion-scroll>'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/
+            selector: 'page-match-detail',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/'  <ion-scroll scrollY="true">\n  <ion-card style="height: 100%">\n   <img  style="max-height: 25vh" src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n   <ion-card-content padding class="match-detail">\n     <ion-card-title>\n       {{match.sport}} \n     </ion-card-title>\n    <div text-center *ngIf="match">\n      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n      <button ion-button block *ngIf="canJoin()" (click)="joinMatch()">Join Game</button>\n      <ion-item no-lines>\n          <ion-icon name="person" item-start></ion-icon>\n          <ion-label>Hosted by {{match.host_id}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n        <ion-icon name="pin" item-start></ion-icon>\n        <ion-label>{{match.location}} </ion-label>\n      </ion-item>\n      <ion-item no-lines>\n          <ion-icon name="time" item-start></ion-icon>\n          <ion-label>{{getTime(match.start_time)}}-{{getTime(match.end_time)}}</ion-label>\n        </ion-item>\n        <ion-item no lines>\n          <ion-icon name="calendar" item-start></ion-icon>\n          <ion-label>{{getDate(match.start_time)}}</ion-label>\n        </ion-item>\n        <ion-item no-lines>\n            <ion-icon name="medal" item-start></ion-icon>\n            <ion-label >Skill Level: {{skillLevel(match)}} </ion-label>\n        </ion-item>\n        <!-- <ion-item> -->\n        <p>{{match.participants.length}} going </p>\n        <p *ngIf="hasSpots(match) == 1">{{hasSpots(match)}} spot left</p>\n        <p *ngIf="hasSpots(match) > 1">{{hasSpots(match)}} spots left</p>\n        <p *ngIf="hasSpots(match) < 1">No spots left</p>\n      <!-- </ion-item> -->\n      </div>\n    </ion-card-content>\n  </ion-card>\n</ion-scroll>'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-detail/match-detail.html"*/
         }),
-        __metadata("design:paramtypes", [NavController, NavParams])
+        __metadata("design:paramtypes", [NavController, NavParams,
+            FirebaseDatabase,
+            FirebaseAuth])
     ], MatchDetailPage);
     return MatchDetailPage;
 }());

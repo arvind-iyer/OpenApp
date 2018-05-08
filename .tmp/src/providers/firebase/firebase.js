@@ -23,7 +23,7 @@ var FirebaseDatabase = (function () {
         this.storage = afs.ref("users");
     }
     FirebaseDatabase.prototype.getMatches = function () {
-        return this.afd.list('/matches/').valueChanges();
+        return this.afd.list('/matches/', function (ref) { return ref.orderByChild("start_time"); }).valueChanges();
     };
     FirebaseDatabase.prototype.getStates = function () {
         return ["joined", "hosted", "full", "available"];
@@ -36,6 +36,27 @@ var FirebaseDatabase = (function () {
     };
     FirebaseDatabase.prototype.updateMatch = function (id, match) {
         this.afd.list('/matches/').update(id, match);
+    };
+    FirebaseDatabase.prototype.joinMatch = function (match_id, user_id) {
+        console.log(match_id, "join game");
+        var pLink = '/matches/' + match_id + '/participants/';
+        console.log(pLink);
+        var pRef = this.afd.list(pLink);
+        var joined = false;
+        pRef.valueChanges().subscribe(function (participants) {
+            for (var p in participants) {
+                if (p == user_id) {
+                    joined = true;
+                }
+            }
+            if (!joined) {
+                console.log("push ", user_id);
+                pRef.push(user_id);
+            }
+            else {
+                console.log("already joined");
+            }
+        }, function (error) { return console.log(error); });
     };
     FirebaseDatabase.prototype.uploadProfileImage = function (user_id, file) {
         console.log(user_id); // just to suppress the non-usage error

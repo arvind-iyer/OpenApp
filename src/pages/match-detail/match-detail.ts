@@ -1,8 +1,8 @@
+import { FirebaseDatabase, FirebaseAuth } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Match } from '../../interfaces/match';
 import { LoginPage } from '../login/login';
-
 @Component({
   selector: 'page-match-detail',
   templateUrl: 'match-detail.html'
@@ -10,7 +10,9 @@ import { LoginPage } from '../login/login';
 export class MatchDetailPage {
   match: Match;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private db: FirebaseDatabase,
+    private au: FirebaseAuth) {
     this.match = navParams.data;
     if (!this.match.start_time) {
       navCtrl.push(LoginPage);
@@ -34,6 +36,20 @@ export class MatchDetailPage {
   hasSpots(match: Match) {
     return match.max_capacity - match.participants.length; 
   }
+  canJoin() {
+    return !(this.match.state == "joined" || this.match.state == "hosted")
+  }
+  joinMatch() {
+    const userid = this.au.currentUserId;
+    if (this.match.participants.indexOf(userid) < 0) {
+      this.match.participants.push(userid);
+      this.db.updateMatch(this.match);
+      console.log("joined game");
+    }
+    else {
+      console.log("already joined");
+    }
+  }
 
   skillLevel(match) {
     if(match.skill_level == 1) {
@@ -51,5 +67,6 @@ export class MatchDetailPage {
   }
 
   ionViewWillEnter() {
+    console.log(this.match.state);
   }
 }

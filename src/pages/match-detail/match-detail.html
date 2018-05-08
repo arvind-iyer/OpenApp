@@ -7,7 +7,7 @@
      </ion-card-title>
     <div text-center *ngIf="match">
       <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->
-      <button ion-button block>Join Game</button>
+      <button ion-button block *ngIf="canJoin()" (click)="joinMatch()">Join Game</button>
       <ion-item no-lines>
           <ion-icon name="person" item-start></ion-icon>
           <ion-label>Hosted by {{match.host_id}} </ion-label>
