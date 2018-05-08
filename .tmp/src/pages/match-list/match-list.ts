@@ -98,16 +98,6 @@ export class MatchListPage {
     return (new Date(timestamp)).toDateString();
   }
 
-  isJoined(match) : boolean {
-    let joined = false;
-    console.log(match.participants);
-    for(var p in match.participants) {
-      if( p == this.currentUser.uid) {
-        joined = true;
-      }
-    }
-    return joined;
-  }
 
   getState(match) {
     var state : string;
@@ -117,11 +107,11 @@ export class MatchListPage {
     if(match.participants[0] == this.currentUser.uid) {
       state = "hosted";
     }
+    else if(match.participants.indexOf(this.currentUser.uid) >= 0) {
+      state = "joined";
+    }
     else if(match.participants.length >= match.max_capacity) {
       state = "full";
-    }
-    else if(this.isJoined(match)) {
-      state = "joined";
     }
     else {
       state = "available";

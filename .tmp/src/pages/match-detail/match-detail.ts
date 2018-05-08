@@ -40,7 +40,15 @@ export class MatchDetailPage {
     return !(this.match.state == "joined" || this.match.state == "hosted")
   }
   joinMatch() {
-    this.db.joinMatch(this.match.id, this.au.currentUserId);
+    const userid = this.au.currentUserId;
+    if (this.match.participants.indexOf(userid) < 0) {
+      this.match.participants.push(userid);
+      this.db.updateMatch(this.match);
+      console.log("joined game");
+    }
+    else {
+      console.log("already joined");
+    }
   }
 
   skillLevel(match) {

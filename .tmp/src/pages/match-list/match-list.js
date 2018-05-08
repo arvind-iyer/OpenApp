@@ -80,16 +80,6 @@ var MatchListPage = (function () {
     MatchListPage.prototype.getDate = function (timestamp) {
         return (new Date(timestamp)).toDateString();
     };
-    MatchListPage.prototype.isJoined = function (match) {
-        var joined = false;
-        console.log(match.participants);
-        for (var p in match.participants) {
-            if (p == this.currentUser.uid) {
-                joined = true;
-            }
-        }
-        return joined;
-    };
     MatchListPage.prototype.getState = function (match) {
         var state;
         if (this.currentUser == null) {
@@ -98,11 +88,11 @@ var MatchListPage = (function () {
         if (match.participants[0] == this.currentUser.uid) {
             state = "hosted";
         }
+        else if (match.participants.indexOf(this.currentUser.uid) >= 0) {
+            state = "joined";
+        }
         else if (match.participants.length >= match.max_capacity) {
             state = "full";
-        }
-        else if (this.isJoined(match)) {
-            state = "joined";
         }
         else {
             state = "available";

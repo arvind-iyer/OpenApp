@@ -29,34 +29,15 @@ var FirebaseDatabase = (function () {
         return ["joined", "hosted", "full", "available"];
     };
     FirebaseDatabase.prototype.createMatch = function (match) {
-        this.afd.list('/matches/').push(match);
+        var promise = this.afd.list('/matches/').push(match);
+        match.id = promise.key;
+        this.afd.list('/matches/').update(promise.key, match);
     };
     FirebaseDatabase.prototype.deleteMatch = function (id) {
         this.afd.list('/matches/').remove(id);
     };
-    FirebaseDatabase.prototype.updateMatch = function (id, match) {
-        this.afd.list('/matches/').update(id, match);
-    };
-    FirebaseDatabase.prototype.joinMatch = function (match_id, user_id) {
-        console.log(match_id, "join game");
-        var pLink = '/matches/' + match_id + '/participants/';
-        console.log(pLink);
-        var pRef = this.afd.list(pLink);
-        var joined = false;
-        pRef.valueChanges().subscribe(function (participants) {
-            for (var p in participants) {
-                if (p == user_id) {
-                    joined = true;
-                }
-            }
-            if (!joined) {
-                console.log("push ", user_id);
-                pRef.push(user_id);
-            }
-            else {
-                console.log("already joined");
-            }
-        }, function (error) { return console.log(error); });
+    FirebaseDatabase.prototype.updateMatch = function (match) {
+        this.afd.list('/matches/').update(match.id, match);
     };
     FirebaseDatabase.prototype.uploadProfileImage = function (user_id, file) {
         console.log(user_id); // just to suppress the non-usage error

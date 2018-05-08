@@ -39,7 +39,15 @@ var MatchDetailPage = (function () {
         return !(this.match.state == "joined" || this.match.state == "hosted");
     };
     MatchDetailPage.prototype.joinMatch = function () {
-        this.db.joinMatch(this.match.id, this.au.currentUserId);
+        var userid = this.au.currentUserId;
+        if (this.match.participants.indexOf(userid) < 0) {
+            this.match.participants.push(userid);
+            this.db.updateMatch(this.match);
+            console.log("joined game");
+        }
+        else {
+            console.log("already joined");
+        }
     };
     MatchDetailPage.prototype.skillLevel = function (match) {
         if (match.skill_level == 1) {
