@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "ionic build",
-    "serve": "ionic build",
+    "serve": "ionic build && node server",
     "start": "npm run serve"
   },
   "dependencies": {
@@ -51,8 +51,7 @@
     "@ionic/app-scripts": "3.1.9",
     "typescript": "~2.4.2"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "config": {
     "ionic_aot_write_to_disk": true
   },
