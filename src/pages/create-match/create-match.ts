@@ -52,7 +52,13 @@ export class CreateMatchPage {
     let mm = parseInt(this.start_time.substr(f+1));
     mDate.setHours(hh);
     mDate.setMinutes(mm); 
-    this.match.start_time = mDate.getTime();
+    var ratio1 = mDate.getMinutes()/60;
+    if (ratio1 > 0.5){
+      this.match.start_time = mDate.getHours()+1 ;
+    }
+    this.match.start_time = mDate.getHours();
+
+
     
     
     f = this.end_time.indexOf(":");
@@ -60,7 +66,11 @@ export class CreateMatchPage {
     mm = parseInt(this.end_time.substr(f+1));
     mDate.setHours(hh);
     mDate.setMinutes(mm); 
-    this.match.end_time = mDate.getTime();
+    var ratio2 = mDate.getMinutes()/60;
+    if (ratio2 > 0.5){
+      this.match.end_time = (mDate.getHours()+1)*3600;
+    }
+    this.match.end_time = (mDate.getHours()*3600)+1800;
   }
 
   validateMatch() {
@@ -83,4 +93,6 @@ export class CreateMatchPage {
 
     this.navCtrl.pop();
   }
+
+
 }
