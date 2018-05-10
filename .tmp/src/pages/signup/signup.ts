@@ -25,6 +25,7 @@ export class SignupPage {
 
     if (form.valid) {
       this.fbAuth.signup(this.signup.email, this.signup.password);
+      // this.fbAuth.login(this.signup.email, this.signup.password);
       this.navCtrl.push(TabsPage);
     }
   }
