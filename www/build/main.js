@@ -89,10 +89,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var AboutPage = (function () {
     function AboutPage(popoverCtrl, fbAuth) {
+        var _this = this;
         this.popoverCtrl = popoverCtrl;
         this.fbAuth = fbAuth;
         this.data = {};
-        this.data.name = this.fbAuth.currentUserDisplayName;
+        var uid = this.fbAuth.currentUserId;
+        this.fbAuth.db.afd.object("users/" + uid + "/about").valueChanges().subscribe(function (d) {
+            _this.data = d;
+            console.log(d);
+        });
     }
     AboutPage.prototype.presentPopover = function (event) {
         var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_3__about_popover_about_popover__["a" /* PopoverPage */]);
@@ -100,14 +105,18 @@ var AboutPage = (function () {
     };
     AboutPage.prototype.updateInfo = function () {
         console.log(this.data);
+        var uid = this.fbAuth.currentUserId;
+        this.fbAuth.db.afd.object("users/" + uid).set({ about: this.data });
+        this.fbAuth.updateProfile(this.data.name);
     };
     AboutPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
             selector: 'page-about',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\about\about.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>About</ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="presentPopover($event)">\n\n        <ion-icon name="more"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n    <form (ngSubmit)="updateInfo()">\n\n      <ion-item>\n\n        <ion-icon name="person" item-start></ion-icon>\n\n        <ion-label >Name</ion-label>\n\n        <ion-input type="text" [(ngModel)]="data.name" name="name" value=""></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item>\n\n        <ion-icon name="calendar" item-start></ion-icon>\n\n        <ion-label >Age</ion-label>\n\n        <ion-input type="number" value="" [(ngModel)]="data.age" name="age"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item>\n\n          <ion-icon name="body" item-start></ion-icon>\n\n          <ion-label >Gender</ion-label>\n\n          <ion-select [(ngModel)]="data.gender" name="gender">\n\n            <ion-option value="male" >Male</ion-option>\n\n            <ion-option value="female" >Female</ion-option>\n\n            <ion-option value="other" >Other</ion-option>\n\n          </ion-select>\n\n        </ion-item>\n\n\n\n      <ion-item>\n\n        <ion-icon name="basketball" item-start></ion-icon>\n\n        <ion-label>Favorite Sport</ion-label>\n\n        <ion-select multiple="true" [(ngModel)]="data.sport" name="sport">\n\n          <ion-option value="tennis">Tennis</ion-option>\n\n          <ion-option value="squash">Squash</ion-option>\n\n          <ion-option value="basketball">Basketball</ion-option>\n\n          <ion-option value="table_tennis">Table Tennis</ion-option>\n\n          <ion-option value="football">Football</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <ion-item>\n\n        <ion-icon name="call" item-start></ion-icon>\n\n        <ion-label >Phone</ion-label>\n\n        <ion-input type="phone" name="phone" [(ngModel)]="data.phone" name="phone"></ion-input>\n\n      </ion-item>\n\n      <button ion-button block>Confirm</button>\n\n    </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\about\about.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* PopoverController */], __WEBPACK_IMPORTED_MODULE_0__providers_firebase_firebase__["a" /* FirebaseAuth */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* PopoverController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* PopoverController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__providers_firebase_firebase__["a" /* FirebaseAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__providers_firebase_firebase__["a" /* FirebaseAuth */]) === "function" && _b || Object])
     ], AboutPage);
     return AboutPage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=about.js.map
@@ -191,6 +200,7 @@ var MapPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_firebase_firebase__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__create_match_create_match__ = __webpack_require__(359);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__schedule_filter_schedule_filter__ = __webpack_require__(360);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(101);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -207,7 +217,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// import {LoginPage} from '../login/login';
+
 var MatchListPage = (function () {
     function MatchListPage(navCtrl, modalCtrl, fbDb, fbAuth, fbm, config, inAppBrowser) {
         var _this = this;
@@ -227,6 +237,10 @@ var MatchListPage = (function () {
                     _this.shownMatches = matches;
                 });
                 console.log(_this.matches);
+            }
+            else {
+                _this.fbAuth.logout();
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */]);
             }
         });
         this.currentUser = fbAuth.currentUser;
@@ -328,10 +342,10 @@ var MatchListPage = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_firebase_firebase__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabs_page_tabs_page__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__about_about__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_firebase_firebase__ = __webpack_require__(32);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -357,16 +371,17 @@ var SignupPage = (function () {
         if (form.valid) {
             this.fbAuth.signup(this.signup.email, this.signup.password);
             // this.fbAuth.login(this.signup.email, this.signup.password);
-            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__tabs_page_tabs_page__["a" /* TabsPage */]);
+            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_0__about_about__["a" /* AboutPage */]);
         }
     };
     SignupPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
             selector: 'page-user',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\signup\signup.html"*/'<ion-header>\n\n	<ion-navbar>\n\n		<button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n		<ion-title>Signup</ion-title>\n\n	</ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="login-page">\n\n\n\n	<div class="logo">\n\n		<img src="assets/img/appicon.svg" alt="Ionic Logo">\n\n	</div>\n\n\n\n	<form #signupForm="ngForm" novalidate>\n\n		<ion-list no-lines>\n\n			<ion-item>\n\n				<ion-label stacked color="primary">Email</ion-label>\n\n				<ion-input [(ngModel)]="signup.email" name="email" type="email" #email="ngModel" required>\n\n				</ion-input>\n\n			</ion-item>\n\n			<p ion-text [hidden]="email.valid || submitted == false" color="danger" padding-left>\n\n				Email is required\n\n			</p>\n\n\n\n			<ion-item>\n\n				<ion-label stacked color="primary">Password</ion-label>\n\n				<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>\n\n				</ion-input>\n\n			</ion-item>\n\n			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>\n\n				Password is required\n\n			</p>\n\n		</ion-list>\n\n\n\n		<div padding>\n\n			<button ion-button (click)="onSignup(signupForm)" type="submit" block>Create</button>\n\n		</div>\n\n	</form>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\signup\signup.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_firebase_firebase__["a" /* FirebaseAuth */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_firebase_firebase__["a" /* FirebaseAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_firebase_firebase__["a" /* FirebaseAuth */]) === "function" && _b || Object])
     ], SignupPage);
     return SignupPage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=signup.js.map
@@ -474,9 +489,10 @@ var FirebaseDatabase = (function () {
     };
     FirebaseDatabase = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_storage__["a" /* AngularFireStorage */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_storage__["a" /* AngularFireStorage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_storage__["a" /* AngularFireStorage */]) === "function" && _b || Object])
     ], FirebaseDatabase);
     return FirebaseDatabase;
+    var _a, _b;
 }());
 
 var FirebaseAuth = (function () {
@@ -555,7 +571,7 @@ var FirebaseAuth = (function () {
     FirebaseAuth.prototype.updateUserData = function () {
         // Writes user name and email to realtime db
         // useful if your app displays information about users or for admin features
-        var path = "users/" + this.currentUserId; // Endpoint on firebase
+        var path = "users/${this.currentUserId}"; // Endpoint on firebase
         var data = {
             email: this.authState.email,
             name: this.authState.displayName
@@ -574,6 +590,7 @@ var FirebaseAuth = (function () {
         this.afAuth.auth.currentUser.updatePassword(newPass);
     };
     FirebaseAuth.prototype.updateProfile = function (newUserName, photoUrl) {
+        if (photoUrl === void 0) { photoUrl = ""; }
         if (newUserName == "") {
             newUserName = this.currentUserDisplayName;
         }
@@ -587,9 +604,10 @@ var FirebaseAuth = (function () {
     };
     FirebaseAuth = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */], FirebaseDatabase])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* Events */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object, FirebaseDatabase])
     ], FirebaseAuth);
     return FirebaseAuth;
+    var _a, _b;
 }());
 
 var FirebaseMessaging = (function () {
@@ -633,9 +651,10 @@ var FirebaseMessaging = (function () {
     };
     FirebaseMessaging = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object])
     ], FirebaseMessaging);
     return FirebaseMessaging;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=firebase.js.map
