@@ -7,7 +7,7 @@ import { FirebaseAuth } from '../../providers/firebase/firebase';
 
 import { UserOptions } from '../../interfaces/user-options';
 
-import { TabsPage } from '../tabs-page/tabs-page';
+import { AboutPage } from '../about/about';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class SignupPage {
     if (form.valid) {
       this.fbAuth.signup(this.signup.email, this.signup.password);
       // this.fbAuth.login(this.signup.email, this.signup.password);
-      this.navCtrl.push(TabsPage);
+      this.navCtrl.push(AboutPage);
     }
   }
 }
