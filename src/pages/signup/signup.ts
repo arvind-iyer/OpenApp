@@ -1,3 +1,4 @@
+import { AboutPage } from './../about/about';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -8,6 +9,7 @@ import { FirebaseAuth } from '../../providers/firebase/firebase';
 import { UserOptions } from '../../interfaces/user-options';
 
 import { TabsPage } from '../tabs-page/tabs-page';
+
 
 
 @Component({
@@ -26,7 +28,9 @@ export class SignupPage {
     if (form.valid) {
       this.fbAuth.signup(this.signup.email, this.signup.password);
       // this.fbAuth.login(this.signup.email, this.signup.password);
-      this.navCtrl.push(TabsPage);
+      this.navCtrl.push(AboutPage);
     }
   }
+  
+
 }
