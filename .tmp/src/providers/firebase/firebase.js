@@ -1,12 +1,5 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import { __decorate } from "tslib";
+import { __metadata } from "tslib";
 // import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -16,7 +9,7 @@ import * as firebase from "firebase/app";
 import { Events } from "ionic-angular";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
-var FirebaseDatabase = (function () {
+var FirebaseDatabase = /*@__PURE__*/ (function () {
     function FirebaseDatabase(afd, afs) {
         this.afd = afd;
         this.afs = afs;
@@ -45,14 +38,10 @@ var FirebaseDatabase = (function () {
         return task;
         // Use uploadProfileImage(x,y).downloadURL() to get file URL
     };
-    FirebaseDatabase = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [AngularFireDatabase, AngularFireStorage])
-    ], FirebaseDatabase);
     return FirebaseDatabase;
 }());
 export { FirebaseDatabase };
-var FirebaseAuth = (function () {
+var FirebaseAuth = /*@__PURE__*/ (function () {
     function FirebaseAuth(events, afAuth, db) {
         var _this = this;
         this.events = events;
@@ -158,14 +147,10 @@ var FirebaseAuth = (function () {
             photoURL: photoUrl
         });
     };
-    FirebaseAuth = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [Events, AngularFireAuth, FirebaseDatabase])
-    ], FirebaseAuth);
     return FirebaseAuth;
 }());
 export { FirebaseAuth };
-var FirebaseMessaging = (function () {
+var FirebaseMessaging = /*@__PURE__*/ (function () {
     function FirebaseMessaging(db, auth) {
         this.db = db;
         this.auth = auth;
@@ -204,11 +189,9 @@ var FirebaseMessaging = (function () {
             _this.currentMessage.next(payload);
         });
     };
-    FirebaseMessaging = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [AngularFireDatabase, AngularFireAuth])
-    ], FirebaseMessaging);
     return FirebaseMessaging;
 }());
 export { FirebaseMessaging };
-//# sourceMappingURL=firebase.js.map
+
+
+

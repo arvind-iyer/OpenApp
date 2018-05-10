@@ -15,7 +15,7 @@
 <ion-content class="outer-content match-list card-background-page" >
   <ion-item *ngFor="let match of shownMatches" #slidingItem [attr.state]="getState(match)" (click)="goToMatchDetail(match)" >
     <ion-card>
-      <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>
+      <img src="assets/img/bg/{{match.sport | lowercase}}.jpg"/>
       <div class="card-text">
         <div class="card-title">{{match.sport}}</div>
         <div class="card-subtitle">{{match.location}}</div>

@@ -1,16 +1,9 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import { __decorate } from "tslib";
+import { __metadata } from "tslib";
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 import { FirebaseDatabase } from '../../providers/firebase/firebase';
-var ScheduleFilterPage = (function () {
+var ScheduleFilterPage = /*@__PURE__*/ (function () {
     function ScheduleFilterPage(fbd, navParams, viewCtrl) {
         var _this = this;
         this.fbd = fbd;
@@ -46,6 +39,7 @@ var ScheduleFilterPage = (function () {
         // can "dismiss" itself and pass back data
         this.viewCtrl.dismiss(data);
     };
+<<<<<<< HEAD
     ScheduleFilterPage = __decorate([
         Component({
             selector: 'page-schedule-filter',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\schedule-filter\schedule-filter.html"*/'<ion-header>\n\n  <ion-toolbar>\n\n    <ion-buttons start>\n\n      <button ion-button (click)="dismiss()">Cancel</button>\n\n    </ion-buttons>\n\n\n\n    <ion-title>\n\n      Filter Sessions\n\n    </ion-title>\n\n\n\n    <ion-buttons end>\n\n      <button ion-button (click)="applyFilters()" strong>Done</button>\n\n    </ion-buttons>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n\n<ion-content class="outer-content">\n\n\n\n  <ion-list>\n\n    <ion-list-header>Types</ion-list-header>\n\n\n\n    <ion-item *ngFor="let state of states" [attr.state]="state.name | lowercase">\n\n      <span item-start class="dot"></span>\n\n      <ion-label>{{state.name}}</ion-label>\n\n      <ion-toggle [(ngModel)]="state.isChecked" color="secondary"></ion-toggle>\n\n    </ion-item>\n\n\n\n  </ion-list>\n\n\n\n  <ion-list>\n\n    <button ion-item (click)="resetFilters()" detail-none class="reset-filters">\n\n      Reset All Filters\n\n    </button>\n\n  </ion-list>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\schedule-filter\schedule-filter.html"*/
@@ -54,7 +48,11 @@ var ScheduleFilterPage = (function () {
             NavParams,
             ViewController])
     ], ScheduleFilterPage);
+=======
+>>>>>>> 9b754ae5750101e2430dc8b9a2fb5ac31f8dece2
     return ScheduleFilterPage;
 }());
 export { ScheduleFilterPage };
-//# sourceMappingURL=schedule-filter.js.map
+
+
+

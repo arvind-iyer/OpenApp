@@ -1,12 +1,5 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import { __decorate } from "tslib";
+import { __metadata } from "tslib";
 import { Component } from '@angular/core';
 import { Config, NavController, ModalController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -15,7 +8,7 @@ import { FirebaseDatabase, FirebaseAuth, FirebaseMessaging } from '../../provide
 import { CreateMatchPage } from '../create-match/create-match';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 // import {LoginPage} from '../login/login';
-var MatchListPage = (function () {
+var MatchListPage = /*@__PURE__*/ (function () {
     function MatchListPage(navCtrl, modalCtrl, fbDb, fbAuth, fbm, config, inAppBrowser) {
         var _this = this;
         this.navCtrl = navCtrl;
@@ -116,6 +109,7 @@ var MatchListPage = (function () {
             console.log(x.length > 0 && x.keys().next().value);
         });
     };
+<<<<<<< HEAD
     MatchListPage = __decorate([
         Component({
             selector: 'page-match-list',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\match-list\match-list.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Matches</ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="presentFilter()">\n\n        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="outer-content match-list card-background-page" >\n\n  <ion-item *ngFor="let match of shownMatches" #slidingItem [attr.state]="getState(match)" (click)="goToMatchDetail(match)" >\n\n    <ion-card>\n\n      <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n\n      <div class="card-text">\n\n        <div class="card-title">{{match.sport}}</div>\n\n        <div class="card-subtitle">{{match.location}}</div>\n\n        <div class="card-subtitle2">{{getTime(match.start_time)}}-{{getTime(match.end_time)}} </div>\n\n      </div>\n\n    </ion-card>\n\n  </ion-item>\n\n  <ion-fab bottom right>\n\n    <button ion-fab (click)="openCreateMatchModal()"><ion-icon name="add"></ion-icon></button>\n\n  </ion-fab>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\match-list\match-list.html"*/
@@ -128,7 +122,11 @@ var MatchListPage = (function () {
             Config,
             InAppBrowser])
     ], MatchListPage);
+=======
+>>>>>>> 9b754ae5750101e2430dc8b9a2fb5ac31f8dece2
     return MatchListPage;
 }());
 export { MatchListPage };
-//# sourceMappingURL=match-list.js.map
+
+
+

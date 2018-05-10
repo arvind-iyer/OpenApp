@@ -1,16 +1,9 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import { __decorate } from "tslib";
+import { __metadata } from "tslib";
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Platform } from 'ionic-angular';
 // declare var google: any;
-var MapPage = (function () {
+var MapPage = /*@__PURE__*/ (function () {
     function MapPage(platform) {
         this.platform = platform;
     }
@@ -39,6 +32,7 @@ var MapPage = (function () {
         //   });
         // });
     };
+<<<<<<< HEAD
     __decorate([
         ViewChild('mapCanvas'),
         __metadata("design:type", ElementRef)
@@ -49,7 +43,11 @@ var MapPage = (function () {
         }),
         __metadata("design:paramtypes", [Platform])
     ], MapPage);
+=======
+>>>>>>> 9b754ae5750101e2430dc8b9a2fb5ac31f8dece2
     return MapPage;
 }());
 export { MapPage };
-//# sourceMappingURL=map.js.map
+
+
+

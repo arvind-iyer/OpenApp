@@ -1,12 +1,5 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import { __decorate } from "tslib";
+import { __metadata } from "tslib";
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebase';
@@ -16,7 +9,7 @@ import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebas
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var CreateMatchPage = (function () {
+var CreateMatchPage = /*@__PURE__*/ (function () {
     function CreateMatchPage(navCtrl, navParams, fbAuth, fbDb) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -74,6 +67,7 @@ var CreateMatchPage = (function () {
         }
         this.navCtrl.pop();
     };
+<<<<<<< HEAD
     CreateMatchPage = __decorate([
         Component({
             selector: 'page-create-match',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\create-match\create-match.html"*/'<!--\n\n  Generated template for the CreateMatchPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>CreateMatch</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <form (ngSubmit)="createMatch()">\n\n    <ion-item>\n\n      <ion-label>Location</ion-label>\n\n      <ion-input type="text" [(ngModel)]="match.location" name="location"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Date</ion-label>\n\n      <ion-datetime displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" name="date" [(ngModel)]="date"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Start Time</ion-label>\n\n      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="start_time" name="start_time"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>End Time</ion-label>\n\n      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="end_time" name="end_time"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Max Capacity</ion-label>\n\n      <ion-input type="number" name="max_cap" [(ngModel)]="match.max_capacity" min="1"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Sport</ion-label>\n\n      <ion-select [(ngModel)]="match.sport" name="sport" >\n\n        <ion-option value="Basketball">Basketball</ion-option>\n\n        <ion-option value="Tennis" >Tennis</ion-option>\n\n        <ion-option value="Table-tennis" >Table-tennis</ion-option>\n\n        <ion-option value="Squash" >Squash</ion-option>\n\n        <ion-option value="Football" >Football</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n\n\n    <button ion-button submit>Submit</button>\n\n  </form>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\create-match\create-match.html"*/,
@@ -83,7 +77,11 @@ var CreateMatchPage = (function () {
             FirebaseAuth,
             FirebaseDatabase])
     ], CreateMatchPage);
+=======
+>>>>>>> 9b754ae5750101e2430dc8b9a2fb5ac31f8dece2
     return CreateMatchPage;
 }());
 export { CreateMatchPage };
-//# sourceMappingURL=create-match.js.map
+
+
+

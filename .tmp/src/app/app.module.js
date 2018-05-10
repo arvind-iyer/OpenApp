@@ -1,9 +1,4 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 // import { AngularFireStorage } from 'angularfire2/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -32,79 +27,12 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { firebaseConfig } from '../providers/firebase/config';
-var AppModule = (function () {
+var AppModule = /*@__PURE__*/ (function () {
     function AppModule() {
     }
-    AppModule = __decorate([
-        NgModule({
-            declarations: [
-                GotNextApp,
-                AboutPage,
-                AccountPage,
-                LoginPage,
-                MapPage,
-                PopoverPage,
-                ScheduleFilterPage,
-                CreateMatchPage,
-                SignupPage,
-                MatchDetailPage,
-                MatchListPage,
-                TabsPage,
-                TutorialPage,
-                SupportPage
-            ],
-            imports: [
-                BrowserModule,
-                HttpModule,
-                AngularFireDatabaseModule,
-                AngularFireModule.initializeApp(firebaseConfig),
-                IonicModule.forRoot(GotNextApp, {}, {
-                    links: [
-                        { component: TabsPage, name: 'TabsPage', segment: 'tabs-page' },
-                        { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
-                        { component: MatchListPage, name: 'MatchList', segment: 'matchList' },
-                        { component: MatchDetailPage, name: 'MatchDetail', segment: 'matchDetail/:matchId' },
-                        { component: MapPage, name: 'Map', segment: 'map' },
-                        { component: AboutPage, name: 'About', segment: 'about' },
-                        { component: TutorialPage, name: 'Tutorial', segment: 'tutorial' },
-                        { component: SupportPage, name: 'SupportPage', segment: 'support' },
-                        { component: LoginPage, name: 'LoginPage', segment: 'login' },
-                        { component: AccountPage, name: 'AccountPage', segment: 'account' },
-                        { component: SignupPage, name: 'SignupPage', segment: 'signup' }
-                    ]
-                }),
-                IonicStorageModule.forRoot()
-            ],
-            bootstrap: [IonicApp],
-            entryComponents: [
-                GotNextApp,
-                AboutPage,
-                AccountPage,
-                LoginPage,
-                MapPage,
-                PopoverPage,
-                ScheduleFilterPage,
-                SignupPage,
-                MatchDetailPage,
-                MatchListPage,
-                TabsPage,
-                CreateMatchPage,
-                TutorialPage,
-                SupportPage
-            ],
-            providers: [
-                { provide: ErrorHandler, useClass: IonicErrorHandler },
-                InAppBrowser,
-                SplashScreen,
-                FirebaseDatabase,
-                FirebaseAuth,
-                AngularFireAuth,
-                AngularFireStorage,
-                FirebaseMessaging
-            ]
-        })
-    ], AppModule);
     return AppModule;
 }());
 export { AppModule };
-//# sourceMappingURL=app.module.js.map
+
+
+

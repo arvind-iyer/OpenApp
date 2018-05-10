@@ -1,17 +1,10 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import { __decorate } from "tslib";
+import { __metadata } from "tslib";
 import { Component, ViewChild } from '@angular/core';
 import { MenuController, NavController, Slides } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { TabsPage } from '../tabs-page/tabs-page';
-var TutorialPage = (function () {
+var TutorialPage = /*@__PURE__*/ (function () {
     function TutorialPage(navCtrl, menu, storage) {
         this.navCtrl = navCtrl;
         this.menu = menu;
@@ -38,6 +31,7 @@ var TutorialPage = (function () {
         // enable the root left menu when leaving the tutorial page
         this.menu.enable(true);
     };
+<<<<<<< HEAD
     __decorate([
         ViewChild('slides'),
         __metadata("design:type", Slides)
@@ -50,7 +44,11 @@ var TutorialPage = (function () {
             MenuController,
             Storage])
     ], TutorialPage);
+=======
+>>>>>>> 9b754ae5750101e2430dc8b9a2fb5ac31f8dece2
     return TutorialPage;
 }());
 export { TutorialPage };
-//# sourceMappingURL=tutorial.js.map
+
+
+
