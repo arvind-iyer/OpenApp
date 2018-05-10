@@ -62,6 +62,7 @@ export class FirebaseAuth {
 
   signup(email: string, password: string) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+    // this.afAuth.auth.
     this.events.publish('user:signup', this.currentUser, Date.now());
   }
 

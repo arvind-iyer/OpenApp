@@ -69,6 +69,7 @@ var FirebaseAuth = (function () {
     };
     FirebaseAuth.prototype.signup = function (email, password) {
         this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+        // this.afAuth.auth.
         this.events.publish('user:signup', this.currentUser, Date.now());
     };
     Object.defineProperty(FirebaseAuth.prototype, "authenticated", {
