@@ -8,7 +8,7 @@ import { FirebaseAuth } from '../../providers/firebase/firebase';
 
 import { UserOptions } from '../../interfaces/user-options';
 
-import { TabsPage } from '../tabs-page/tabs-page';
+import { AboutPage } from '../about/about';
 
 
 

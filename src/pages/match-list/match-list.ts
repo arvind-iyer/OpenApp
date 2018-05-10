@@ -15,7 +15,7 @@ import { FirebaseDatabase, FirebaseAuth, FirebaseMessaging } from '../../provide
 import { CreateMatchPage } from '../create-match/create-match'; 
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { Match } from '../../interfaces/match';
-// import {LoginPage} from '../login/login';
+import {LoginPage} from '../login/login';
 
 @Component({
   selector: 'page-match-list',
@@ -43,6 +43,9 @@ export class MatchListPage {
           this.shownMatches = matches;
         })
         console.log(this.matches);
+      } else {
+        this.fbAuth.logout();
+        this.navCtrl.push(LoginPage);
       }
     })
     this.currentUser = fbAuth.currentUser;

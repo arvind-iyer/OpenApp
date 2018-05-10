@@ -11,7 +11,11 @@ export class AboutPage {
   data: AboutSettings = {
   };
   constructor(public popoverCtrl: PopoverController, private fbAuth : FirebaseAuth) {
-    this.data.name = this.fbAuth.currentUserDisplayName;
+    const uid = this.fbAuth.currentUserId;
+    this.fbAuth.db.afd.object("users/" + uid + "/about").valueChanges().subscribe(d => {
+      this.data = d;
+      console.log(d);
+    });
    }
 
   presentPopover(event: Event) {
@@ -21,6 +25,8 @@ export class AboutPage {
 
   updateInfo() {
     console.log(this.data);
-
+    const uid = this.fbAuth.currentUserId;
+    this.fbAuth.db.afd.object("users/" + uid).set({about: this.data});
+    this.fbAuth.updateProfile(this.data.name);
   }
 }
