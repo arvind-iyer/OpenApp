@@ -1,12 +1,5 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import { __decorate } from "tslib";
+import { __metadata } from "tslib";
 import { Component } from '@angular/core';
 import { Config, NavController, ModalController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -15,7 +8,7 @@ import { FirebaseDatabase, FirebaseAuth, FirebaseMessaging } from '../../provide
 import { CreateMatchPage } from '../create-match/create-match';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 // import {LoginPage} from '../login/login';
-var MatchListPage = (function () {
+var MatchListPage = /*@__PURE__*/ (function () {
     function MatchListPage(navCtrl, modalCtrl, fbDb, fbAuth, fbm, config, inAppBrowser) {
         var _this = this;
         this.navCtrl = navCtrl;
@@ -116,19 +109,9 @@ var MatchListPage = (function () {
             console.log(x.length > 0 && x.keys().next().value);
         });
     };
-    MatchListPage = __decorate([
-        Component({
-            selector: 'page-match-list',template:/*ion-inline-start:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Matches</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentFilter()">\n        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="outer-content match-list card-background-page" >\n  <ion-item *ngFor="let match of shownMatches" #slidingItem [attr.state]="getState(match)" (click)="goToMatchDetail(match)" >\n    <ion-card>\n      <img src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n      <div class="card-text">\n        <div class="card-title">{{match.sport}}</div>\n        <div class="card-subtitle">{{match.location}}</div>\n        <div class="card-subtitle2">{{getTime(match.start_time)}}-{{getTime(match.end_time)}} </div>\n      </div>\n    </ion-card>\n  </ion-item>\n  <ion-fab bottom right>\n    <button ion-fab (click)="openCreateMatchModal()"><ion-icon name="add"></ion-icon></button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/home/arvind/coding/entr/hybrid/gotnext/src/pages/match-list/match-list.html"*/
-        }),
-        __metadata("design:paramtypes", [NavController,
-            ModalController,
-            FirebaseDatabase,
-            FirebaseAuth,
-            FirebaseMessaging,
-            Config,
-            InAppBrowser])
-    ], MatchListPage);
     return MatchListPage;
 }());
 export { MatchListPage };
-//# sourceMappingURL=match-list.js.map
+
+
+
