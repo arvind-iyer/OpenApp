@@ -28,7 +28,7 @@ export class CreateMatchPage {
     state: ""
   };
 
-  start_time : string = "";
+  start_time : any;
   end_time : string = "";
   date : string = "";
   currentUser : any;
@@ -46,20 +46,26 @@ export class CreateMatchPage {
   }
 
   setDate() {
-    let mDate = new Date(this.date);
+    let mDate = new Date();
     var f = this.start_time.indexOf(":");
     let hh = parseInt(this.start_time.substr(0, f));
     let mm = parseInt(this.start_time.substr(f+1));
+    if (mm != 0) {
+      hh += 1;
+    }
     mDate.setHours(hh);
-    mDate.setMinutes(mm); 
+    mDate.setMinutes(0);
     this.match.start_time = mDate.getTime();
     
     
     f = this.end_time.indexOf(":");
-    hh = parseInt(this.end_time.substr(0, f));
+    hh = parseInt(this.end_time.substr(0, f)) + 1;
     mm = parseInt(this.end_time.substr(f+1));
+    if (mm != 0) {
+      hh += 1;
+    }
     mDate.setHours(hh);
-    mDate.setMinutes(mm); 
+    mDate.setMinutes(0);
     this.match.end_time = mDate.getTime();
   }
 

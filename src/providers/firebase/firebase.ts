@@ -5,7 +5,7 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase/app";
 import { Match } from "../../interfaces/match";
-import { AboutSettings } from '../../interfaces/match';
+// import { AboutSettings } from '../../interfaces/match';
 import { Events } from "ionic-angular";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
