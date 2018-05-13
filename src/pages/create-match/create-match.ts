@@ -28,7 +28,7 @@ export class CreateMatchPage {
     state: ""
   };
 
-  start_time : string = "";
+  start_time : any;
   end_time : string = "";
   date : string = "";
   currentUser : any;
@@ -46,11 +46,15 @@ export class CreateMatchPage {
   }
 
   setDate() {
-    let mDate = new Date(this.date);
+    let mDate = new Date();
     var f = this.start_time.indexOf(":");
     let hh = parseInt(this.start_time.substr(0, f));
     let mm = parseInt(this.start_time.substr(f+1));
+    if (mm != 0) {
+      hh += 1;
+    }
     mDate.setHours(hh);
+<<<<<<< HEAD
     mDate.setMinutes(mm); 
     var ratio1 = mDate.getMinutes()/60;
     if (ratio1 > 0.5){
@@ -59,18 +63,30 @@ export class CreateMatchPage {
     this.match.start_time = mDate.getHours();
 
 
+=======
+    mDate.setMinutes(0);
+    this.match.start_time = mDate.getTime();
+>>>>>>> 6854bb4f1a0a05fb46a48b36a4623528606a47aa
     
     
     f = this.end_time.indexOf(":");
-    hh = parseInt(this.end_time.substr(0, f));
+    hh = parseInt(this.end_time.substr(0, f)) + 1;
     mm = parseInt(this.end_time.substr(f+1));
+    if (mm != 0) {
+      hh += 1;
+    }
     mDate.setHours(hh);
+<<<<<<< HEAD
     mDate.setMinutes(mm); 
     var ratio2 = mDate.getMinutes()/60;
     if (ratio2 > 0.5){
       this.match.end_time = (mDate.getHours()+1)*3600;
     }
     this.match.end_time = (mDate.getHours()*3600)+1800;
+=======
+    mDate.setMinutes(0);
+    this.match.end_time = mDate.getTime();
+>>>>>>> 6854bb4f1a0a05fb46a48b36a4623528606a47aa
   }
 
   validateMatch() {
