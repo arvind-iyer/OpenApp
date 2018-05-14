@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Camera } from 'ionic-native';
 import { AlertController, NavController } from 'ionic-angular';
 import { FirebaseAuth } from '../../providers/firebase/firebase';
 
@@ -7,18 +7,38 @@ import { FirebaseAuth } from '../../providers/firebase/firebase';
   selector: 'page-account',
   templateUrl: 'account.html'
 })
+
 export class AccountPage {
   user : any;
+  private imageSrc: string;
   constructor(public alertCtrl: AlertController, public nav: NavController, public fbAuth: FirebaseAuth) {
     this.user = fbAuth.currentUser;
+  }
+
+  private openGallery(): void {
+    console.log('Clicked to update picture')
+    let cameraOptions = {
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: Camera.DestinationType.FILE_URI,      
+      quality: 100,
+      targetWidth: 1000,
+      targetHeight: 1000,
+      encodingType: Camera.EncodingType.JPEG,      
+      correctOrientation: true
+    }
+  
+    Camera.getPicture(cameraOptions)
+      .then(file_uri => this.imageSrc = file_uri, 
+      err => console.log(err));   
   }
 
   ngAfterViewInit() {
   }
 
-  updatePicture() {
-    console.log('Clicked to update picture');
-  }
+  // updatePicture() {
+  //   console.log('Clicked to update picture');
+  // }
+  
 
   // Present an alert with the current username populated
   // clicking OK will update the username and display it
