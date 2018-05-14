@@ -416,10 +416,9 @@ var FirebaseDatabase = (function () {
     };
     FirebaseDatabase = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_storage__["a" /* AngularFireStorage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_storage__["a" /* AngularFireStorage */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_storage__["a" /* AngularFireStorage */]])
     ], FirebaseDatabase);
     return FirebaseDatabase;
-    var _a, _b;
 }());
 
 var FirebaseAuth = (function () {
@@ -531,10 +530,9 @@ var FirebaseAuth = (function () {
     };
     FirebaseAuth = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* Events */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object, FirebaseDatabase])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */], FirebaseDatabase])
     ], FirebaseAuth);
     return FirebaseAuth;
-    var _a, _b;
 }());
 
 var FirebaseMessaging = (function () {
@@ -578,10 +576,9 @@ var FirebaseMessaging = (function () {
     };
     FirebaseMessaging = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]])
     ], FirebaseMessaging);
     return FirebaseMessaging;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=firebase.js.map
@@ -745,15 +742,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var MatchDetailPage = (function () {
     function MatchDetailPage(navCtrl, navParams, db, au) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.db = db;
         this.au = au;
+        this.host = { name: "" };
         this.match = navParams.data;
         if (!this.match.start_time) {
             navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__login_login__["a" /* LoginPage */]);
         }
         console.log(this.match.participants.length);
+        this.db.afd.object("users/" + this.match.participants[0] + "/about").valueChanges().subscribe(function (data) {
+            _this.host = data;
+        });
     }
     MatchDetailPage.prototype.getTime = function (timestamp) {
         var time = new Date(timestamp);
@@ -800,7 +802,7 @@ var MatchDetailPage = (function () {
     };
     MatchDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-match-detail',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\match-detail\match-detail.html"*/'  <ion-scroll scrollY="true">\n\n  <ion-card style="height: 100%">\n\n   <img  style="max-height: 25vh" src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n\n   <ion-card-content padding class="match-detail">\n\n     <ion-card-title>\n\n       {{match.sport}} \n\n     </ion-card-title>\n\n    <div text-center *ngIf="match">\n\n      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n\n      <button ion-button block *ngIf="canJoin()" (click)="joinMatch()">Join Game</button>\n\n      <ion-item no-lines>\n\n          <ion-icon name="person" item-start></ion-icon>\n\n          <ion-label>Hosted by {{match.host_id}} </ion-label>\n\n      </ion-item>\n\n      <ion-item no-lines>\n\n        <ion-icon name="pin" item-start></ion-icon>\n\n        <ion-label>{{match.location}} </ion-label>\n\n      </ion-item>\n\n      <ion-item no-lines>\n\n          <ion-icon name="time" item-start></ion-icon>\n\n          <ion-label>{{getTime(match.start_time)}}-{{getTime(match.end_time)}}</ion-label>\n\n        </ion-item>\n\n        <ion-item no lines>\n\n          <ion-icon name="calendar" item-start></ion-icon>\n\n          <ion-label>{{getDate(match.start_time)}}</ion-label>\n\n        </ion-item>\n\n        <ion-item no-lines>\n\n            <ion-icon name="medal" item-start></ion-icon>\n\n            <ion-label >Skill Level: {{skillLevel(match)}} </ion-label>\n\n        </ion-item>\n\n        <!-- <ion-item> -->\n\n        <p>{{match.participants.length}} going </p>\n\n        <p *ngIf="hasSpots(match) == 1">{{hasSpots(match)}} spot left</p>\n\n        <p *ngIf="hasSpots(match) > 1">{{hasSpots(match)}} spots left</p>\n\n        <p *ngIf="hasSpots(match) < 1">No spots left</p>\n\n      <!-- </ion-item> -->\n\n      </div>\n\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-scroll>'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\match-detail\match-detail.html"*/
+            selector: 'page-match-detail',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\match-detail\match-detail.html"*/'  <ion-scroll scrollY="true">\n\n  <ion-card style="height: 100%">\n\n   <img  style="max-height: 25vh" src="../../assets/img/bg/{{match.sport | lowercase}}.jpg"/>\n\n   <ion-card-content padding class="match-detail">\n\n     <ion-card-title>\n\n       {{match.sport}} \n\n     </ion-card-title>\n\n    <div text-center *ngIf="match">\n\n      <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->\n\n      <button ion-button block *ngIf="canJoin()" (click)="joinMatch()">Join Game</button>\n\n      <ion-item no-lines>\n\n          <ion-icon name="person" item-start></ion-icon>\n\n          <ion-label>Hosted by {{host.name}} </ion-label>\n\n      </ion-item>\n\n      <ion-item no-lines>\n\n        <ion-icon name="pin" item-start></ion-icon>\n\n        <ion-label>{{match.location}} </ion-label>\n\n      </ion-item>\n\n      <ion-item no-lines>\n\n          <ion-icon name="time" item-start></ion-icon>\n\n          <ion-label>{{getTime(match.start_time)}}-{{getTime(match.end_time)}}</ion-label>\n\n        </ion-item>\n\n        <ion-item no lines>\n\n          <ion-icon name="calendar" item-start></ion-icon>\n\n          <ion-label>{{getDate(match.start_time)}}</ion-label>\n\n        </ion-item>\n\n        <ion-item no-lines>\n\n            <ion-icon name="medal" item-start></ion-icon>\n\n            <ion-label >Skill Level: {{skillLevel(match)}} </ion-label>\n\n        </ion-item>\n\n        <!-- <ion-item> -->\n\n        <p>{{match.participants.length}} going </p>\n\n        <p *ngIf="hasSpots(match) == 1">{{hasSpots(match)}} spot left</p>\n\n        <p *ngIf="hasSpots(match) > 1">{{hasSpots(match)}} spots left</p>\n\n        <p *ngIf="hasSpots(match) < 1">No spots left</p>\n\n      <!-- </ion-item> -->\n\n      </div>\n\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-scroll>'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\match-detail\match-detail.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_0__providers_firebase_firebase__["b" /* FirebaseDatabase */],
@@ -901,7 +903,7 @@ var CreateMatchPage = (function () {
     };
     CreateMatchPage.prototype.createMatch = function () {
         this.setDate();
-        this.match.host_id = this.currentUser.displayName;
+        this.match.host_id = this.currentUser.uid;
         this.match.participants.push(this.currentUser.uid);
         console.log(this.match);
         if (this.validateMatch()) {
@@ -1356,6 +1358,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var GotNextApp = (function () {
     function GotNextApp(events, fbAuth, menu, platform, storage, splashScreen) {
+        var _this = this;
         this.events = events;
         this.fbAuth = fbAuth;
         this.menu = menu;
@@ -1381,16 +1384,17 @@ var GotNextApp = (function () {
             { title: 'Signup', name: 'SignupPage', component: __WEBPACK_IMPORTED_MODULE_8__pages_signup_signup__["a" /* SignupPage */], icon: 'person-add' }
         ];
         this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
-        // // Check if the user has already seen the tutorial
-        // this.storage.get('hasSeenTutorial')
-        //   .then((hasSeenTutorial) => {
-        //     if (hasSeenTutorial) {
-        //       this.rootPage = LoginPage;
-        //     } else {
-        //       this.rootPage = TutorialPage;
-        //     }
-        //     this.platformReady()
-        //   });
+        // Check if the user has already seen the tutorial
+        this.storage.get('hasSeenTutorial')
+            .then(function (hasSeenTutorial) {
+            if (hasSeenTutorial) {
+                _this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
+            }
+            else {
+                _this.rootPage = __WEBPACK_IMPORTED_MODULE_10__pages_tutorial_tutorial__["a" /* TutorialPage */];
+            }
+            _this.platformReady();
+        });
         if (fbAuth.authenticated) {
             this.rootPage = __WEBPACK_IMPORTED_MODULE_9__pages_tabs_page_tabs_page__["a" /* TabsPage */];
         }
@@ -1559,7 +1563,7 @@ var LoginPage = (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-user',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\login\login.html"*/'<ion-header>\n\n	<ion-navbar>\n\n		<button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n		<ion-title>Login</ion-title>\n\n	</ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n	<div class="logo">\n\n		<img src="assets/img/appicon.svg" alt="Ionic logo">\n\n	</div>\n\n\n\n	<form #loginForm="ngForm" novalidate>\n\n		<ion-list no-lines>\n\n			<ion-item>\n\n				<ion-label stacked color="primary">Email</ion-label>\n\n				<ion-input [(ngModel)]="login.email" name="email" type="email" #email="ngModel" spellcheck="false" autocapitalize="off"\n\n					required>\n\n				</ion-input>\n\n			</ion-item>\n\n			<p ion-text [hidden]="email.valid || submitted == false" color="danger" padding-left>\n\n				Email is required\n\n			</p>\n\n\n\n			<ion-item>\n\n				<ion-label stacked color="primary">Password</ion-label>\n\n				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>\n\n				</ion-input>\n\n			</ion-item>\n\n			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>\n\n				Password is required\n\n			</p>\n\n		</ion-list>\n\n\n\n		<ion-row responsive-sm>\n\n			<ion-col>\n\n				<button ion-button (click)="onLogin(loginForm)" type="submit" block>Login</button>\n\n			</ion-col>\n\n			<ion-col>\n\n				<button ion-button (click)="onSignup()" color="light" block>Signup</button>\n\n			</ion-col>\n\n		</ion-row>\n\n	</form>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\login\login.html"*/
+            selector: 'page-user',template:/*ion-inline-start:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\login\login.html"*/'<ion-header>\n\n	<ion-navbar>\n\n		<button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n		<ion-title>Login</ion-title>\n\n	</ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n	<div class="logo">\n\n		<img src="assets/img/ic_launcher.png" alt="Got Next">\n\n	</div>\n\n\n\n	<form #loginForm="ngForm" novalidate>\n\n		<ion-list no-lines>\n\n			<ion-item>\n\n				<ion-label stacked color="primary">Email</ion-label>\n\n				<ion-input [(ngModel)]="login.email" name="email" type="email" #email="ngModel" spellcheck="false" autocapitalize="off"\n\n					required>\n\n				</ion-input>\n\n			</ion-item>\n\n			<p ion-text [hidden]="email.valid || submitted == false" color="danger" padding-left>\n\n				Email is required\n\n			</p>\n\n\n\n			<ion-item>\n\n				<ion-label stacked color="primary">Password</ion-label>\n\n				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>\n\n				</ion-input>\n\n			</ion-item>\n\n			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>\n\n				Password is required\n\n			</p>\n\n		</ion-list>\n\n\n\n		<ion-row responsive-sm>\n\n			<ion-col>\n\n				<button ion-button (click)="onLogin(loginForm)" type="submit" block>Login</button>\n\n			</ion-col>\n\n			<ion-col>\n\n				<button ion-button (click)="onSignup()" color="light" block>Signup</button>\n\n			</ion-col>\n\n		</ion-row>\n\n	</form>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Pranay Sood\Desktop\OpenApp-hybrid\OpenApp\src\pages\login\login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_firebase_firebase__["a" /* FirebaseAuth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */]])
     ], LoginPage);

@@ -7,10 +7,11 @@
 /build
 /captures
 .externalNativeBuild
+.tmp/
 
 
 node_modules
-# www
+www
 .idea
 .sass-cache
 coverage
@@ -19,5 +20,6 @@ plugins
 *.swp
 *.swo
 *.log
+.tmp/*
 # src/providers/firebase/config.ts
-.tmp
+

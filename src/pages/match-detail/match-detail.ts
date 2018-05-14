@@ -1,15 +1,17 @@
 import { FirebaseDatabase, FirebaseAuth } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Match } from '../../interfaces/match';
+import { Match, AboutSettings } from '../../interfaces/match';
 import { LoginPage } from '../login/login';
+
 @Component({
   selector: 'page-match-detail',
   templateUrl: 'match-detail.html'
 })
+
 export class MatchDetailPage {
   match: Match;
-
+  host: AboutSettings = {name: ""};
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private db: FirebaseDatabase,
     private au: FirebaseAuth) {
@@ -18,6 +20,10 @@ export class MatchDetailPage {
       navCtrl.push(LoginPage);
     }
     console.log(this.match.participants.length);
+    this.db.afd.object("users/" + this.match.participants[0] + "/about").valueChanges().subscribe(
+      data => {
+        this.host = data;
+      });
   }
 
   getTime(timestamp) {
@@ -27,6 +33,7 @@ export class MatchDetailPage {
         ("0" + time.getMinutes()).slice(-2)
       );
   }
+
 
   getDate(timestamp) {
     var time = new Date(timestamp);

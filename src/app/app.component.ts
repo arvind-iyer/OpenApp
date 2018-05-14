@@ -65,16 +65,16 @@ export class GotNextApp {
     public splashScreen: SplashScreen
   ) {
 
-    // // Check if the user has already seen the tutorial
-    // this.storage.get('hasSeenTutorial')
-    //   .then((hasSeenTutorial) => {
-    //     if (hasSeenTutorial) {
-    //       this.rootPage = LoginPage;
-    //     } else {
-    //       this.rootPage = TutorialPage;
-    //     }
-    //     this.platformReady()
-    //   });
+    // Check if the user has already seen the tutorial
+    this.storage.get('hasSeenTutorial')
+      .then((hasSeenTutorial) => {
+        if (hasSeenTutorial) {
+          this.rootPage = LoginPage;
+        } else {
+          this.rootPage = TutorialPage;
+        }
+        this.platformReady()
+      });
     if(fbAuth.authenticated) {
       this.rootPage = TabsPage;
     }

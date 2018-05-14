@@ -5,6 +5,7 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase/app";
 import { Match } from "../../interfaces/match";
+// import { AboutSettings } from '../../interfaces/match';
 import { Events } from "ionic-angular";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
@@ -97,10 +98,11 @@ export class FirebaseAuth {
       .catch(error => console.log(error));
   }
   
+
   private updateUserData(): void {
     // Writes user name and email to realtime db
     // useful if your app displays information about users or for admin features
-      let path = `users/${this.currentUserId}`; // Endpoint on firebase
+      let path = "users/${this.currentUserId}"; // Endpoint on firebase
       let data = {
                     email: this.authState.email,
                     name: this.authState.displayName
@@ -124,7 +126,7 @@ export class FirebaseAuth {
     this.afAuth.auth.currentUser.updatePassword(newPass)
   }
 
-  updateProfile( newUserName: string, photoUrl: string) {
+  updateProfile( newUserName: string, photoUrl: string = "") {
     if (newUserName == "") {
       newUserName = this.currentUserDisplayName;
     }
