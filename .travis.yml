@@ -2,5 +2,4 @@ install:
   - npm install -g cordova ionic
   - npm install
 
-script:
-  - bash deploy-gh.sh
+script: bash deploy-gh.sh

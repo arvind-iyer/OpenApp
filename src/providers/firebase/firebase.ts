@@ -9,7 +9,7 @@ import { Match } from "../../interfaces/match";
 import { Events } from "ionic-angular";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
-
+import { first } from 'rxjs/operators';
 @Injectable()
 export class FirebaseDatabase {
   storage: AngularFireStorageReference;
@@ -111,6 +111,9 @@ export class FirebaseAuth {
       this.db.afd.object(path).update(data)
       .catch(error => console.log(error));
   
+  }
+  isLoggedIn() {
+    return this.afAuth.authState.pipe(first()).toPromise();
   }
   
   logout() {
