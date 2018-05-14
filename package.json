@@ -57,7 +57,10 @@
     "ionic_aot_write_to_disk": true
   },
   "cordova": {
-    "platforms": [],
+    "platforms": [
+      "android",
+      "ios"
+    ],
     "plugins": {
       "cordova-plugin-crosswalk-webview": {
         "XWALK_VERSION": "22+",
