@@ -1,6 +1,6 @@
 import { FirebaseDatabase, FirebaseAuth } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { Match, AboutSettings } from '../../interfaces/match';
 import { LoginPage } from '../login/login';
 
@@ -13,6 +13,7 @@ export class MatchDetailPage {
   match: Match;
   host: AboutSettings = {name: ""};
   constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private toast: ToastController,
     private db: FirebaseDatabase,
     private au: FirebaseAuth) {
     this.match = navParams.data;
@@ -31,6 +32,32 @@ export class MatchDetailPage {
       this.navCtrl.push(LoginPage);
     }
   }
+
+  leaveMatch() {
+    console.log("TODO: Leave Match");
+    const uid = this.au.currentUserId;
+    this.match.participants = this.match.participants.filter(p => p !== uid);
+    console.log(this.match, uid);
+    // this.db.updateMatch(this.match);
+    this.toast.create({
+      message: 'Exited game',
+      duration: 1500,
+      position: 'bottom'
+    }).present();
+    this.match.state = "available";
+  }
+
+  deleteMatch() { 
+    console.log("TODO: Delete match");
+    this.db.deleteMatch(this.match);
+    this.toast.create({
+      message: 'Deleted game',
+      duration: 1500,
+      position: 'bottom'
+    }).present();
+    this.navCtrl.pop();
+  }
+
   getTime(timestamp) {
     var time = new Date(timestamp);
     return  (
@@ -57,6 +84,7 @@ export class MatchDetailPage {
       this.match.participants.push(userid);
       this.db.updateMatch(this.match);
       console.log("joined game");
+      this.match.state = "joined";
     }
     else {
       console.log("already joined");
