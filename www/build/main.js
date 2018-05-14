@@ -381,7 +381,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-//import { AboutSettings } from '../../interfaces/match';
+// import { AboutSettings } from '../../interfaces/match';
 
 
 
@@ -856,7 +856,6 @@ var CreateMatchPage = (function () {
             sport: "",
             state: ""
         };
-        this.start_time = "";
         this.end_time = "";
         this.date = "";
         this.currentUser = this.fbAuth.currentUser;
@@ -866,10 +865,13 @@ var CreateMatchPage = (function () {
         console.log('ionViewDidLoad CreateMatchPage');
     };
     CreateMatchPage.prototype.setDate = function () {
-        var mDate = new Date(this.date);
+        var mDate = new Date();
         var f = this.start_time.indexOf(":");
         var hh = parseInt(this.start_time.substr(0, f));
         var mm = parseInt(this.start_time.substr(f + 1));
+        if (mm != 0) {
+            hh += 1;
+        }
         mDate.setHours(hh);
         mDate.setMinutes(mm);
         var ratio1 = mDate.getMinutes() / 60;
@@ -878,8 +880,11 @@ var CreateMatchPage = (function () {
         }
         this.match.start_time = mDate.getHours();
         f = this.end_time.indexOf(":");
-        hh = parseInt(this.end_time.substr(0, f));
+        hh = parseInt(this.end_time.substr(0, f)) + 1;
         mm = parseInt(this.end_time.substr(f + 1));
+        if (mm != 0) {
+            hh += 1;
+        }
         mDate.setHours(hh);
         mDate.setMinutes(mm);
         var ratio2 = mDate.getMinutes() / 60;
