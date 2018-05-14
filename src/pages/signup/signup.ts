@@ -1,3 +1,7 @@
+import { AboutPage } from './../about/about';
+
+// import { TutorialPage } from './../tutorial/tutorial';
+
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -6,8 +10,6 @@ import { NavController } from 'ionic-angular';
 import { FirebaseAuth } from '../../providers/firebase/firebase';
 
 import { UserOptions } from '../../interfaces/user-options';
-
-import { AboutPage } from '../about/about';
 
 
 @Component({
@@ -29,4 +31,6 @@ export class SignupPage {
       this.navCtrl.push(AboutPage);
     }
   }
+  
+
 }
