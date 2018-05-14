@@ -16,9 +16,7 @@ export class MatchDetailPage {
     private db: FirebaseDatabase,
     private au: FirebaseAuth) {
     this.match = navParams.data;
-    if (!this.match.start_time) {
-      navCtrl.push(LoginPage);
-    }
+    this.checkLoggedIn();
     console.log(this.match.participants.length);
     this.db.afd.object("users/" + this.match.participants[0] + "/about").valueChanges().subscribe(
       data => {
@@ -26,6 +24,13 @@ export class MatchDetailPage {
       });
   }
 
+  async checkLoggedIn() {
+    const user = await this.au.isLoggedIn();
+    if (user == null) {
+      this.au.logout();
+      this.navCtrl.push(LoginPage);
+    }
+  }
   getTime(timestamp) {
     var time = new Date(timestamp);
     return  (

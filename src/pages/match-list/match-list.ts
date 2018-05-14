@@ -15,7 +15,7 @@ import { FirebaseDatabase, FirebaseAuth, FirebaseMessaging } from '../../provide
 import { CreateMatchPage } from '../create-match/create-match'; 
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { Match } from '../../interfaces/match';
-import {LoginPage} from '../login/login';
+// import {LoginPage} from '../login/login';
 
 @Component({
   selector: 'page-match-list',
@@ -36,21 +36,22 @@ export class MatchListPage {
     public config: Config,
     public inAppBrowser: InAppBrowser
   ) {
-    this.fbAuth.afAuth.authState.subscribe(auth=> {
-      if (auth) {
-        this.matches = fbDb.getMatches();
-        this.matches.subscribe(matches => {
-          this.shownMatches = matches;
-        })
-        console.log(this.matches);
-      } else {
-        this.fbAuth.logout();
-        this.navCtrl.push(LoginPage);
-      }
-    })
-    this.currentUser = fbAuth.currentUser;
+    this.loadMatches();
   }
 
+  async loadMatches() {
+    this.currentUser = await this.fbAuth.isLoggedIn();
+    if (this.currentUser) {
+      this.matches = this.fbDb.getMatches();
+      this.matches.subscribe(matches => {
+        this.shownMatches = matches;
+      })
+    }
+    else {
+      console.log("Leaving from here");
+      this.fbAuth.logout();
+    }
+  }
   ionViewDidLoad() {
     console.log(this.matches);
   }

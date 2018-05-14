@@ -120,7 +120,7 @@ export class GotNextApp {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
-      this.nav.setRoot('LoginPage');    
+      this.nav.setRoot(TabsPage);    
     });
 
     this.events.subscribe('user:signup', () => {
@@ -130,6 +130,7 @@ export class GotNextApp {
     this.events.subscribe('user:logout', () => {
       console.log("User has logged out");
       this.enableMenu(false);
+      this.nav.setRoot('LoginPage');
     });
   }
 

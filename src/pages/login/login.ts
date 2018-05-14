@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { NavController, ToastController } from 'ionic-angular';
-
+import { NavController, ToastController, Events, MenuController } from 'ionic-angular';
 import { FirebaseAuth } from '../../providers/firebase/firebase';
 
 import { UserOptions } from '../../interfaces/user-options';
@@ -19,8 +18,21 @@ export class LoginPage {
   login: UserOptions = { email: '', password: '' };
   submitted = false;
 
-  constructor(public navCtrl: NavController, public fbAuth: FirebaseAuth, private toastCtrl : ToastController) {
+  constructor(public navCtrl: NavController, 
+    public fbAuth: FirebaseAuth, 
+    private toastCtrl : ToastController, 
+    private menu: MenuController,
+    private events: Events) {
+    this.checkLoggedIn();
      
+  }
+
+  onPageDidEnter() {
+    this.menu.enable(false);
+  }
+
+  onPageDidLeave() {
+    this.menu.enable(true);
   }
 
   onLogin(form: NgForm) {
@@ -33,15 +45,20 @@ export class LoginPage {
   }
   ionViewDidLoad() {
 
+    this.menu.enable(false);
     
-    if(this.fbAuth.authenticated) {
+  }
+
+  async checkLoggedIn() {
+    const user  = await this.fbAuth.isLoggedIn();
+    if (user) {
       this.toastCtrl.create({
         message: 'Already Logged In',
         duration: 1500,
         position: 'bottom'
       }).present();
-      
-      this.navCtrl.push(TabsPage);
+      this.events.publish('user:login', user, Date.now());
+      // this.navCtrl.push(TabsPage);
     }
   }
 
