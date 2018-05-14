@@ -78,7 +78,7 @@ export class CreateMatchPage {
 
   createMatch() {
     this.setDate();
-    this.match.host_id = this.currentUser.displayName;
+    this.match.host_id = this.currentUser.uid;
     this.match.participants.push(this.currentUser.uid);
 
     console.log(this.match);

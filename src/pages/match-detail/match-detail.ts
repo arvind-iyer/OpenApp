@@ -28,6 +28,10 @@ export class MatchDetailPage {
       );
   }
 
+  hostName(match: Match) {
+    return this.db.afd.object("users/" + match.host_id + "/about/name").valueChanges();
+  } 
+
   getDate(timestamp) {
     var time = new Date(timestamp);
     return time.toDateString();
