@@ -8,6 +8,9 @@
     <div text-center *ngIf="match">
       <!-- <img [src]="getPicture(match.sport)" [alt]="match.host_id"><br> -->
       <button ion-button block *ngIf="canJoin()" (click)="joinMatch()">Join Game</button>
+      <button ion-button block color="danger" *ngIf="match.state == 'joined'" (click)="leaveMatch()">Leave Game</button>
+      <button ion-button block color="danger" *ngIf="match.state == 'hosted'" (click)="deleteMatch()">Delete Game</button>
+
       <ion-item no-lines>
           <ion-icon name="person" item-start></ion-icon>
           <ion-label>Hosted by {{host.name}} </ion-label>

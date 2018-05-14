@@ -29,8 +29,8 @@ export class FirebaseDatabase {
     this.afd.list('/matches/').update(promise.key, match);
   }
 
-  deleteMatch(id) {
-    this.afd.list('/matches/').remove(id);
+  deleteMatch(match) {
+    this.afd.list('/matches/').remove(match.id);
   }
 
   updateMatch(match) {
