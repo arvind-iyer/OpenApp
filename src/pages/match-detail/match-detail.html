@@ -31,11 +31,14 @@
             <ion-icon name="medal" item-start></ion-icon>
             <ion-label>Skill Level: {{skillLevel(match)}} </ion-label>
         </ion-item>
-        <ion-item no-lines>
+        <ion-item no-lines (click)="openWhatsapp()" >
+          
           <ion-icon name="call" item-start></ion-icon>
-          <ion-label>match.telephone</ion-label>
-        </ion-item> 
-        <!-- <ion-item> -->
+            <ion-label> 
+              {{host.phone}}
+            </ion-label>
+          </ion-item> 
+          <!-- <ion-item> -->
         <p>{{match.participants.length}} going </p>
         <p *ngIf="hasSpots(match) == 1">{{hasSpots(match)}} spot left</p>
         <p *ngIf="hasSpots(match) > 1">{{hasSpots(match)}} spots left</p>

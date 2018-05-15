@@ -47,6 +47,11 @@ export class MatchDetailPage {
     this.match.state = "available";
   }
 
+  openWhatsapp() {
+    console.log(this.host.phone);
+    window.open("whatsapp://send?text=Hello&phone=" + this.host.phone, "_system", "location=yes");
+  }
+
   deleteMatch() { 
     console.log("TODO: Delete match");
     this.db.deleteMatch(this.match);
