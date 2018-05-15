@@ -24,7 +24,10 @@ export class AboutPage {
     const uid = this.fbAuth.currentUserId;
     this.fbAuth.db.afd.object("users/" + uid).set({about: this.data});
     this.fbAuth.updateProfile(this.data.name);
-    this.navCtrl.push(TabsPage)
+    
+  }
+  goNextPage(){
+    this.navCtrl.push(TabsPage);
   }
 
 
