@@ -17,6 +17,7 @@ import * as firebase from "firebase/app";
 import { Events } from "ionic-angular";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
+import { first } from 'rxjs/operators';
 var FirebaseDatabase = (function () {
     function FirebaseDatabase(afd, afs) {
         this.afd = afd;
@@ -34,8 +35,8 @@ var FirebaseDatabase = (function () {
         match.id = promise.key;
         this.afd.list('/matches/').update(promise.key, match);
     };
-    FirebaseDatabase.prototype.deleteMatch = function (id) {
-        this.afd.list('/matches/').remove(id);
+    FirebaseDatabase.prototype.deleteMatch = function (match) {
+        this.afd.list('/matches/').remove(match.id);
     };
     FirebaseDatabase.prototype.updateMatch = function (match) {
         this.afd.list('/matches/').update(match.id, match);
@@ -136,6 +137,9 @@ var FirebaseAuth = (function () {
         };
         this.db.afd.object(path).update(data)
             .catch(function (error) { return console.log(error); });
+    };
+    FirebaseAuth.prototype.isLoggedIn = function () {
+        return this.afAuth.authState.pipe(first()).toPromise();
     };
     FirebaseAuth.prototype.logout = function () {
         this.afAuth.auth.signOut();
