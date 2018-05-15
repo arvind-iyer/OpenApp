@@ -39,6 +39,11 @@ export class CreateMatchPage {
     public fbDb : FirebaseDatabase) {
       this.currentUser = this.fbAuth.currentUser;
       console.log(this.currentUser);
+      
+      var start_date = new Date();
+      this.match.start_time = start_date.getTime();
+      start_date.setHours(start_date.getHours() + 1);
+      this.match.end_time = start_date.getTime();
   }
 
   ionViewDidLoad() {
@@ -46,34 +51,23 @@ export class CreateMatchPage {
   }
 
   setDate() {
-    let mDate = new Date();
+    let mDate = new Date(this.date);
     var f = this.start_time.indexOf(":");
     let hh = parseInt(this.start_time.substr(0, f));
     let mm = parseInt(this.start_time.substr(f+1));
-    if (mm != 0) {
-      hh += 1;
-    }
     mDate.setHours(hh);
-    mDate.setMinutes(mm); 
-    var ratio1 = mDate.getMinutes()/60;
-    if (ratio1 > 0.5){
-      this.match.start_time = mDate.getHours()+1 ;
-    }
-    this.match.start_time = mDate.getHours();
-
-      f = this.end_time.indexOf(":");
+    mDate.setMinutes(mm);
+    this.match.start_time = mDate.getTime();
+    
+    console.log(this.date, mDate, this.match.start_time, hh, mm);
+    
+    f = this.end_time.indexOf(":");
     hh = parseInt(this.end_time.substr(0, f)) + 1;
     mm = parseInt(this.end_time.substr(f+1));
-    if (mm != 0) {
-      hh += 1;
-    }
     mDate.setHours(hh);
-    mDate.setMinutes(mm); 
-    var ratio2 = mDate.getMinutes()/60;
-    if (ratio2 > 0.5){
-      this.match.end_time = (mDate.getHours()+1)*3600;
-    }
-    this.match.end_time = (mDate.getHours()*3600)+1800;
+    mDate.setMinutes(mm);
+    this.match.end_time = mDate.getTime();
+
   }
 
   validateMatch() {

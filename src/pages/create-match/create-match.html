@@ -25,11 +25,11 @@
     </ion-item>
     <ion-item>
       <ion-label>Start Time</ion-label>
-      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="start_time" name="start_time"></ion-datetime>
+      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" minuteValues="0,15,30,45" [(ngModel)]="start_time" name="start_time"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>End Time</ion-label>
-      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="end_time" name="end_time"></ion-datetime>
+      <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" minuteValues="0,15,30,45" [(ngModel)]="end_time" name="end_time"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>Max Capacity</ion-label>
