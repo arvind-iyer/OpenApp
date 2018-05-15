@@ -45,6 +45,7 @@
     "firebase-admin": "^5.12.0",
     "firebase-functions": "^1.0.2",
     "ionic-angular": "3.9.2",
+    "ionic-native": "^2.9.0",
     "ionicons": "3.0.0",
     "morgan": "^1.9.0",
     "rxjs": "^5.5.4",
