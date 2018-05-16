@@ -1,8 +1,8 @@
+import { MatchListPage } from './../match-list/match-list';
 import { FirebaseAuth } from '../../providers/firebase/firebase';
 import { Component } from '@angular/core';
 
 import { AboutSettings } from '../../interfaces/match';
-import { TabsPage } from '.././tabs-page/tabs-page';
 import { NavController } from 'ionic-angular';
 
 @Component({
@@ -27,7 +27,7 @@ export class AboutPage {
     
   }
   goNextPage(){
-    this.navCtrl.push(TabsPage);
+    this.navCtrl.push(MatchListPage);
   }
 
 

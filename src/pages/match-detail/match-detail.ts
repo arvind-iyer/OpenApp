@@ -49,7 +49,7 @@ export class MatchDetailPage {
 
   openWhatsapp() {
     console.log(this.host.phone);
-    window.open("whatsapp://send?text=Hello&phone=" + this.host.phone, "_system", "location=yes");
+    window.open("whatsapp://send?text=Hello&phone=" + this.host.phone);
   }
 
   deleteMatch() { 
