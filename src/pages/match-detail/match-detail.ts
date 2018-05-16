@@ -107,7 +107,7 @@ export class MatchDetailPage {
       return "Professional";
     }
     else {
-      return "Any"
+      return "Open to All"
     }
   }
 

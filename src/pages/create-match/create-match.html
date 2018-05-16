@@ -38,15 +38,23 @@
     <ion-item>
       <ion-label>Sport</ion-label>
       <ion-select [(ngModel)]="match.sport" name="sport" >
-        <ion-option value="Basketball">Basketball</ion-option>
+        <ion-option value="Basketball" >Basketball</ion-option>
         <ion-option value="Tennis" >Tennis</ion-option>
         <ion-option value="Table-tennis" >Table-tennis</ion-option>
         <ion-option value="Squash" >Squash</ion-option>
         <ion-option value="Football" >Football</ion-option>
       </ion-select>
     </ion-item>
-
-    <button ion-button submit>Submit</button>
+    <ion-item>
+    <ion-label>Skill Level</ion-label>
+    <ion-select [(ngModel)]="match.skill_level" name="skill level">
+    <ion-option value="1">Beginner</ion-option>
+    <ion-option value="2">Intermediate</ion-option>
+    <ion-option value="3">Professional</ion-option>
+    <ion-option>Any</ion-option>
+  </ion-select>
+</ion-item>
+  <button ion-button block>Submit</button>
   </form>
 
 </ion-content>
