@@ -76,7 +76,7 @@ $sports : (
     margin: 0px;
     position: relative;
     text-align: center;
-    height: 150px;
+    height: 160px;
   }
   img {
     height: 100%;
@@ -84,9 +84,9 @@ $sports : (
   .card-text {
     .card-title {
       position: absolute;
-      height: 65%;
+      height: 82%;
       background: linear-gradient(to right,rgba(#888, 0.0), rgba(#222, 0.9) 0.5, rgba(#888, 0.0));
-      top: 18%;
+      top: 8%;
       font-size: 2.0em;
       width: 80%;
       margin-left: 10%;
@@ -100,15 +100,25 @@ $sports : (
     .card-subtitle {
       font-size: 1.0em;
       position: absolute;
-      top: 52%;
       width: 80%;
       height: 100%;
       margin-left: 10%;
       margin-right: 10%;
       color: #fff;
-      
+      &.location {
+        top: 40%;
+      }
+      &.date {
+        top: 70%;
+      }
+      &.time {
+        top: 55%;
+      }
+      ion-icon {
+        margin-right:5px;
+      }
     }
-    .card-subtitle2 {
+    .card-subtitle2 .date {
       font-size: 1.0em;
       position: absolute;
       top: 70%;
