@@ -62,7 +62,7 @@ export class CreateMatchPage {
     console.log(this.date, mDate, this.match.start_time, hh, mm);
     
     f = this.end_time.indexOf(":");
-    hh = parseInt(this.end_time.substr(0, f)) + 1;
+    hh = parseInt(this.end_time.substr(0, f));
     mm = parseInt(this.end_time.substr(f+1));
     mDate.setHours(hh);
     mDate.setMinutes(mm);
