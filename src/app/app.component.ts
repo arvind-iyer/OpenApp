@@ -15,7 +15,7 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { MatchListPage } from '../pages/match-list/match-list';
 import { SupportPage } from '../pages/support/support';
 
-import { FirebaseAuth } from '../providers/firebase/firebase';
+import { FirebaseAuth, FirebaseMessaging } from '../providers/firebase/firebase';
 
 export interface PageInterface {
   title: string;
@@ -59,12 +59,15 @@ export class GotNextApp {
   constructor(
     public events: Events,
     public fbAuth: FirebaseAuth,
+    public fcm : FirebaseMessaging,
     public menu: MenuController,
     public platform: Platform,
     public storage: Storage,
     public splashScreen: SplashScreen
   ) {
 
+    fcm.getPermission();
+    fcm.receiveMessage();
     // Check if the user has already seen the tutorial
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
