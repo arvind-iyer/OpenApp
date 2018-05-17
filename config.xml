@@ -5,7 +5,7 @@
     <author email="arvindiiyer@gmail.com">Arvind Iyer</author>
     <content src="index.html" />
     <access origin="*" />
-    <access origin="whatsapp:*" launch-external="yes" />
+    <access launch-external="yes" origin="whatsapp:*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
