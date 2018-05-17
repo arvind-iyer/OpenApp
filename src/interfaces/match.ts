@@ -9,7 +9,7 @@ export interface Match {
     participants: Array<string>;
     skill_level: number;
     sport: string;
-    state?: string;
+    state?: string
   }
 
 export interface AboutSettings {

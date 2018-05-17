@@ -141,4 +141,6 @@ export class MatchListPage {
       console.log(x.length > 0 && x.keys().next().value);
     })
   }
+
 }
+
