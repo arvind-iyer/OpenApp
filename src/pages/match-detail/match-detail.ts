@@ -37,6 +37,8 @@ export class MatchDetailPage {
     console.log("TODO: Leave Match");
     const uid = this.au.currentUserId;
     this.match.participants = this.match.participants.filter(p => p !== uid);
+    this.match.state = "available";
+    this.db.updateMatch(this.match);
     console.log(this.match, uid);
     // this.db.updateMatch(this.match);
     this.toast.create({
@@ -44,7 +46,6 @@ export class MatchDetailPage {
       duration: 1500,
       position: 'bottom'
     }).present();
-    this.match.state = "available";
   }
 
   openWhatsapp() {
@@ -81,7 +82,7 @@ export class MatchDetailPage {
     return match.max_capacity - match.participants.length; 
   }
   canJoin() {
-    return !(this.match.state == "joined" || this.match.state == "hosted")
+    return !(this.match.state == "joined" || this.match.state == "hosted");
   }
   joinMatch() {
     const userid = this.au.currentUserId;
@@ -107,7 +108,7 @@ export class MatchDetailPage {
       return "Professional";
     }
     else {
-      return "Open to All"
+      return "Open to All";
     }
   }
 

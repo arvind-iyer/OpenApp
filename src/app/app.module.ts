@@ -36,7 +36,6 @@ import { firebaseConfig } from '../providers/firebase/config';
 // import { File } from '@ionic-native/file';
 // import { Transfer } from '@ionic-native/transfer';
 // import { FilePath } from '@ionic-native/file-path';
-import { Camera } from '@ionic-native/camera';
 
 
 @NgModule({
@@ -104,7 +103,6 @@ import { Camera } from '@ionic-native/camera';
     AngularFireAuth ,   
     AngularFireStorage,
     FirebaseMessaging,
-    Camera,
   ]
 })
 export class AppModule { }

@@ -10,6 +10,8 @@ import { Events } from "ionic-angular";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
 import { first } from 'rxjs/operators';
+import "@firebase/messaging";
+
 @Injectable()
 export class FirebaseDatabase {
   storage: AngularFireStorageReference;
@@ -148,16 +150,23 @@ export class FirebaseAuth {
 export class FirebaseMessaging {
   m : firebase.messaging.Messaging;
   currentMessage = new BehaviorSubject(null);
+  
   constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
-    // this.m = firebase.messaging();
+    this.m = firebase.messaging();
+
+    // navigator.serviceWorker.register('firebase-messaging-sw.js')
+    //   .then((registration) => {
+    //     this.m.useServiceWorker(registration);
+    //   })
+    // console.log("Token: ", this.m.getToken());
   }
 
   updateToken(token) {
     this.auth.authState.take(1).subscribe(user => 
     {
       if (!user) return;
-      const data = { [user.uid]: token};
-      this.db.object('notifTokens/').update(data);
+      const data = { "notifTokens": token};
+      this.db.object('users/' + user.uid).update(data);
     })
   }
 
@@ -181,5 +190,15 @@ export class FirebaseMessaging {
       console.log("Message received: ", payload);
       this.currentMessage.next(payload);
     });
+
+    // this.m.setBackgroundMessageHandler((payload) => {
+    //   console.log('[firebase-messaging] Received background message ', payload);
+    //   var notificationTitle = "Background Message Title";
+    //   var notificationOptions = {
+    //     body: "Background Message Body",
+    //     icon: "assets/icon.png"
+    //   };
+    //   return this.showNotification(notificationTitle, notificationOptions);
+    // })
   }
 }
