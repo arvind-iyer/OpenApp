@@ -1,8 +1,8 @@
 import { Match } from './../../../.tmp/src/interfaces/match';
-import { Match } from './../../interfaces/match';
+// import { Match } from './../../interfaces/match';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Match } from '../../interfaces/match';
+// import { Match } from '../../interfaces/match';
 import { FirebaseDatabase, FirebaseAuth } from '../../providers/firebase/firebase';
 
 /**
@@ -93,7 +93,7 @@ export class CreateMatchPage {
     this.navCtrl.pop();
   }
 
-typeSport(Match){
+typeSport(){
   if(this.match.sport == "Basketball"){
     return 1;
   }
