@@ -1,3 +1,5 @@
+import { Match } from './../../../.tmp/src/interfaces/match';
+import { Match } from './../../interfaces/match';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Match } from '../../interfaces/match';
@@ -91,5 +93,22 @@ export class CreateMatchPage {
     this.navCtrl.pop();
   }
 
+typeSport(Match){
+  if(this.match.sport == "Basketball"){
+    return 1;
+  }
+  else if(this.match.sport == "Football"){
+    return 2;
+  }
+  else if(this.match.sport == "Squash"){
+    return 3;
+  }
+  else if(this.match.sport == "Table-Tennis"){
+    return 4;
+  }
+  else if(this.match.sport == "Tennis"){
+    return 5;
+  }
+}
 
 }

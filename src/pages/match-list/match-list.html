@@ -17,8 +17,8 @@
     <ion-card>
       <img src="assets/img/bg/{{match.sport | lowercase}}.jpg"/>
       <div class="card-text">
-        <div class="card-title"><ion-input type="text" placeholder="Enter Your Event Name"></ion-input></div>
-        <div class="card-subtitle sport"><ion-icon name="basketball"></ion-icon>>{{match.sport}}</div>
+        <!-- <div class="card-title"><ion-input type="text" placeholder="Enter Your Event Name"></ion-input></div> -->
+        <div class="card-subtitle sport"><ion-icon name="basketball"></ion-icon>{{match.sport}}</div>
         <div class="card-subtitle location"><ion-icon name="pin"></ion-icon> {{match.location}}</div>
         <div class="card-subtitle date"><ion-icon name="calendar"></ion-icon>{{getDate(match.start_time)}}</div>
         <div class="card-subtitle time"><ion-icon name=time></ion-icon>{{getTime(match.start_time)}}-{{getTime(match.end_time)}} </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController } from 'ionic-angular';
 import { FirebaseAuth } from '../../providers/firebase/firebase';
+// import { Camera } from '@ionic-native/camera';
 
 @Component({
   selector: 'page-account',
@@ -9,6 +10,7 @@ import { FirebaseAuth } from '../../providers/firebase/firebase';
 
 export class AccountPage {
   user : any;
+  // private imageSrc: string;
   constructor(public alertCtrl: AlertController, 
     public nav: NavController, 
     public fbAuth: FirebaseAuth) {
@@ -63,6 +65,19 @@ export class AccountPage {
   }
 
   openGallery() {
-    console.log('Clicked to update picture');
+    // console.log('Clicked to update picture');
+    // let cameraOptions = {
+    //   sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+    //   destinationType: Camera.DestinationType.FILE_URI,      
+    //   quality: 100,
+    //   targetWidth: 1000,
+    //   targetHeight: 1000,
+    //   encodingType: Camera.EncodingType.JPEG,      
+    //   correctOrientation: true
+    // }
+  
+    // Camera.getPicture(cameraOptions)
+    //   .then(file_uri => this.imageSrc = file_uri, 
+    //   err => console.log(err));   
   }
 }

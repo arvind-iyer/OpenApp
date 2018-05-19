@@ -106,13 +106,16 @@ $sports : (
       margin-right: 10%;
       color: #fff;
       &.location {
-        top: 40%;
+        top: 55%;
       }
       &.date {
         top: 70%;
       }
       &.time {
-        top: 55%;
+        top: 85%;
+      }
+      &.sport{
+        top: 40%
       }
       ion-icon {
         margin-right:5px;
