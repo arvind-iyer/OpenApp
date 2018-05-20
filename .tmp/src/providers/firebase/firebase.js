@@ -1,5 +1,12 @@
-import { __decorate } from "tslib";
-import { __metadata } from "tslib";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 // import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -12,7 +19,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
 import { first } from 'rxjs/operators';
 import "@firebase/messaging";
-var FirebaseDatabase = /*@__PURE__*/ (function () {
+var FirebaseDatabase = (function () {
     function FirebaseDatabase(afd, afs) {
         this.afd = afd;
         this.afs = afs;
@@ -44,10 +51,14 @@ var FirebaseDatabase = /*@__PURE__*/ (function () {
         return task;
         // Use uploadProfileImage(x,y).downloadURL() to get file URL
     };
+    FirebaseDatabase = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [AngularFireDatabase, AngularFireStorage])
+    ], FirebaseDatabase);
     return FirebaseDatabase;
 }());
 export { FirebaseDatabase };
-var FirebaseAuth = /*@__PURE__*/ (function () {
+var FirebaseAuth = (function () {
     function FirebaseAuth(events, afAuth, db) {
         var _this = this;
         this.events = events;
@@ -145,9 +156,7 @@ var FirebaseAuth = /*@__PURE__*/ (function () {
         this.afAuth.auth.currentUser.updatePassword(newPass);
     };
     FirebaseAuth.prototype.updateProfile = function (newUserName, photoUrl) {
-        if (photoUrl === void 0) {
-            photoUrl = "";
-        }
+        if (photoUrl === void 0) { photoUrl = ""; }
         if (newUserName == "") {
             newUserName = this.currentUserDisplayName;
         }
@@ -159,10 +168,14 @@ var FirebaseAuth = /*@__PURE__*/ (function () {
             photoURL: photoUrl
         });
     };
+    FirebaseAuth = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [Events, AngularFireAuth, FirebaseDatabase])
+    ], FirebaseAuth);
     return FirebaseAuth;
 }());
 export { FirebaseAuth };
-var FirebaseMessaging = /*@__PURE__*/ (function () {
+var FirebaseMessaging = (function () {
     function FirebaseMessaging(db, auth) {
         var _this = this;
         this.db = db;
@@ -224,9 +237,11 @@ var FirebaseMessaging = /*@__PURE__*/ (function () {
         //   return this.m.showNotification(notificationTitle, notificationOptions);
         // })
     };
+    FirebaseMessaging = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [AngularFireDatabase, FirebaseAuth])
+    ], FirebaseMessaging);
     return FirebaseMessaging;
 }());
 export { FirebaseMessaging };
-
-
-
+//# sourceMappingURL=firebase.js.map
