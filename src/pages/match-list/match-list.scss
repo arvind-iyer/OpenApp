@@ -76,7 +76,7 @@ $sports : (
     margin: 0px;
     position: relative;
     text-align: center;
-    height: 160px;
+    height: 180px;
   }
   img {
     height: 100%;
@@ -84,17 +84,19 @@ $sports : (
   .card-text {
     .card-title {
       position: absolute;
-      height: 82%;
       background: linear-gradient(to right,rgba(#888, 0.0), rgba(#222, 0.9) 0.5, rgba(#888, 0.0));
+      height: 82%;
       top: 8%;
       font-size: 2.0em;
       width: 80%;
+      padding-top: 1%;
       margin-left: 10%;
       margin-right:10%;
       text-align: center;
       align-self: center;  
       font-weight: bold;
       color: #fff;
+      animation: marquee 5s linear infinite;
     }
 
     .card-subtitle {
@@ -105,17 +107,17 @@ $sports : (
       margin-left: 10%;
       margin-right: 10%;
       color: #fff;
-      &.location {
-        top: 55%;
-      }
-      &.date {
-        top: 70%;
-      }
-      &.time {
-        top: 85%;
-      }
       &.sport{
         top: 40%
+      }
+      &.location {
+        top: 52%;
+      }
+      &.date {
+        top: 64%;
+      }
+      &.time {
+        top: 76%;
       }
       ion-icon {
         margin-right:5px;

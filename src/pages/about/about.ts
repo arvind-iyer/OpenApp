@@ -16,7 +16,7 @@ export class AboutPage {
     const uid = this.fbAuth.currentUserId;
     this.fbAuth.db.afd.object("users/" + uid + "/about").valueChanges().subscribe(d => {
       this.data = d;
-      console.log(d);
+      // console.log(d);
     });
    }
   updateInfo() {

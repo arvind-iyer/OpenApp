@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
+// import { MapPage } from '../pages/map/map';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
@@ -41,8 +41,8 @@ export class GotNextApp {
   // the login page disables the left menu
   appPages: PageInterface[] = [
     { title: 'Matches', name: 'TabsPage', component: TabsPage, tabComponent: MatchListPage, index: 0, icon: 'basketball' },
-    { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map' },
-    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'information-circle' }
+    // { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map' },
+    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 1, icon: 'information-circle' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
@@ -67,7 +67,6 @@ export class GotNextApp {
   ) {
 
     fcm.getPermission();
-    fcm.receiveMessage();
     // Check if the user has already seen the tutorial
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
@@ -78,16 +77,23 @@ export class GotNextApp {
         }
         this.platformReady()
       });
-    if(fbAuth.authenticated) {
+    if(this.checkLoggedIn()) {
       this.rootPage = TabsPage;
+      this.enableMenu(this.fbAuth.authenticated);
     }
+    
     // load the conference data
 
     // decide which menu items should be hidden by current login status stored in local storage
-    this.enableMenu(this.fbAuth.authenticated);
     this.listenToLoginEvents();
   }
-
+  async checkLoggedIn() {
+    const user  = await this.fbAuth.isLoggedIn();
+    if (user) {
+      this.events.publish('user:login', user, Date.now());
+      // this.navCtrl.push(TabsPage);
+    }
+  }
   openPage(page: PageInterface) {
     let params = {};
 
@@ -123,7 +129,7 @@ export class GotNextApp {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
-      this.nav.setRoot(TabsPage);    
+      this.nav.setRoot(TabsPage);  
     });
 
     this.events.subscribe('user:signup', () => {

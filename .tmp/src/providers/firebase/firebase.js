@@ -19,7 +19,10 @@ var FirebaseDatabase = /*@__PURE__*/ (function () {
         this.storage = afs.ref("users");
     }
     FirebaseDatabase.prototype.getMatches = function () {
-        return this.afd.list('/matches/', function (ref) { return ref.orderByChild("start_time"); }).valueChanges();
+        return this.afd.list('/matches/', function (ref) {
+            return ref.orderByChild("start_time")
+                .startAt(new Date().getTime() + 600000);
+        }).valueChanges();
     };
     FirebaseDatabase.prototype.getStates = function () {
         return ["joined", "hosted", "full", "available"];
@@ -161,10 +164,21 @@ var FirebaseAuth = /*@__PURE__*/ (function () {
 export { FirebaseAuth };
 var FirebaseMessaging = /*@__PURE__*/ (function () {
     function FirebaseMessaging(db, auth) {
+        var _this = this;
         this.db = db;
         this.auth = auth;
         this.currentMessage = new BehaviorSubject(null);
         this.m = firebase.messaging();
+        this.receiveMessage();
+        this.m.onTokenRefresh(function () {
+            _this.m.getToken().then(function (refreshedToken) {
+                console.log("Token refreshed");
+                _this.updateToken(refreshedToken);
+            })
+                .catch(function (err) {
+                console.error("Unable to retrieve refreshed token", err);
+            });
+        });
         // navigator.serviceWorker.register('firebase-messaging-sw.js')
         //   .then((registration) => {
         //     this.m.useServiceWorker(registration);
@@ -172,20 +186,19 @@ var FirebaseMessaging = /*@__PURE__*/ (function () {
         // console.log("Token: ", this.m.getToken());
     }
     FirebaseMessaging.prototype.updateToken = function (token) {
-        var _this = this;
-        this.auth.authState.take(1).subscribe(function (user) {
-            if (!user)
-                return;
-            var data = { "notifTokens": token };
-            _this.db.object('users/' + user.uid).update(data);
-        });
+        var user = this.auth.currentUserId;
+        console.log("UserID: ", user, " token: ", token);
+        var data = { "notifTokens": token };
+        console.log();
+        this.db.object('users/' + user).update(data);
     };
     FirebaseMessaging.prototype.getPermission = function () {
         var _this = this;
         this.m.requestPermission()
             .then(function () {
             console.log('Notification permission granted');
-            return _this.m.getToken();
+            var token = _this.m.getToken();
+            _this.updateToken(token);
         })
             .then(function (token) {
             console.log(token);
@@ -204,11 +217,11 @@ var FirebaseMessaging = /*@__PURE__*/ (function () {
         // this.m.setBackgroundMessageHandler((payload) => {
         //   console.log('[firebase-messaging] Received background message ', payload);
         //   var notificationTitle = "Background Message Title";
-        //   var notificationOptions = {
+        //   var notificationOptions  = {
         //     body: "Background Message Body",
         //     icon: "assets/icon.png"
         //   };
-        //   return this.showNotification(notificationTitle, notificationOptions);
+        //   return this.m.showNotification(notificationTitle, notificationOptions);
         // })
     };
     return FirebaseMessaging;

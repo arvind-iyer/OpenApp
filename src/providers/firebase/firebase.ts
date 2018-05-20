@@ -18,9 +18,11 @@ export class FirebaseDatabase {
   constructor(public afd: AngularFireDatabase, public afs: AngularFireStorage ) {
     this.storage = afs.ref("users")
    }
-
   getMatches() {
-    return this.afd.list('/matches/', ref=>ref.orderByChild("start_time")).valueChanges();
+    return this.afd.list('/matches/', ref=>
+      ref.orderByChild("start_time")
+         .startAt(new Date().getTime() + 600000)
+    ).valueChanges();
   }
   getStates() {
     return ["joined", "hosted", "full", "available"];
@@ -151,9 +153,18 @@ export class FirebaseMessaging {
   m : firebase.messaging.Messaging;
   currentMessage = new BehaviorSubject(null);
   
-  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
+  constructor(private db: AngularFireDatabase, private auth: FirebaseAuth) {
     this.m = firebase.messaging();
-
+    this.receiveMessage();
+    this.m.onTokenRefresh( () => {
+      this.m.getToken().then( (refreshedToken) => {
+        console.log("Token refreshed");
+        this.updateToken(refreshedToken);
+      })
+      .catch( (err) => {
+        console.error("Unable to retrieve refreshed token", err);
+      });
+    });
     // navigator.serviceWorker.register('firebase-messaging-sw.js')
     //   .then((registration) => {
     //     this.m.useServiceWorker(registration);
@@ -162,19 +173,19 @@ export class FirebaseMessaging {
   }
 
   updateToken(token) {
-    this.auth.authState.take(1).subscribe(user => 
-    {
-      if (!user) return;
-      const data = { "notifTokens": token};
-      this.db.object('users/' + user.uid).update(data);
-    })
+    const user = this.auth.currentUserId;
+    console.log("UserID: ", user, " token: ", token);
+    const data = { "notifTokens": token};
+    console.log()
+    this.db.object('users/' + user).update(data);
   }
 
   getPermission() {
     this.m.requestPermission()
       .then( () => {
         console.log('Notification permission granted');
-        return this.m.getToken();
+        const token =  this.m.getToken();
+        this.updateToken(token);
       })
       .then(token => {
         console.log(token);
@@ -194,11 +205,11 @@ export class FirebaseMessaging {
     // this.m.setBackgroundMessageHandler((payload) => {
     //   console.log('[firebase-messaging] Received background message ', payload);
     //   var notificationTitle = "Background Message Title";
-    //   var notificationOptions = {
+    //   var notificationOptions  = {
     //     body: "Background Message Body",
     //     icon: "assets/icon.png"
     //   };
-    //   return this.showNotification(notificationTitle, notificationOptions);
+    //   return this.m.showNotification(notificationTitle, notificationOptions);
     // })
   }
 }

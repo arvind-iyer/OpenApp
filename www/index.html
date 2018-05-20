@@ -49,11 +49,11 @@
   <script src="build/main.js"></script>
 
   <!-- google maps script is loaded last as to not block rendering -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js"></script>
+  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js"></script> -->
 
   <script>
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('firebase-messaging-sw.js')
+        navigator.serviceWorker.register('service-worker.js')
           .then(() => console.log('service worker installed'))
           .catch(err => console.error('Error', err));
       }

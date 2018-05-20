@@ -1,5 +1,4 @@
-import { Match } from './../../../.tmp/src/interfaces/match';
-// import { Match } from './../../interfaces/match';
+import { Match } from './../../interfaces/match';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 // import { Match } from '../../interfaces/match';
@@ -27,7 +26,8 @@ export class CreateMatchPage {
     participants: [],
     skill_level: 0,
     sport: "",
-    state: ""
+    state: "",
+    title: ""
   };
 
   start_time : any;

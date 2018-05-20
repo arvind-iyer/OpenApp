@@ -21,6 +21,10 @@
 <ion-content padding>
   <form (ngSubmit)="createMatch()">
     <ion-item>
+      <ion-label>Title</ion-label>
+      <ion-input placeholder="{{match.sport}} match" name="title" [(ngModel)]="match.title"></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label>Sport</ion-label>
         <ion-select [(ngModel)]="match.sport" name="sport" >
           <ion-option value="Basketball">Basketball</ion-option>
