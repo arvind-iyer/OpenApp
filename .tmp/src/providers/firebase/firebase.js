@@ -1,5 +1,12 @@
-import { __decorate } from "tslib";
-import { __metadata } from "tslib";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 // import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -12,14 +19,17 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/take';
 import { first } from 'rxjs/operators';
 import "@firebase/messaging";
-var FirebaseDatabase = /*@__PURE__*/ (function () {
+var FirebaseDatabase = (function () {
     function FirebaseDatabase(afd, afs) {
         this.afd = afd;
         this.afs = afs;
         this.storage = afs.ref("users");
     }
     FirebaseDatabase.prototype.getMatches = function () {
-        return this.afd.list('/matches/', function (ref) { return ref.orderByChild("start_time"); }).valueChanges();
+        return this.afd.list('/matches/', function (ref) {
+            return ref.orderByChild("start_time")
+                .startAt(new Date().getTime() + 600000);
+        }).valueChanges();
     };
     FirebaseDatabase.prototype.getStates = function () {
         return ["joined", "hosted", "full", "available"];
@@ -41,10 +51,14 @@ var FirebaseDatabase = /*@__PURE__*/ (function () {
         return task;
         // Use uploadProfileImage(x,y).downloadURL() to get file URL
     };
+    FirebaseDatabase = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [AngularFireDatabase, AngularFireStorage])
+    ], FirebaseDatabase);
     return FirebaseDatabase;
 }());
 export { FirebaseDatabase };
-var FirebaseAuth = /*@__PURE__*/ (function () {
+var FirebaseAuth = (function () {
     function FirebaseAuth(events, afAuth, db) {
         var _this = this;
         this.events = events;
@@ -142,9 +156,7 @@ var FirebaseAuth = /*@__PURE__*/ (function () {
         this.afAuth.auth.currentUser.updatePassword(newPass);
     };
     FirebaseAuth.prototype.updateProfile = function (newUserName, photoUrl) {
-        if (photoUrl === void 0) {
-            photoUrl = "";
-        }
+        if (photoUrl === void 0) { photoUrl = ""; }
         if (newUserName == "") {
             newUserName = this.currentUserDisplayName;
         }
@@ -156,15 +168,30 @@ var FirebaseAuth = /*@__PURE__*/ (function () {
             photoURL: photoUrl
         });
     };
+    FirebaseAuth = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [Events, AngularFireAuth, FirebaseDatabase])
+    ], FirebaseAuth);
     return FirebaseAuth;
 }());
 export { FirebaseAuth };
-var FirebaseMessaging = /*@__PURE__*/ (function () {
+var FirebaseMessaging = (function () {
     function FirebaseMessaging(db, auth) {
+        var _this = this;
         this.db = db;
         this.auth = auth;
         this.currentMessage = new BehaviorSubject(null);
         this.m = firebase.messaging();
+        this.receiveMessage();
+        this.m.onTokenRefresh(function () {
+            _this.m.getToken().then(function (refreshedToken) {
+                console.log("Token refreshed");
+                _this.updateToken(refreshedToken);
+            })
+                .catch(function (err) {
+                console.error("Unable to retrieve refreshed token", err);
+            });
+        });
         // navigator.serviceWorker.register('firebase-messaging-sw.js')
         //   .then((registration) => {
         //     this.m.useServiceWorker(registration);
@@ -172,20 +199,19 @@ var FirebaseMessaging = /*@__PURE__*/ (function () {
         // console.log("Token: ", this.m.getToken());
     }
     FirebaseMessaging.prototype.updateToken = function (token) {
-        var _this = this;
-        this.auth.authState.take(1).subscribe(function (user) {
-            if (!user)
-                return;
-            var data = { "notifTokens": token };
-            _this.db.object('users/' + user.uid).update(data);
-        });
+        var user = this.auth.currentUserId;
+        console.log("UserID: ", user, " token: ", token);
+        var data = { "notifTokens": token };
+        console.log();
+        this.db.object('users/' + user).update(data);
     };
     FirebaseMessaging.prototype.getPermission = function () {
         var _this = this;
         this.m.requestPermission()
             .then(function () {
             console.log('Notification permission granted');
-            return _this.m.getToken();
+            var token = _this.m.getToken();
+            _this.updateToken(token);
         })
             .then(function (token) {
             console.log(token);
@@ -204,16 +230,18 @@ var FirebaseMessaging = /*@__PURE__*/ (function () {
         // this.m.setBackgroundMessageHandler((payload) => {
         //   console.log('[firebase-messaging] Received background message ', payload);
         //   var notificationTitle = "Background Message Title";
-        //   var notificationOptions = {
+        //   var notificationOptions  = {
         //     body: "Background Message Body",
         //     icon: "assets/icon.png"
         //   };
-        //   return this.showNotification(notificationTitle, notificationOptions);
+        //   return this.m.showNotification(notificationTitle, notificationOptions);
         // })
     };
+    FirebaseMessaging = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [AngularFireDatabase, FirebaseAuth])
+    ], FirebaseMessaging);
     return FirebaseMessaging;
 }());
 export { FirebaseMessaging };
-
-
-
+//# sourceMappingURL=firebase.js.map

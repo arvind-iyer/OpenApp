@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 
 import { AboutPage } from '../about/about';
-import { MapPage } from '../map/map';
+// import { MapPage } from '../map/map';
 import { MatchListPage } from '../match-list/match-list';
 
 @Component({
@@ -12,8 +12,8 @@ import { MatchListPage } from '../match-list/match-list';
 export class TabsPage {
   // set the root pages for each tab
   tab1Root: any = MatchListPage;
-  tab2Root: any = MapPage;
-  tab3Root: any = AboutPage;
+  // tab2Root: any = MapPage;
+  tab2Root: any = AboutPage;
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {

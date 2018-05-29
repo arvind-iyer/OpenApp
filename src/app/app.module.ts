@@ -16,7 +16,7 @@ import { AboutPage } from '../pages/about/about';
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
+// import { MapPage } from '../pages/map/map';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
 import { SignupPage } from '../pages/signup/signup';
 import { MatchDetailPage } from '../pages/match-detail/match-detail';
@@ -44,7 +44,7 @@ import { firebaseConfig } from '../providers/firebase/config';
     AboutPage,
     AccountPage,
     LoginPage,
-    MapPage,
+    // MapPage,
     PopoverPage,
     ScheduleFilterPage,
     CreateMatchPage,
@@ -66,7 +66,7 @@ import { firebaseConfig } from '../providers/firebase/config';
         { component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter' },
         { component: MatchListPage, name: 'MatchList', segment: 'matchList' },
         { component: MatchDetailPage, name: 'MatchDetail', segment: 'matchDetail/:matchId' },
-        { component: MapPage, name: 'Map', segment: 'map' },
+        // { component: MapPage, name: 'Map', segment: 'map' },
         { component: AboutPage, name: 'About', segment: 'about' },
         { component: TutorialPage, name: 'Tutorial', segment: 'tutorial' },
         { component: SupportPage, name: 'SupportPage', segment: 'support' },
@@ -83,7 +83,7 @@ import { firebaseConfig } from '../providers/firebase/config';
     AboutPage,
     AccountPage,
     LoginPage,
-    MapPage,
+    // MapPage,
     PopoverPage,
     ScheduleFilterPage,
     SignupPage,
